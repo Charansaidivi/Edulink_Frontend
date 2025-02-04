@@ -10,9 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroui/navbar": "^2.2.9",
     "@reduxjs/toolkit": "^2.5.1",
+    "bootstrap": "^5.3.3",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

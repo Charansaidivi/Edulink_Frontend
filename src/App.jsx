@@ -3,6 +3,7 @@ import AuthPage from './pages/AuthPage'
 import HomePage from './pages/HomePage'
 import './App.css'
 import { Routes,Route } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 const App = () => {
   return (
     <div>

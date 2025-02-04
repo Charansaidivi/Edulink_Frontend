@@ -146,3 +146,158 @@
 .btn:hover {
   border: 1px solid orange;
 }
+.p {
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.btn {
+  margin-top: 10px;
+  width: 100%;
+  height: 50px;
+  border-radius: 10em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  gap: 10px;
+  border: 1px solid #ededef;
+  background-color: white;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.btn:hover {
+  border: 1px solid orange;
+}
+/* navbar styles */
+/* From Uiverse.io by vk-uiux */
+#navbar {
+  height: 50px;
+}
+
+#checkbox {
+  display: none;
+}
+
+.toggle {
+  position: relative;
+  width: 40px;
+  cursor: pointer;
+  margin: auto;
+  display: block;
+  height: calc(4px * 2 + 8px * 2);
+}
+
+.bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: calc(4px / 2);
+  background: #7b52b9;
+  color: inherit;
+  opacity: 1;
+  transition: none 0.35s cubic-bezier(0.5, -0.35, 0.35, 1.5) 0s;
+}
+
+/***** Spin Animation *****/
+
+.bar--top {
+  bottom: calc(50% + 11px + 4px / 2);
+  transition-property: bottom, transform;
+  transition-delay: calc(0s + 0.35s), 0s;
+}
+
+.bar--middle {
+  top: calc(50% - 4px / 2);
+  transition-property: opacity;
+  transition-delay: calc(0s + 0.35s);
+}
+
+.bar--bottom {
+  top: calc(50% + 11px + 4px / 2);
+  transition-property: top, transform;
+  transition-delay: calc(0s + 0.35s), 0s;
+}
+
+#checkbox:checked + .toggle .bar--top {
+  bottom: calc(50% - 4px / 2);
+  transform: rotate(135deg);
+  transition-delay: 0s, calc(0s + 0.35s);
+}
+
+#checkbox:checked + .toggle .bar--middle {
+  opacity: 0;
+  transition-duration: 0s;
+  transition-delay: calc(0s + 0.35s);
+}
+
+#checkbox:checked + .toggle .bar--bottom {
+  top: calc(50% - 4px / 2);
+  transform: rotate(225deg);
+  transition-delay: 0s, calc(0s + 0.35s);
+}
+
+.profile-container {
+  width: 60px; /* Adjust size as needed */
+  height: 60px; /* Adjust size as needed */
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-image {
+  width: 60px;
+  height: 60px;
+  clip-path: circle(50%);
+}
+
+/* Add this to your existing CSS file */
+@media (min-width: 920px) {
+  #checkbox {
+    display: none; /* Hide the checkbox input above 920px */
+  }
+
+  .toggle {
+    display: none; /* Hide the toggle label above 920px */
+  }
+}
+
+@media (max-width: 920px) {
+  .toggle {
+    position: absolute; /* Position the toggle button absolutely */
+    right: 20px; /* Adjust the right margin as needed */
+    top: 15px; /* Adjust the top margin as needed */
+    z-index: 1; /* Ensure it appears above other elements */
+  }
+
+  .navbar-collapse {
+    /* margin-top: 10px; */
+    width: 100%;
+    border: 1px solid #ddd; /* Light border for better visibility */
+    display: flex;
+    justify-content: center;
+    background-color: white; /* Background color for the dropdown */
+    opacity: 0; /* Start with 0 opacity */
+    transform: translateY(-20px); /* Move the menu up slightly */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    visibility: hidden; /* Hide the element but keep it in the layout */
+    position: absolute; /* Position it absolutely to avoid layout shifts */
+    top: 100%; /* Position it below the navbar */
+    left: 0;
+    z-index: 1000; /* Ensure it appears above other elements */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+
+  .navbar-collapse.show {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Move back to its original position */
+    visibility: visible; /* Make it visible */
+  }
+}

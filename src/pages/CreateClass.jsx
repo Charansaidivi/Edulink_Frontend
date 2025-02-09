@@ -15,7 +15,8 @@ const CreateClass = () => {
       endTime: '',
       maxSlots: '',
       meetingLink: '',
-      media: null
+      media: null,
+      topicType:''
     });
 
 const handleChange = (e) => {
@@ -39,7 +40,7 @@ const handleSubmit = async (e) => {
 
         // Prepare the data to send using FormData
         const formDataToSend = new FormData();
-        const { topicName, description, startDate, endDate, startTime, endTime, maxSlots, meetingLink, media } = formData;
+        const { topicName, description, startDate, endDate, startTime, endTime, maxSlots, meetingLink, media,topicType } = formData;
 
         // Append data to FormData
         formDataToSend.append('topicName', topicName);
@@ -50,12 +51,13 @@ const handleSubmit = async (e) => {
         formDataToSend.append('endTime', endTime);
         formDataToSend.append('maxSlots', Number(maxSlots));
         formDataToSend.append('meetingLink', meetingLink);
+        formDataToSend.append('topicType', topicType);
         if (media) {
             formDataToSend.append('media', media); // Append the media file
         }
 
         // Fetch call for creating a class
-        const response = await fetch(`${API_URL}/sessions/create-session`, {
+        const response = await fetch(`${API_URL}/session/create-session`, {
             method: 'POST',
             headers: {
                 'token': token,
@@ -100,6 +102,31 @@ const handleSubmit = async (e) => {
                 required
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
               />
+            </div>
+
+            {/* Topic Type Dropdown */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Topic Type</label>
+              <select
+                name="topicType"
+                value={formData.topicType}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              >
+                <option value="">Select a topic</option>
+                <option value="Java">Java</option>
+                <option value="Python">Python</option>
+                <option value="C++">C++</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="Ruby">Ruby</option>
+                <option value="PHP">PHP</option>
+                <option value="C#">C#</option>
+                <option value="Go">Go</option>
+                <option value="Swift">Swift</option>
+                <option value="Kotlin">Kotlin</option>
+                <option value="Others">Others</option>
+              </select>
             </div>
 
             {/* Meeting Link */}

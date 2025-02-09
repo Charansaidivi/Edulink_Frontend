@@ -67,21 +67,9 @@
 .inputForm:focus-within {
   border: 1.5px solid orange;
 }
-
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  justify-content: space-between;
+.flex-row{
+  width: 100%;
 }
-
-.flex-row > div > label {
-  font-size: 14px;
-  color: black;
-  font-weight: 400;
-}
-
 .span {
   font-size: 14px;
   margin-left: 5px;
@@ -171,6 +159,13 @@
 
 .btn:hover {
   border: 1px solid orange;
+}
+
+.flex-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
 /* navbar styles */
 /* From Uiverse.io by vk-uiux */

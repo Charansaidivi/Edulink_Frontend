@@ -70,12 +70,14 @@ const HomePage = () => {
         </div>
         <div>
           {classes.map((cls) => (
-            <div key={cls._id} className="p-4 mb-4 border border-gray-300 rounded-md">
-              <div className="flex items-center mb-2">
-                {cls.student.profileImage && (
-                  <img src={cls.student.profileImage} alt={`${cls.student.username}'s profile`} className="w-10 h-10 rounded-full mr-2" />
-                )}
-                <p><strong>{cls.student.username}</strong></p>
+            <div key={cls._id} className="p-4 mb-4 border border-gray-300 rounded-md shadow-lg bg-white">
+              <div className="profile-container">
+                <img 
+                  src={cls.student.profileImage ? `${API_URL}/uploads/${cls.student.profileImage}` : '/default.jpg'} 
+                  alt={`${cls.student.username}'s profile`} 
+                  className="profile-image" 
+                />
+                <p className="profile-name">{cls.student.username}</p>
               </div>
               <h3 className="text-xl font-bold">{cls.topicName}</h3>
               {cls.media && (

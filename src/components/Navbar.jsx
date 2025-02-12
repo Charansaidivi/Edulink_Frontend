@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
+import { API_URL } from '../data/apiData'; // Import API_URL
 // import "./Navbar.css"; // Import the CSS file for styles
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate()
+  const profileImageFromStore = useSelector((state) => state.profile.profileImage); // Get profile image from Redux state
 
   const toggleMenu = () => {
     setIsOpen(!isOpen); // Toggle the state
@@ -36,7 +39,7 @@ const Navbar = () => {
           <div className="profile-container">
             <button className="profile-button" onClick={()=>navigate('/profile')}>
               <img
-                src="/"
+                src={profileImageFromStore ? `${API_URL}/uploads/${profileImageFromStore}` : '/default.jpg'} // Use profile image from Redux state
                 alt="Profile"
                 className="profile-image"
               />

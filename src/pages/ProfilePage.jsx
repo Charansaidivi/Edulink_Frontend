@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setProfileImage } from '../redux/profileSlice'
 import Pattern from '../components/Pattern'
 import Navbar from '../components/Navbar' // Adjust the path as necessary
 import axios from 'axios'; // Import axios for API calls
 import { API_URL } from '../data/apiData';
 
 const ProfilePage = () => {
-  const [profileImage, setProfileImage] = useState(null); // State for profile image
+  const dispatch = useDispatch()
+  const profileImageFromStore = useSelector((state) => state.profile.profileImage)
   const [enrolledSessions, setEnrolledSessions] = useState([]); // State for enrolled sessions
   const [teachingSessions, setTeachingSessions] = useState([]); // State for teaching sessions
   const [username, setUsername] = useState(''); // State for username
@@ -21,19 +24,19 @@ const ProfilePage = () => {
         console.log(response);
         const { profileImage, enrolledSessions = [], teachingSessions = [], email, username, ratings } = response.data;
         console.log(teachingSessions) // Destructure response with defaults
-        setProfileImage(profileImage); // Set profile image
-        setEnrolledSessions(enrolledSessions); // Set enrolled sessions
-        setTeachingSessions(teachingSessions); // Set teaching sessions
         setUsername(username); // Set username
         setEmail(email); // Set email
         setRatings(ratings); // Set ratings
+        setEnrolledSessions(enrolledSessions); // Set enrolled sessions
+        setTeachingSessions(teachingSessions); // Set teaching sessions
+        dispatch(setProfileImage(profileImage)); // Dispatch action to set profile image in Redux
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
     };
 
     fetchUserProfile(); // Call the function to fetch user profile
-  }, [userId]);
+  }, [userId, dispatch]);
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -47,7 +50,7 @@ const ProfilePage = () => {
             'Content-Type': 'multipart/form-data',
           },
         });
-        setProfileImage(response.data.profileImage);
+        dispatch(setProfileImage(response.data.profileImage)); // Update Redux state with new profile image
         alert("profile updated sucessfully")
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -60,7 +63,7 @@ const ProfilePage = () => {
       <div className="profile-wrapper"> {/* New wrapper div */}
         <div className="profile-page"> {/* Profile page content */}
           <div className="profile-container">
-            <img src={profileImage ? `${API_URL}/uploads/${profileImage}` : '/default.jpg'} alt="Profile" className="profile-image" />
+            <img src={profileImageFromStore ? `${API_URL}/uploads/${profileImageFromStore}` : '/default.jpg'} alt="Profile" className="profile-image" />
           </div>
           <div className="profile-info">
             <h2>{username}</h2>

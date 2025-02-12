@@ -42,7 +42,7 @@ export const Login = ({SignupHandler}) => {
     const { credential } = response;
 
     try {
-      const serverResponse = await fetch(`${API_URL}/student/auth/google`, {
+      const serverResponse = await fetch(`${API_URL}/student/google-auth`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -115,12 +115,10 @@ export const Login = ({SignupHandler}) => {
     <p className="p line">Or With</p>
 
     <div className="flex-row">
-      <div className="google-login-button-wrapper">
         <GoogleLogin
           onSuccess={handleGoogleLoginSuccess}
           onError={handleGoogleLoginFailure}
         />
-      </div>
     </div>
   </form>
   </div>

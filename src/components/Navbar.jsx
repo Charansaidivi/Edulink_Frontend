@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 // import "./Navbar.css"; // Import the CSS file for styles
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen); // Toggle the state
@@ -25,16 +27,16 @@ const Navbar = () => {
         <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`} id="navbarTogglerDemo01">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">Home</a>
+              <a className="nav-link active" aria-current="page" href="/home">Home</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/create-class">Create Class</a>
             </li>
           </ul>
           <div className="profile-container">
-            <button className="profile-button">
+            <button className="profile-button" onClick={()=>navigate('/profile')}>
               <img
-                src="/sai.png"
+                src="/"
                 alt="Profile"
                 className="profile-image"
               />

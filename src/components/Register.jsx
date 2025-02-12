@@ -26,7 +26,7 @@ const Register = ({LoginHandler}) => {
         setName("")
         setPassword("")
         alert("Student registered sucessfully")
-        navigate('/home')
+        LoginHandler()
        }
     } catch (error) {
        console.log("registration failed",error)
@@ -39,7 +39,7 @@ const Register = ({LoginHandler}) => {
     const { credential } = response
 
     try {
-      const serverResponse = await fetch(`${API_URL}/student/auth/google`, {
+      const serverResponse = await fetch(`${API_URL}/student/google-auth`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

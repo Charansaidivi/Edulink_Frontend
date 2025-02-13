@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
 import { API_URL } from '../data/apiData'; // Import API_URL

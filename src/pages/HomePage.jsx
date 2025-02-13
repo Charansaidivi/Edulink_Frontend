@@ -1,11 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProfile } from '../redux/profileSlice';
 import { API_URL } from '../data/apiData';
+import Navbar from '../components/Navbar';
+import axios from 'axios';
 
 const HomePage = () => {
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('');
   const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
+      if (userId) {
+        try {
+          const response = await axios.get(`${API_URL}/student/profile/${userId}`);
+          const userProfile = response.data;
+          dispatch(setProfile(userProfile));
+        } catch (error) {
+          console.error("Error fetching user profile:", error);
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchClasses = async () => {

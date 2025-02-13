@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #f0f0f0; /* Adjust background color as needed */
+  background:white; /* Adjust background color as needed */
   margin: 0;
   padding: 0;
 }
@@ -14,17 +14,14 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: linear-gradient(45deg, skyblue, darkblue);
+  background: #2D9CDB;
   padding: 30px;
   width: 450px;
-  border-radius: 20px;
+  border:5px solid rgb(15, 15, 15);
+  border-radius: 40px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   transition: background 0.3s ease;
-}
-
-.form:hover {
-  background: linear-gradient(45deg, darkblue, skyblue);
 }
 
 ::placeholder {
@@ -37,12 +34,12 @@
 }
 
 .flex-column > label {
-  color: white;
+  color: black;
   font-weight: 600;
 }
 
 .inputForm {
-  border: 1.5px solid #ecedec;
+  border: 1.5px solid black;
   border-radius: 10em;
   height: 50px;
   display: flex;
@@ -50,6 +47,11 @@
   padding-left: 10px;
   transition: 0.2s ease-in-out;
   background-color: white;
+}
+.inputForm :hover{
+  color: #000000CC;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .input {
@@ -64,16 +66,17 @@
   outline: none;
 }
 
-.inputForm:focus-within {
-  border: 1.5px solid orange;
-}
 .flex-row{
   width: 100%;
 }
+.google-login-button-wrapper{
+  border: 1px solid black;
+}
+
 .span {
-  font-size: 14px;
+  font-size: 20px;
   margin-left: 5px;
-  color: white;
+  color: rgb(12, 11, 11);
   font-weight: 500;
   cursor: pointer;
 }
@@ -89,10 +92,10 @@
   transition: ease-out 0.5s;
   border: 2px solid;
   border-radius: 10em;
-  box-shadow: inset 0 0 0 0 blue;
+  box-shadow: inset 0 0 0 0 white;
   margin: 20px 0 10px 0;
-  color: white;
-  font-size: 15px;
+  color: black;
+  font-size: 17px;
   font-weight: 500;
   height: 50px;
   width: 100%;
@@ -100,19 +103,27 @@
 }
 
 .button-submit:hover {
-  color: white;
-  box-shadow: inset 0 -100px 0 0 royalblue;
+  color: black;
+  box-shadow: inset 0 -100px 0 0 white;
+  font-size: 19px;
+  font-weight: bold;
 }
 
 .button-submit:active {
   transform: scale(0.9);
 }
 
-.p {
+p{
+  font-size: 30px;
+  font-weight: normal;
+  color: black;
   text-align: center;
-  color: white;
-  font-size: 14px;
-  margin: 5px 0;
+  cursor: pointer;
+}
+p span:hover{
+  background-color: white;
+  font-weight: bold;
+  color: black;
 }
 
 .btn {
@@ -125,8 +136,8 @@
   align-items: center;
   font-weight: 500;
   gap: 10px;
-  border: 1px solid #ededef;
-  background-color: white;
+  border: 1px solid black;
+  background-color: rgb(14, 13, 13);
   cursor: pointer;
   transition: 0.2s ease-in-out;
 }
@@ -136,14 +147,15 @@
 }
 .p {
   text-align: center;
-  color: white;
-  font-size: 14px;
+  color: black;
+  font-size: 16px;
   margin: 5px 0;
 }
 
 .btn {
   margin-top: 10px;
   width: 100%;
+  border: 2px solid black;
   height: 50px;
   border-radius: 10em;
   display: flex;
@@ -152,9 +164,8 @@
   font-weight: 500;
   gap: 10px;
   border: 1px solid #ededef;
-  background-color: white;
+  background-color: black;
   cursor: pointer;
-  transition: 0.2s ease-in-out;
 }
 
 .btn:hover {
@@ -237,24 +248,19 @@
 }
 
 .profile-container {
+  width: 60px; /* Adjust size as needed */
+  height: 60px; /* Adjust size as needed */
+  border-radius: 50%;
+  overflow: hidden;
   display: flex;
-  align-items: center; /* Center items vertically */
-  margin-bottom: 10px; /* Space below the profile container */
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-image {
-  width: 50px; /* Adjust size as needed */
-  height: 50px; /* Adjust size as needed */
-  border-radius: 50%; /* Make the image circular */
-  border: 2px solid #ecedec; /* Light border around the image */
-  margin-right: 10px; /* Space between image and name */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-.profile-name {
-  font-size: 1.2em; /* Adjust font size */
-  font-weight: bold; /* Make the name bold */
-  color: #333; /* Dark color for the name */
+  width: 60px;
+  height: 60px;
+  clip-path: circle(50%);
 }
 
 /* Add this to your existing CSS file */
@@ -300,4 +306,56 @@
     transform: translateY(0); /* Move back to its original position */
     visibility: visible; /* Make it visible */
   }
+}
+
+/* Navbar styles */
+.navbar.navbar-expand-lg {
+  background-color: #384959; /* Use !important as a last resort */
+}
+.navbar a {
+  color: black; /* Black text */
+}
+
+.navbar a:hover {
+  background-color: blue; /* Blue background on hover */
+  color: white; /* White text on hover */
+  border: 1px solid blue; /* Blue border on hover */
+}
+
+.navbar {
+    width: 100%;
+    height: 60px;
+    background-color: #007bff; /* Bootstrap primary color */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    color: white;
+}
+
+.navbar img {
+    width: 50px;
+    height: 50px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar li {
+    font-size: larger;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light hover effect */
 }

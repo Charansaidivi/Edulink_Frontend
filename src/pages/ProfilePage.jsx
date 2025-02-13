@@ -1,17 +1,36 @@
-import React from 'react';
-import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
-import { useDispatch } from 'react-redux';
-import { setProfileImage } from '../redux/profileSlice'
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setProfile } from '../redux/profileSlice'; // Import the action to set profile
+import axios from 'axios';
+import { API_URL } from '../data/apiData';
 import Pattern from '../components/Pattern'
 import Navbar from '../components/Navbar' // Adjust the path as necessary
-import axios from 'axios'; // Import axios for API calls
-import { API_URL } from '../data/apiData';
 import './ProfilePage.css'
 
 const ProfilePage = () => {
-  const dispatch = useDispatch()
-  // Access profile data from Redux
+  const dispatch = useDispatch();
   const { profileImage, username, email, ratings, enrolledSessions, teachingSessions } = useSelector((state) => state.profile);
+  
+  const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
+
+  useEffect(() => {
+    // Check if profile data is already in Redux state
+    if (!username) { // Assuming username is a key part of the profile
+      const fetchUserProfile = async () => {
+        if (userId) {
+          try {
+            const response = await axios.get(`${API_URL}/student/profile/${userId}`); // Fetch user profile
+            const userProfile = response.data; // Assuming the response contains the full user profile
+            dispatch(setProfile(userProfile)); // Store the entire profile in Redux
+          } catch (error) {
+            console.error("Error fetching user profile:", error);
+          }
+        }
+      };
+
+      fetchUserProfile(); // Call the function to fetch user profile
+    }
+  }, [dispatch, username, userId]); // Dependency array includes dispatch, username, and userId
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -20,13 +39,13 @@ const ProfilePage = () => {
       formData.append('media', file); // Append the file to the form data
 
       try {
-        const response = await axios.post(`${API_URL}/student/upload/${localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : ""}`, formData, {
+        const response = await axios.post(`${API_URL}/student/upload/${userId}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-        dispatch(setProfileImage(response.data.profileImage)); // Update Redux state with new profile image
-        alert("profile updated sucessfully")
+        dispatch(setProfile({ profileImage: response.data.profileImage })); // Update Redux state with new profile image
+        alert("Profile updated successfully");
       } catch (error) {
         console.error("Error uploading image:", error);
       }

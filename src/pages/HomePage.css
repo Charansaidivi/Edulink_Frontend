@@ -1,0 +1,157 @@
+/* HomePage.css */
+
+/* Search input and select styles */
+.search-input,
+.topic-select {
+  background: #f034c1; /* Blue background */
+  color: black; /* Black text */
+  transition: color 0.3s ease;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+}
+
+.search-input:hover,
+.topic-select:hover{
+  color: white; /* White text on hover */
+  font-weight: bold;
+  font-size: 3px solid white;/* Bold text on hover */
+}
+
+/* Class card styles */
+.class-card {
+  background-color: #BDDDFC !important; /* Gray background */
+  color: black; /* Black text */
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-container img {
+  width: 50px; /* Profile image size */
+  height: 50px; /* Profile image size */
+  border-radius: 50%; /* Circular profile image */
+  margin-right: 10px; /* Space between image and name */
+}
+
+.topic-name {
+  font-weight: bold;
+  color: black; /* Black text for topic name */
+  margin: 0px 0 !important; /* Margin for spacing */
+}
+
+/* Book slot button styles */
+.class-card .book-slot-button {
+  background-color: white; /* White background */
+  color: black; /* Black text */
+  border: 1px solid #007bff; /* Blue border */
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px; /* Space above the button */
+}
+
+.class-card .book-slot-button:hover {
+  background-color: #007bff; /* Blue background on hover */
+  color: white; /* White text on hover */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topic-select {
+  background: #2D9CDB; /* Blue background */
+  color: black; /* Black text */
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 100%; /* Centered width */
+  margin-bottom: 20px;
+}
+
+.class-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%; /* Centered width */
+}
+
+.class-card {
+  background-color: #f0f0f0; /* Gray background */
+  color: black; /* Black text */
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 100%; /* Full width of the container */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-image {
+  width: 50px; /* Profile image size */
+  height: 50px; /* Profile image size */
+  border-radius: 50%; /* Circular profile image */
+  margin-right: 10px; /* Space between image and name */
+}
+
+.username {
+  font-weight: bold;
+}
+
+.topic-name {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0; /* Margin for spacing */
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0; /* Margin for spacing */
+}
+
+.date-time {
+  display: flex;
+  justify-content: space-between; /* Align items on the same line */
+  margin: 5px 0; /* Margin for spacing */
+}
+
+.slots {
+  display: flex;
+  justify-content: space-between; /* Align items on the same line */
+  margin: 5px 0; /* Margin for spacing */
+}
+
+.book-slot-button {
+  background-color: white; /* White background */
+  color: black; /* Black text */
+  border: 1px solid #007bff; /* Blue border */
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px; /* Space above the button */
+}
+
+.book-slot-button:hover {
+  background-color: #007bff; /* Blue background on hover */
+  color: white; /* White text on hover */
+}

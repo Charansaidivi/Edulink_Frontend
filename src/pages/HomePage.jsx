@@ -4,12 +4,14 @@ import { setProfile } from '../redux/profileSlice';
 import { API_URL } from '../data/apiData';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
+import './HomePage.css';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const [searchTerm, setSearchTerm] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('');
   const [classes, setClasses] = useState([]);
+  const profileImageFromStore = useSelector((state) => state.profile.profileImage);
+  const usernameFromStore = useSelector((state) => state.profile.username);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -32,25 +34,21 @@ const HomePage = () => {
     const fetchClasses = async () => {
       try {
         const query = new URLSearchParams({
-          searchTerm,
           topicType: selectedTopic
         }).toString();
 
         const response = await fetch(`${API_URL}/session/sessions?${query}`);
         const data = await response.json();
-        console.log(data);
         setClasses(data);
+        console.log(data)
       } catch (error) {
         console.error('Error fetching classes:', error);
       }
     };
-
-    fetchClasses();
-  }, [searchTerm, selectedTopic]);
-
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
+    if (selectedTopic) {
+      fetchClasses();
+    }
+  }, [selectedTopic]);
 
   const handleTopicChange = (e) => {
     setSelectedTopic(e.target.value);
@@ -60,22 +58,13 @@ const HomePage = () => {
     <div>
       <Navbar />
       <div className="container mx-auto p-4">
-        <div className="flex justify-between items-center mb-4">
-          <input
-            type="text"
-            placeholder="Search for classes..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
-        </div>
         <div className="mb-4">
           <select
             value={selectedTopic}
             onChange={handleTopicChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="topic-select"
           >
-            <option value="">All Topics</option>
+            <option value="">Choose Topic</option>
             <option value="Java">Java</option>
             <option value="Python">Python</option>
             <option value="C++">C++</option>
@@ -89,39 +78,40 @@ const HomePage = () => {
             <option value="Others">Others</option>
           </select>
         </div>
-        <div>
+        <div className="class-container">
           {classes.map((cls) => (
-            <div key={cls._id} className="p-4 mb-4 border border-gray-300 rounded-md shadow-lg bg-white">
-              <div className="profile-container">
+            <div key={cls._id} className="class-card">
+              <div className="header">
                 <img 
                   src={cls.student.profileImage ? `${API_URL}/uploads/${cls.student.profileImage}` : '/default.jpg'} 
                   alt={`${cls.student.username}'s profile`} 
-                  className="profile-image" 
+                  className="profile-image"
                 />
-                <p className="profile-name">{cls.student.username}</p>
+                <span className="username">{cls.student.username}</span>
               </div>
-              <h3 className="text-xl font-bold">{cls.topicName}</h3>
-              {cls.media && (
-                <div className="my-2">
-                  {cls.media.endsWith('.mp4') ? (
-                    <video controls className="w-full">
-                      <source src={`${API_URL}/uploads/${cls.media}`} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : (
-                    <img src={`${API_URL}/uploads/${cls.media}`} alt="Session media" className="w-full" />
-                  )}
+              <h3 className="topic-name">{cls.topicName}</h3>
+              <hr />
+              <div className="details">
+                <div className="date-time">
+                  <span>Start Date: {cls.startDate}</span>
+                  <span>Start Time: {cls.startTime}</span>
                 </div>
-              )}
-              <p>{cls.description}</p>
-              <a href={cls.meetingLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">Join Meeting</a>
+                <div className="date-time">
+                  <span>End Date: {cls.endDate}</span>
+                  <span>End Time: {cls.endTime}</span>
+                </div>
+                <div className="slots">
+                  <span>Total Slots: {cls.maxSlots}</span>
+                  <span>Available Slots: {cls.availableSlots}</span>
+                </div>
+                <p>Meeting Link:{cls.meetingLink}</p>
+              </div>
               <button
-                className={`mt-2 p-2 bg-blue-500 text-white rounded ${cls.availableSlots === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`book-slot-button ${cls.availableSlots === 0 ? 'disabled' : ''}`}
                 disabled={cls.availableSlots === 0}
               >
                 Book Slot
               </button>
-              <p>Available Slots: {cls.availableSlots}</p>
             </div>
           ))}
         </div>

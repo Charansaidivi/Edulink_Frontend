@@ -1,17 +1,23 @@
 /* Profile Page Styles */
+.profile-wrapper{
+  background-color: rgb(250, 250, 250);
+  margin-top: 80px;
+}
 .profile-page {
-    margin-top: 20px;
-    margin-left:25%;
-    border: 1px solid red;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center content horizontally */
-    padding: 20px; /* Add padding around the page */
-    background-color: #f9f9f9; /* Light background color */
-    min-height: 100vh; /* Ensure it takes full height */
-  }
-  
+  margin: 20px auto; /* Center the container with auto margins */
+  width: 90%; /* Default width for smaller screens */
+  max-width: 1000px; /* Maximum width to prevent it from being too large */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  padding: 20px; /* Default padding */
+  padding-top: 80px; /* Add padding to the top to avoid overlap with navbar */
+  background-color: #ffffff; /* Light background color */
+  min-height: 80vh; /* Ensure it takes full height */
+  box-shadow: 0 0 20px rgba(0, 0, 255, 0.5), /* Blue glow effect */
+              0 0 40px rgba(0, 0, 255, 0.3); /* More intense blue glow */
+  border-radius: 15px; /* Optional: Rounded corners for a softer look */
+}
   .profile-info {
     text-align: center; /* Center the text */
     color: #333; /* Text color */
@@ -30,7 +36,7 @@
   
   .enrolled-sessions, .teaching-sessions {
     width: 100%; /* Full width */
-    max-width: 600px; /* Limit max width */
+    max-width: 400px; /* Decreased max width */
     margin: 20px 0; /* Space between sections */
     padding: 15px; /* Padding inside sections */
     background-color: #fff; /* White background for sections */
@@ -39,7 +45,8 @@
   }
   
   .enrolled-sessions h3, .teaching-sessions h3 {
-    margin-bottom: 10px; /* Space below headings */
+    margin-bottom: 10px;
+    font-size: 18px; /* Space below headings */
     color: #333; /* Heading color */
   }
   
@@ -49,4 +56,30 @@
     border: 1px solid #ddd; /* Light border for session items */
     border-radius: 5px; /* Rounded corners for items */
   }
-  
+  /* Assuming this is in your ProfilePage.css or a relevant CSS file *
+/* Responsive Styles */
+@media (min-width: 768px) {
+    .profile-page {
+        width: 80%; /* Adjust width for tablets and larger screens */
+        padding: 30px; /* Increase padding for larger screens */
+    }
+}
+
+@media (min-width: 1024px) {
+    .profile-page {
+        width: 70%; /* Further adjust width for larger desktops */
+        padding: 40px; /* Increase padding for larger screens */
+    }
+}
+
+.profile-page .profile-container{
+  width: 100px; /* Increased width */
+  height: 100px; /* Increased height */
+  border-radius: 50%; /* Make it circular */
+  object-fit:cover; /* Ensure the image covers the area */
+}
+
+.profile-page .profile-container img{
+  width: 100px;
+  height: 100px;
+}

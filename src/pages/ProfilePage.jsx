@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setProfile } from '../redux/profileSlice'; // Import the action to set profile
+import { setProfile } from '../redux/profileSlice'; 
 import axios from 'axios';
 import { API_URL } from '../data/apiData';
 import Pattern from '../components/Pattern'
-import Navbar from '../components/Navbar' // Adjust the path as necessary
+import Navbar from '../components/Navbar' 
 import './ProfilePage.css'
 
 const ProfilePage = () => {
@@ -14,8 +14,7 @@ const ProfilePage = () => {
   const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
 
   useEffect(() => {
-    // Check if profile data is already in Redux state
-    if (!username) { // Assuming username is a key part of the profile
+    if (!username) { 
       const fetchUserProfile = async () => {
         if (userId) {
           try {
@@ -53,7 +52,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <Pattern>
+    <>
       <Navbar />
       <div className="profile-wrapper"> {/* New wrapper div */}
         <div className="profile-page"> {/* Profile page content */}
@@ -96,7 +95,7 @@ const ProfilePage = () => {
           </div>
         </div>
       </div> {/* End of new wrapper div */}
-    </Pattern>
+    </>
   );
 };
 

@@ -10,6 +10,7 @@
   border-radius: 5px;
   border: none;
   width: 100%;
+  position: relative;
 }
 
 .search-input:hover,
@@ -21,13 +22,14 @@
 
 /* Class card styles */
 .class-card {
-  background-color: #BDDDFC !important; /* Gray background */
+  background-color: #f0f0f0; /* Gray background */
   color: black; /* Black text */
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
+  width: 100%; /* Full width of the container */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border: 2px solid #007bff; /* Blue border */
 }
 
 .profile-container {
@@ -80,6 +82,9 @@
   border: none;
   width: 100%; /* Centered width */
   margin-bottom: 20px;
+  margin-top: 50px; /* Add margin to the top */
+  z-index: 40; /* Ensure it appears above other elements */
+  position: relative; /* Ensure z-index works */
 }
 
 .class-container {
@@ -87,16 +92,6 @@
   flex-direction: column;
   align-items: center;
   width: 50%; /* Centered width */
-}
-
-.class-card {
-  background-color: #f0f0f0; /* Gray background */
-  color: black; /* Black text */
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  width: 100%; /* Full width of the container */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .header {
@@ -154,4 +149,34 @@
 .book-slot-button:hover {
   background-color: #007bff; /* Blue background on hover */
   color: white; /* White text on hover */
+}
+
+/* Join Meeting button styles */
+.join-meeting-button {
+  background-color: white; /* White background */
+  color: black; /* Black text */
+  border: 1px solid black; /* Black border */
+  position: center;
+  padding: 10px 20px; /* Padding for the button */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.join-meeting-button:hover {
+  background-color: blue; /* Blue background on hover */
+  color: white; /* White text on hover */
+}
+
+/* Media container styles */
+.media-container {
+  display: flex;
+  justify-content: center; /* Center the image */
+  padding: 10%; /* Padding around the image */
+}
+
+.media-image {
+  max-width: 100%; /* Responsive image */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 10px; /* Rounded corners for the image */
 }

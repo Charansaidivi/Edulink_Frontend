@@ -63,6 +63,7 @@ const HomePage = () => {
             value={selectedTopic}
             onChange={handleTopicChange}
             className="topic-select"
+            style={{ marginTop: '20px', zIndex: 10 }}
           >
             <option value="">Choose Topic</option>
             <option value="Java">Java</option>
@@ -91,6 +92,15 @@ const HomePage = () => {
               </div>
               <h3 className="topic-name">{cls.topicName}</h3>
               <hr />
+              {cls.media && (
+                <div className="media-container">
+                  <img 
+                    src={`${API_URL}/uploads/${cls.media}`} 
+                    alt="Uploaded Media" 
+                    className="media-image"
+                  />
+                </div>
+              )}
               <div className="details">
                 <div className="date-time">
                   <span>Start Date: {cls.startDate}</span>
@@ -104,7 +114,14 @@ const HomePage = () => {
                   <span>Total Slots: {cls.maxSlots}</span>
                   <span>Available Slots: {cls.availableSlots}</span>
                 </div>
-                <p>Meeting Link:{cls.meetingLink}</p>
+                <div>
+                  <button 
+                    className="join-meeting-button" 
+                    onClick={() => window.open(cls.meetingLink, '_blank')}
+                  >
+                    Join Meeting
+                  </button>
+                </div>
               </div>
               <button
                 className={`book-slot-button ${cls.availableSlots === 0 ? 'disabled' : ''}`}

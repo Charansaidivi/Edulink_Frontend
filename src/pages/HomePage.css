@@ -171,12 +171,18 @@
 /* Media container styles */
 .media-container {
   display: flex;
-  justify-content: center; /* Center the image */
-  padding: 10%; /* Padding around the image */
+  justify-content: center; /* Center the media */
+  padding: 10%; /* Padding around the media */
 }
 
 .media-image {
   max-width: 100%; /* Responsive image */
   height: auto; /* Maintain aspect ratio */
   border-radius: 10px; /* Rounded corners for the image */
+}
+
+.media-video {
+  max-width: 100%; /* Responsive video */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 10px; /* Rounded corners for the video */
 }

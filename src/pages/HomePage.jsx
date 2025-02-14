@@ -94,11 +94,20 @@ const HomePage = () => {
               <hr />
               {cls.media && (
                 <div className="media-container">
-                  <img 
-                    src={`${API_URL}/uploads/${cls.media}`} 
-                    alt="Uploaded Media" 
-                    className="media-image"
-                  />
+                  {cls.media.endsWith('.mp4') || cls.media.endsWith('.mov') ? (
+                    <video 
+                      src={`${API_URL}/uploads/${cls.media}`} 
+                      alt="Uploaded Media" 
+                      className="media-video" 
+                      controls
+                    />
+                  ) : (
+                    <img 
+                      src={`${API_URL}/uploads/${cls.media}`} 
+                      alt="Uploaded Media" 
+                      className="media-image"
+                    />
+                  )}
                 </div>
               )}
               <div className="details">

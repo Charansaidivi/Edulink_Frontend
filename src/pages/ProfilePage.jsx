@@ -63,11 +63,11 @@ const ProfilePage = () => {
               alt="Profile" 
               className="profile-image" 
             />
-          </div>
+          </div>  
           <div className="profile-info">
             <h2>{username}</h2>
             <p>{email}</p>
-            <p>Ratings: {ratings}</p>
+
           </div>
           <input type="file" onChange={handleImageUpload} />
           <div className="enrolled-sessions">

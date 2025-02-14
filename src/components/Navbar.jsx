@@ -1,13 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
+import { useSelector, useDispatch } from 'react-redux'; // Import useDispatch to dispatch actions
+import { setProfile } from '../redux/profileSlice'; // Import the action to set profile
 import { API_URL } from '../data/apiData'; // Import API_URL
+import axios from 'axios'; // Import axios for API calls
 // import "./Navbar.css"; // Import the CSS file for styles
 
 const Navbar = () => {
+  const dispatch = useDispatch(); // Initialize dispatch
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate()
   const profileImageFromStore = useSelector((state) => state.profile.profileImage); // Get profile image from Redux state
+  const username = useSelector((state) => state.profile.username); // Get username from Redux state
+
+  useEffect(() => {
+    const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
+
+    // Check if username is already in Redux state
+    if (!username) {
+      const fetchUserProfile = async () => {
+        if (userId) {
+          try {
+            const response = await axios.get(`${API_URL}/student/profile/${userId}`); // Fetch user profile
+            const userProfile = response.data; // Assuming the response contains the full user profile
+            dispatch(setProfile(userProfile)); // Store the entire profile in Redux
+          } catch (error) {
+            console.error("Error fetching user profile:", error);
+          }
+        }
+      };
+
+      fetchUserProfile(); // Call the function to fetch user profile
+    }
+  }, [dispatch, username]); // Dependency array includes dispatch and username
 
   const toggleMenu = () => {
     setIsOpen(!isOpen); // Toggle the state

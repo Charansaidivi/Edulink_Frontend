@@ -1,5 +1,8 @@
 /* From Uiverse.io by KapeParaguay */ 
 /* Parent container to center the form */
+body {
+  margin: 0; /* Adjust this value based on the height of your navbar */
+}
 .body-container {
   display: flex;
   justify-content: center;
@@ -121,9 +124,9 @@ p{
   cursor: pointer;
 }
 p span:hover{
-  background-color: white;
+  /* background-color: white; */
   font-weight: bold;
-  color: black;
+  color: rgb(255, 255, 255);
 }
 
 .btn {
@@ -180,14 +183,9 @@ p span:hover{
 }
 /* navbar styles */
 /* From Uiverse.io by vk-uiux */
-#navbar {
-  height: 50px;
-}
-
 #checkbox {
   display: none;
 }
-
 .toggle {
   position: relative;
   width: 40px;
@@ -315,47 +313,35 @@ p span:hover{
 .navbar a {
   color: black; /* Black text */
 }
-
-.navbar a:hover {
-  background-color: blue; /* Blue background on hover */
-  color: white; /* White text on hover */
-  border: 1px solid blue; /* Blue border on hover */
+#navbar {
+    position: fixed; /* This is handled by Bootstrap */
+    top: 0; /* This is handled by Bootstrap */
+    left: 0; /* This is handled by Bootstrap */
+    width: 100%; /* This is handled by Bootstrap */
+    height: 80px;
+    z-index: 1000; /* This is handled by Bootstrap */
+    background-color: #fff; /* This is handled by Bootstrap */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for depth */
+    padding: 10px 20px; /* This is handled by Bootstrap */
 }
 
-.navbar {
-    width: 100%;
-    height: 60px;
-    background-color: #007bff; /* Bootstrap primary color */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    color: white;
+/* Profile Container */
+.profile-container {
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center items vertically */
 }
 
-.navbar img {
-    width: 50px;
-    height: 50px;
+/* Profile Image */
+.profile-image {
+    width: 40px; /* Adjust width as needed */
+    height: 40px; /* Adjust height as needed */
+    border-radius: 50%; /* Make the image circular */
 }
 
-.navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-.navbar li {
-    font-size: larger;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.navbar a:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Light hover effect */
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .profile-image {
+        width: 30px; /* Smaller profile image on mobile */
+        height: 30px; /* Smaller profile image on mobile */
+    }
 }

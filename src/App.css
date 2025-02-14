@@ -1,9 +1,5 @@
 /* From Uiverse.io by KapeParaguay */ 
 /* Parent container to center the form */
-body {
-  margin: 0; /* No margin for the body */
-}
-
 .body-container {
   display: flex;
   justify-content: center;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import { API_URL } from '../data/apiData';
 import './CreateClass.css'; // Import the CSS file
 
@@ -83,9 +83,10 @@ const CreateClass = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Create New Class</h2>
+          <Navbar/>
+          <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6" id='newClass'>
+            <div className="flex justify-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-600 text-center w-full">Create New Class</h2>
             </div>
     
             <form onSubmit={handleSubmit} className="space-y-6">    

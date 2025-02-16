@@ -1,14 +1,13 @@
 /* CreateClass.css */
 
-.min-h-screen {
-    min-height: 100vh;
-    background-color: white;  /* Light gray background */
+.min-h-screen { /* Light gray background */
+    margin-top: 20px; /* Added margin from the top */
 }
-
 .max-w-3xl {
-    max-width: 700px; /* Maximum width for the form */
+    border: 1px solid red;
+    margin-top: 50px;
+    max-width: 800px;/* Decreased maximum width for the form */
 }
-
 .bg-white {
     background: #2D9CDB !important; /* White background for the form */
 }
@@ -27,9 +26,7 @@
 
 .text-2xl {
     font-size: 1.7rem;
-    color: white !important;
-    position: center;
-    padding-left: 10rem ;
+    color: rgb(255, 255, 255) !important;
     padding-bottom: 2rem;/* Font size for the title */
 }
 

@@ -54,6 +54,30 @@ const HomePage = () => {
     setSelectedTopic(e.target.value);
   };
 
+  const handleBookSlot = async (sessionId) => {
+    const token=localStorage.getItem('loginToken');
+    console.log(token)
+    try {
+        const response = await fetch(`${API_URL}/session/enroll/${sessionId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': token // Assuming you use JWT for authentication
+            }
+        });
+        const data = await response.json();
+        if (response.ok) {
+            alert(data.msg);
+            window.location.reload()
+        } else {
+            alert(data.msg); // Show error message
+        }
+    } catch (error) {
+        console.error('Error enrolling in session:', error);
+        alert('Error enrolling in session');
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -123,18 +147,11 @@ const HomePage = () => {
                   <span>Total Slots: {cls.maxSlots}</span>
                   <span>Available Slots: {cls.availableSlots}</span>
                 </div>
-                <div>
-                  <button 
-                    className="join-meeting-button" 
-                    onClick={() => window.open(cls.meetingLink, '_blank')}
-                  >
-                    Join Meeting
-                  </button>
-                </div>
               </div>
               <button
                 className={`book-slot-button ${cls.availableSlots === 0 ? 'disabled' : ''}`}
                 disabled={cls.availableSlots === 0}
+                onClick={() => handleBookSlot(cls._id)}
               >
                 Book Slot
               </button>

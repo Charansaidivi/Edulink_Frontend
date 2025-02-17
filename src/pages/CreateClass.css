@@ -4,7 +4,7 @@
     margin-top: 20px; /* Added margin from the top */
 }
 .max-w-3xl {
-    border: 1px solid red;
+    border: 3px solid black;
     margin-top: 50px;
     max-width: 800px;/* Decreased maximum width for the form */
 }
@@ -131,16 +131,20 @@
 }
 
 .bg-gray-100 {
-    background-color: #a12d2d;
+    background-color: #8f2f2f;
+    color: white; /* Light gray background for cancel button */
+}
+.bg-gray-100:hover {
+    background-color: #fa0505;
     color: white; /* Light gray background for cancel button */
 }
 
 .bg-indigo-600 {
-    background-color: #4f46e5; /* Indigo background for submit button */
+    background-color: #3e38af; /* Indigo background for submit button */
 }
 
 .hover\:bg-indigo-700:hover {
-    background-color: #4338ca; /* Darker indigo on hover */
+    background-color: #1804f6; /* Darker indigo on hover */
 }
 
 .text-white {

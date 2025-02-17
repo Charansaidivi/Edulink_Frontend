@@ -82,7 +82,7 @@
   border: none;
   width: 100%; /* Centered width */
   margin-bottom: 20px;
-  margin-top: 50px; /* Add margin to the top */
+  margin-top: 50px !important; /* Add margin to the top */
   z-index: 40; /* Ensure it appears above other elements */
   position: relative; /* Ensure z-index works */
 }

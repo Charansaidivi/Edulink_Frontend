@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProfile } from '../redux/profileSlice'; 
 import axios from 'axios';
@@ -12,6 +12,9 @@ const ProfilePage = () => {
   const { profileImage, username, email, ratings, enrolledSessions, teachingSessions } = useSelector((state) => state.profile);
   
   const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
+
+  const [showEnrolled, setShowEnrolled] = useState(false);
+  const [showTeaching, setShowTeaching] = useState(false);
 
   useEffect(() => {
     if (!username) { 
@@ -57,42 +60,61 @@ const ProfilePage = () => {
       <div className="profile-wrapper"> {/* New wrapper div */}
         <div className="profile-page"> {/* Profile page content */}
           <div className="profile-container">
-            <img 
-              src={profileImage ? `${API_URL}/uploads/${profileImage}` : '/default.jpg'} 
-              alt="Profile" 
-              className="profile-image" 
-            />
+            <div className="profile-image-wrapper">
+              <img 
+                src={profileImage ? `${API_URL}/uploads/${profileImage}` : '/default.jpg'} 
+                alt="Profile" 
+                className="profile-image" 
+              />
+              <input 
+                type="file" 
+                id="file-upload" 
+                onChange={handleImageUpload} 
+                className="file-input" 
+              />
+              <label htmlFor="file-upload" className="edit-icon">✎</label> {/* Edit icon */}
+            </div>
           </div>  
           <div className="profile-info">
             <h2>{username}</h2>
             <p>{email}</p>
+          </div>
+          
+          <button onClick={() => setShowEnrolled(!showEnrolled)}>
+            {showEnrolled ? 'Hide Enrolled Sessions' : 'Show Enrolled Sessions'}
+          </button>
+          {showEnrolled && (
+            <div className="enrolled-sessions">
+              <h3>My Enrolled Sessions</h3>
+              {enrolledSessions.length > 0 ? (
+                enrolledSessions.map((sessionItem) => (
+                  <div key={sessionItem._id}>
+                    <h4>{sessionItem._}</h4>
+                  </div>
+                ))
+              ) : (
+                <p>No enrolled sessions yet.</p>
+              )}
+            </div>
+          )}
 
-          </div>
-          <input type="file" onChange={handleImageUpload} />
-          <div className="enrolled-sessions">
-            <h3>My Enrolled Sessions</h3>
-            {enrolledSessions.length > 0 ? (
-              enrolledSessions.map((sessionItem) => (
-                <div key={sessionItem._id}>
-                  <h4>{sessionItem.name}</h4>
-                </div>
-              ))
-            ) : (
-              <p>No enrolled sessions yet.</p>
-            )}
-          </div>
-          <div className="teaching-sessions">
-            <h3>Teaching Sessions</h3>
-            {teachingSessions.length > 0 ? (
-              teachingSessions.map((sessionItem) => (
-                <div key={sessionItem._id}>
-                  <h4>{sessionItem.name}</h4>
-                </div>
-              ))
-            ) : (
-              <p>No teaching sessions yet.</p>
-            )}
-          </div>
+          <button onClick={() => setShowTeaching(!showTeaching)}>
+            {showTeaching ? 'Hide Teaching Sessions' : 'Show Teaching Sessions'}
+          </button>
+          {showTeaching && (
+            <div className="teaching-sessions">
+              <h3>Teaching Sessions</h3>
+              {teachingSessions.length > 0 ? (
+                teachingSessions.map((sessionItem) => (
+                  <div key={sessionItem._id}>
+                    <h4>{sessionItem.name}</h4>
+                  </div>
+                ))
+              ) : (
+                <p>No teaching sessions yet.</p>
+              )}
+            </div>
+          )}
         </div>
       </div> {/* End of new wrapper div */}
     </>

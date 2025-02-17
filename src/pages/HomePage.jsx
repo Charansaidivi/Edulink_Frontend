@@ -19,6 +19,7 @@ const HomePage = () => {
       if (userId) {
         try {
           const response = await axios.get(`${API_URL}/student/profile/${userId}`);
+          console.log(response)
           const userProfile = response.data;
           dispatch(setProfile(userProfile));
         } catch (error) {
@@ -36,7 +37,6 @@ const HomePage = () => {
         const query = new URLSearchParams({
           topicType: selectedTopic
         }).toString();
-
         const response = await fetch(`${API_URL}/session/sessions?${query}`);
         const data = await response.json();
         setClasses(data);

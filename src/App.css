@@ -346,7 +346,6 @@ p span:hover{
     height: 80px; /* Adjust height as needed */
     border-radius: 50%; /* Make the image circular */
 }
-
 /* Responsive Styles */
 @media (max-width: 768px) {
     .profile-image {

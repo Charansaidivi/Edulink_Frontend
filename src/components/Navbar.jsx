@@ -38,6 +38,12 @@ const Navbar = () => {
     setIsOpen(!isOpen); // Toggle the state
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('loginToken'); 
+    dispatch(setProfile({})); 
+    navigate('/login'); // Redirect to the login page
+  };
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary" >
       <div className="container-fluid" id="navbar">
@@ -62,7 +68,7 @@ const Navbar = () => {
             </li>
           </ul>
           <div className="profile-container">
-            <button className="profile-button" onClick={()=>navigate('/profile')}>
+            <button className="profile-button" onClick={() => navigate('/profile')}>
               <img
                 src={profileImageFromStore ? `${API_URL}/uploads/${profileImageFromStore}` : '/default.jpg'} // Use profile image from Redux state
                 alt="Profile"

@@ -155,3 +155,25 @@ button:active {
 .profile-image-wrapper:hover .edit-icon {
   opacity: 1; /* Show the edit icon on hover */
 }
+
+.logout-button {
+  background-color: #e74c3c; /* Red color for logout */
+  color: white; /* Text color */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 15px; /* Padding for better click area */
+  font-size: 1em; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effect */
+  margin-top: 20px; /* Space above the button */
+}
+
+.logout-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.logout-button:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); /* Add shadow for focus state */
+}

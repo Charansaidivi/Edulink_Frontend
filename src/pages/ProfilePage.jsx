@@ -3,50 +3,85 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setProfile } from '../redux/profileSlice'; 
 import axios from 'axios';
 import { API_URL } from '../data/apiData';
-import Pattern from '../components/Pattern'
-import Navbar from '../components/Navbar' 
-import './ProfilePage.css'
+import Navbar from '../components/Navbar';
+import './ProfilePage.css';
+
+const SessionList = ({ sessions, handleJoinSession, isTeaching }) => (
+  <div className="session-list">
+    {sessions.length > 0 ? (
+      sessions.map((session) => (
+        <div key={session._id} className="session-item">
+          <h4>{session.topicName}</h4>
+          <button onClick={() => handleJoinSession(session.meetingLink)}>
+            {isTeaching ? 'Start Class' : 'Join'}
+          </button>
+        </div>
+      ))
+    ) : (
+      <p>No sessions available.</p>
+    )}
+  </div>
+);
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const { profileImage, username, email, ratings, enrolledSessions, teachingSessions } = useSelector((state) => state.profile);
-  
-  const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
-
+  const { profileImage, username, email, enrolledSessions, teachingSessions } = useSelector((state) => state.profile);
+  const [sessionDetails, setSessionDetails] = useState([]);
+  const [teachingSessionDetails, setTeachingSessionDetails] = useState([]);
   const [showEnrolled, setShowEnrolled] = useState(false);
   const [showTeaching, setShowTeaching] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
 
   useEffect(() => {
-    if (!username) { 
-      const fetchUserProfile = async () => {
-        if (userId) {
-          try {
-            const response = await axios.get(`${API_URL}/student/profile/${userId}`); // Fetch user profile
-            const userProfile = response.data; // Assuming the response contains the full user profile
-            dispatch(setProfile(userProfile)); // Store the entire profile in Redux
-          } catch (error) {
-            console.error("Error fetching user profile:", error);
-          }
+    const fetchUserProfile = async () => {
+      if (userId) {
+        try {
+          const response = await axios.get(`${API_URL}/student/profile/${userId}`);
+          dispatch(setProfile(response.data));
+        } catch (error) {
+          console.error("Error fetching user profile:", error);
         }
-      };
+      }
+    };
 
-      fetchUserProfile(); // Call the function to fetch user profile
-    }
-  }, [dispatch, username, userId]); // Dependency array includes dispatch, username, and userId
+    fetchUserProfile();
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    const fetchSessions = async () => {
+      setLoading(true);
+      try {
+        if (showEnrolled) {
+          const response = await axios.post(`${API_URL}/student/sessions/details`, { sessionIds: enrolledSessions });
+          setSessionDetails(response.data);
+        }
+        if (showTeaching) {
+          const response = await axios.post(`${API_URL}/student/sessions/details`, { sessionIds: teachingSessions });
+          setTeachingSessionDetails(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching session details:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSessions();
+  }, [showEnrolled, showTeaching, enrolledSessions, teachingSessions]);
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append('media', file); // Append the file to the form data
+      formData.append('media', file);
 
       try {
         const response = await axios.post(`${API_URL}/student/upload/${userId}`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+          headers: { 'Content-Type': 'multipart/form-data' },
         });
-        dispatch(setProfile({ profileImage: response.data.profileImage })); // Update Redux state with new profile image
+        dispatch(setProfile({ profileImage: response.data.profileImage }));
         alert("Profile updated successfully");
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -54,11 +89,21 @@ const ProfilePage = () => {
     }
   };
 
+  const handleJoinSession = (meetingLink) => {
+    window.open(meetingLink, '_blank');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('loginToken');
+    dispatch(setProfile({}));
+    window.location.href = '/';
+  };
+
   return (
     <>
       <Navbar />
-      <div className="profile-wrapper"> {/* New wrapper div */}
-        <div className="profile-page"> {/* Profile page content */}
+      <div className="profile-wrapper">
+        <div className="profile-page">
           <div className="profile-container">
             <div className="profile-image-wrapper">
               <img 
@@ -72,7 +117,7 @@ const ProfilePage = () => {
                 onChange={handleImageUpload} 
                 className="file-input" 
               />
-              <label htmlFor="file-upload" className="edit-icon">✎</label> {/* Edit icon */}
+              <label htmlFor="file-upload" className="edit-icon">✎</label>
             </div>
           </div>  
           <div className="profile-info">
@@ -86,15 +131,7 @@ const ProfilePage = () => {
           {showEnrolled && (
             <div className="enrolled-sessions">
               <h3>My Enrolled Sessions</h3>
-              {enrolledSessions.length > 0 ? (
-                enrolledSessions.map((sessionItem) => (
-                  <div key={sessionItem._id}>
-                    <h4>{sessionItem._}</h4>
-                  </div>
-                ))
-              ) : (
-                <p>No enrolled sessions yet.</p>
-              )}
+              {loading ? <p>Loading...</p> : <SessionList sessions={sessionDetails} handleJoinSession={handleJoinSession} isTeaching={false} />}
             </div>
           )}
 
@@ -104,21 +141,16 @@ const ProfilePage = () => {
           {showTeaching && (
             <div className="teaching-sessions">
               <h3>Teaching Sessions</h3>
-              {teachingSessions.length > 0 ? (
-                teachingSessions.map((sessionItem) => (
-                  <div key={sessionItem._id}>
-                    <h4>{sessionItem.name}</h4>
-                  </div>
-                ))
-              ) : (
-                <p>No teaching sessions yet.</p>
-              )}
+              {loading ? <p>Loading...</p> : <SessionList sessions={teachingSessionDetails} handleJoinSession={handleJoinSession} isTeaching={true} />}
             </div>
           )}
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
-      </div> {/* End of new wrapper div */}
+      </div>
     </>
   );
 };
 
-export default ProfilePage
+export default ProfilePage;

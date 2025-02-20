@@ -12,6 +12,7 @@ const SessionList = ({ sessions, handleJoinSession }) => (
     {sessions.length > 0 ? (
       sessions.map((session) => {
         const startDateTime = new Date(`${session.startDate.split('T')[0]}T${session.startTime}:00Z`).toISOString();
+        const endDateTime = new Date(`${session.endDate.split('T')[0]}T${session.endTime}:00Z`).toISOString();
         
         return (
           <div key={session._id} className="session-item">
@@ -19,7 +20,7 @@ const SessionList = ({ sessions, handleJoinSession }) => (
             <button onClick={() => handleJoinSession(session.meetingLink)}>
               Join
             </button>
-            <CountdownTimer startTime={startDateTime} />
+            <CountdownTimer startTime={startDateTime} endTime={endDateTime} recurrence="daily" />
           </div>
         );
       })
@@ -149,6 +150,7 @@ const ProfilePage = () => {
               {loading ? <p>Loading...</p> : <SessionList sessions={teachingSessionDetails} handleJoinSession={handleJoinSession} />}
             </div>
           )}
+
           <button className="logout-button" onClick={handleLogout}>
             Logout
           </button>

@@ -19,7 +19,6 @@ const HomePage = () => {
       if (userId) {
         try {
           const response = await axios.get(`${API_URL}/student/profile/${userId}`);
-          console.log(response)
           const userProfile = response.data;
           dispatch(setProfile(userProfile));
         } catch (error) {
@@ -40,7 +39,6 @@ const HomePage = () => {
         const response = await fetch(`${API_URL}/session/sessions?${query}`);
         const data = await response.json();
         setClasses(data);
-        console.log(data)
       } catch (error) {
         console.error('Error fetching classes:', error);
       }
@@ -55,27 +53,32 @@ const HomePage = () => {
   };
 
   const handleBookSlot = async (sessionId) => {
-    const token=localStorage.getItem('loginToken');
-    console.log(token)
+    const token = localStorage.getItem('loginToken');
     try {
-        const response = await fetch(`${API_URL}/session/enroll/${sessionId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'token': token // Assuming you use JWT for authentication
-            }
-        });
-        const data = await response.json();
-        if (response.ok) {
-            alert(data.msg);
-            window.location.reload()
-        } else {
-            alert(data.msg); // Show error message
+      const response = await fetch(`${API_URL}/session/enroll/${sessionId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token // Assuming you use JWT for authentication
         }
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.msg);
+        window.location.reload();
+      } else {
+        alert(data.msg); // Show error message
+      }
     } catch (error) {
-        console.error('Error enrolling in session:', error);
-        alert('Error enrolling in session');
+      console.error('Error enrolling in session:', error);
+      alert('Error enrolling in session');
     }
+  };
+
+  // Function to format date
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('en-GB', options).replace(/\//g, ' - ');
   };
 
   return (
@@ -136,11 +139,11 @@ const HomePage = () => {
               )}
               <div className="details">
                 <div className="date-time">
-                  <span>Start Date: {cls.startDate}</span>
+                  <span>Start Date: {formatDate(cls.startDate)}</span>
                   <span>Start Time: {cls.startTime}</span>
                 </div>
                 <div className="date-time">
-                  <span>End Date: {cls.endDate}</span>
+                  <span>End Date: {formatDate(cls.endDate)}</span>
                   <span>End Time: {cls.endTime}</span>
                 </div>
                 <div className="slots">

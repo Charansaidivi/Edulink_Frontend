@@ -4,19 +4,25 @@ import { setProfile } from '../redux/profileSlice';
 import axios from 'axios';
 import { API_URL } from '../data/apiData';
 import Navbar from '../components/Navbar';
+import CountdownTimer from '../components/CountdownTimer';
 import './ProfilePage.css';
 
-const SessionList = ({ sessions, handleJoinSession, isTeaching }) => (
+const SessionList = ({ sessions, handleJoinSession }) => (
   <div className="session-list">
     {sessions.length > 0 ? (
-      sessions.map((session) => (
-        <div key={session._id} className="session-item">
-          <h4>{session.topicName}</h4>
-          <button onClick={() => handleJoinSession(session.meetingLink)}>
-            {isTeaching ? 'Start Class' : 'Join'}
-          </button>
-        </div>
-      ))
+      sessions.map((session) => {
+        const startDateTime = new Date(`${session.startDate.split('T')[0]}T${session.startTime}:00Z`).toISOString();
+        
+        return (
+          <div key={session._id} className="session-item">
+            <h4>{session.topicName}</h4>
+            <button onClick={() => handleJoinSession(session.meetingLink)}>
+              Join
+            </button>
+            <CountdownTimer startTime={startDateTime} />
+          </div>
+        );
+      })
     ) : (
       <p>No sessions available.</p>
     )}
@@ -55,6 +61,7 @@ const ProfilePage = () => {
       try {
         if (showEnrolled) {
           const response = await axios.post(`${API_URL}/student/sessions/details`, { sessionIds: enrolledSessions });
+          console.log("Enrolled Sessions Data:", response.data);
           setSessionDetails(response.data);
         }
         if (showTeaching) {
@@ -130,8 +137,7 @@ const ProfilePage = () => {
           </button>
           {showEnrolled && (
             <div className="enrolled-sessions">
-              <h3>My Enrolled Sessions</h3>
-              {loading ? <p>Loading...</p> : <SessionList sessions={sessionDetails} handleJoinSession={handleJoinSession} isTeaching={false} />}
+              {loading ? <p>Loading...</p> : <SessionList sessions={sessionDetails} handleJoinSession={handleJoinSession} />}
             </div>
           )}
 
@@ -140,8 +146,7 @@ const ProfilePage = () => {
           </button>
           {showTeaching && (
             <div className="teaching-sessions">
-              <h3>Teaching Sessions</h3>
-              {loading ? <p>Loading...</p> : <SessionList sessions={teachingSessionDetails} handleJoinSession={handleJoinSession} isTeaching={true} />}
+              {loading ? <p>Loading...</p> : <SessionList sessions={teachingSessionDetails} handleJoinSession={handleJoinSession} />}
             </div>
           )}
           <button className="logout-button" onClick={handleLogout}>

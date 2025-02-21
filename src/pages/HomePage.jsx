@@ -5,6 +5,7 @@ import { API_URL } from '../data/apiData';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
 import './HomePage.css';
+import SessionImage from '/Session.png'; // Update the path to your image
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const HomePage = () => {
   };
 
   return (
-    <div>
+    <div className="home-container">
       <Navbar />
       <div className="container mx-auto p-4">
         <div className="mb-4">
@@ -161,6 +162,8 @@ const HomePage = () => {
             </div>
           ))}
         </div>
+        <button className="choose-topic-button">Choose Topic</button>
+        <img src={SessionImage} alt="Session" className="session-image" />
       </div>
     </div>
   );

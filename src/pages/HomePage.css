@@ -120,19 +120,22 @@
 .details {
   display: flex;
   flex-direction: column;
-  margin: 10px 0; /* Margin for spacing */
+  margin: 10px 0;
+  font-weight: bold; /* Margin for spacing */
 }
 
 .date-time {
   display: flex;
   justify-content: space-between; /* Align items on the same line */
-  margin: 5px 0; /* Margin for spacing */
+  margin: 5px 0;
+  font-weight: bold; /* Margin for spacing */
 }
 
 .slots {
   display: flex;
   justify-content: space-between; /* Align items on the same line */
-  margin: 5px 0; /* Margin for spacing */
+  margin: 5px 0;
+  font-weight: bold; /* Margin for spacing */
 }
 
 .book-slot-button {
@@ -185,6 +188,18 @@
   max-width: 100%; /* Responsive video */
   height: auto; /* Maintain aspect ratio */
   border-radius: 10px; /* Rounded corners for the video */
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+}
+
+.session-image {
+  max-width: 80%; /* Responsive image */
+  height:fit-content; /* Maintain aspect ratio */
+  margin-top: 20px; /* Space above the image */
 }
 
 

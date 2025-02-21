@@ -1,28 +1,52 @@
-/* From Uiverse.io by KapeParaguay */ 
-/* Parent container to center the form */
+/* General Styles */
 body {
-  margin: 0; /* Adjust this value based on the height of your navbar */
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
-.body-container {
+
+/* Container for the entire authentication page */
+.auth-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Image Container (Left Side) */
+.image-container {
+  flex: 1; /* Take up 50% of the width by default */
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background:white; /* Adjust background color as needed */
-  padding: 0;
+  background-color: white; /* Optional: Add a background color */
 }
 
+.responsive-image {
+  max-width: 100%; /* Allow the image to take full width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Form Container (Right Side) */
+.form-container {
+  flex: 1; /* Take up 50% of the width by default */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Form Styles */
 .form {
   display: flex;
   flex-direction: column;
   gap: 10px;
   background: #2D9CDB;
   padding: 30px;
-  width: 450px;
-  border:5px solid rgb(15, 15, 15);
+  width: 100%;
+  max-width: 400px;
+  border: 5px solid rgb(15, 15, 15);
   border-radius: 40px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   transition: background 0.3s ease;
 }
 
@@ -50,7 +74,8 @@ body {
   transition: 0.2s ease-in-out;
   background-color: white;
 }
-.inputForm :hover{
+
+.inputForm:hover {
   color: #000000CC;
   font-size: 16px;
   font-weight: bold;
@@ -68,11 +93,8 @@ body {
   outline: none;
 }
 
-.flex-row{
+.flex-row {
   width: 100%;
-}
-.google-login-button-wrapper{
-  border: 1px solid black;
 }
 
 .span {
@@ -115,15 +137,15 @@ body {
   transform: scale(0.9);
 }
 
-p{
+p {
   font-size: 30px;
   font-weight: normal;
   color: black;
   text-align: center;
   cursor: pointer;
 }
-p span:hover{
-  /* background-color: white; */
+
+p span:hover {
   font-weight: bold;
   color: rgb(255, 255, 255);
 }
@@ -147,31 +169,12 @@ p span:hover{
 .btn:hover {
   border: 1px solid orange;
 }
+
 .p {
   text-align: center;
   color: black;
   font-size: 16px;
   margin: 5px 0;
-}
-
-.btn {
-  margin-top: 10px;
-  width: 100%;
-  border: 2px solid black;
-  height: 50px;
-  border-radius: 10em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 500;
-  gap: 10px;
-  border: 1px solid #ededef;
-  background-color: black;
-  cursor: pointer;
-}
-
-.btn:hover {
-  border: 1px solid orange;
 }
 
 .flex-row {
@@ -180,30 +183,10 @@ p span:hover{
   justify-content: center;
   margin-top: 10px;
 }
-/* navbar styles */
-/* From Uiverse.io by vk-uiux */
-#checkbox {
-  display: none;
-}
-.toggle {
-  position: relative;
-  width: 40px;
-  cursor: pointer;
-  margin: auto;
-  display: block;
-  height: calc(4px * 2 + 8px * 2);
-}
 
-.bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 4px;
-  border-radius: calc(4px / 2);
-  background: #7b52b9;
-  color: inherit;
-  opacity: 1;
-  transition: none 0.35s cubic-bezier(0.5, -0.35, 0.35, 1.5) 0s;
+/* Google Login Button Wrapper */
+.google-login-button-wrapper {
+  border: 1px solid black;
 }
 
 /***** Spin Animation *****/
@@ -346,10 +329,32 @@ p span:hover{
     height: 80px; /* Adjust height as needed */
     border-radius: 50%; /* Make the image circular */
 }
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .profile-image {
         width: 30px; /* Smaller profile image on mobile */
         height: 30px; /* Smaller profile image on mobile */
     }
+}
+
+/* Media query for screens less than or equal to 900px */
+@media (max-width: 900px) {
+  .auth-container {
+    flex-direction: column; /* Stack vertically */
+    height: auto; /* Allow height to adjust */
+  }
+
+  .image-container {
+    order: 1; /* Image comes first */
+    width: 100%; /* Full width */
+    height: 50vh; /* Set height to 50% of the viewport */
+  }
+
+  .form-container {
+    order: 2; /* Form comes second */
+    width: 100%; /* Full width */
+    height: 50vh; /* Set height to 50% of the viewport */
+    padding: 20px 0; /* Adjust padding for smaller screens */
+  }
 }

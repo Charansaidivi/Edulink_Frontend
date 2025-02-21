@@ -100,11 +100,12 @@
   margin-bottom: 10px;
 }
 
-.profile-image {
-  width: 50px; /* Profile image size */
-  height: 50px; /* Profile image size */
+.header .profile-image {
+  width: 70px; /* Profile image size */
+  height: 70px; /* Profile image size */
   border-radius: 50%; /* Circular profile image */
   margin-right: 10px; /* Space between image and name */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
 }
 
 .username {

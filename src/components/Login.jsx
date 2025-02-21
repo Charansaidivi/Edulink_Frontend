@@ -112,6 +112,11 @@ export const Login = ({SignupHandler}) => {
     <p className="p">
       Don't have an account? <span className="span" onClick={SignupHandler}>Sign Up</span>
     </p>
+    <p className="p">
+      <span className="span" onClick={() => navigate('/request-password-reset')}>
+        Forgot Password?
+      </span>
+    </p>
     <p className="p line">Or With</p>
 
     <div className="flex-row">

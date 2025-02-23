@@ -25,7 +25,14 @@ const SessionList = ({ sessions, handleJoinSession }) => (
         );
       })
     ) : (
-      <p>No sessions available.</p>
+      <div className="no-sessions">
+        <img 
+          src="./Nodata.gif" 
+          alt="No sessions found" 
+          className="no-data-illustration"
+        />
+        <p>No sessions available.</p>
+      </div>
     )}
   </div>
 );
@@ -38,6 +45,8 @@ const ProfilePage = () => {
   const [showEnrolled, setShowEnrolled] = useState(false);
   const [showTeaching, setShowTeaching] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [enrolledDataFetched, setEnrolledDataFetched] = useState(false);
+  const [teachingDataFetched, setTeachingDataFetched] = useState(false);
 
   const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
 
@@ -58,16 +67,19 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchSessions = async () => {
-      setLoading(true);
       try {
-        if (showEnrolled) {
+        if (showEnrolled && !enrolledDataFetched && enrolledSessions?.length > 0) {
+          setLoading(true);
           const response = await axios.post(`${API_URL}/student/sessions/details`, { sessionIds: enrolledSessions });
           console.log("Enrolled Sessions Data:", response.data);
           setSessionDetails(response.data);
+          setEnrolledDataFetched(true);
         }
-        if (showTeaching) {
+        if (showTeaching && !teachingDataFetched && teachingSessions?.length > 0) {
+          setLoading(true);
           const response = await axios.post(`${API_URL}/student/sessions/details`, { sessionIds: teachingSessions });
           setTeachingSessionDetails(response.data);
+          setTeachingDataFetched(true);
         }
       } catch (error) {
         console.error("Error fetching session details:", error);
@@ -77,7 +89,7 @@ const ProfilePage = () => {
     };
 
     fetchSessions();
-  }, [showEnrolled, showTeaching, enrolledSessions, teachingSessions]);
+  }, [showEnrolled, showTeaching, enrolledSessions, teachingSessions, enrolledDataFetched, teachingDataFetched]);
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -107,6 +119,14 @@ const ProfilePage = () => {
     window.location.href = '/';
   };
 
+  const toggleEnrolledSessions = () => {
+    setShowEnrolled(!showEnrolled);
+  };
+
+  const toggleTeachingSessions = () => {
+    setShowTeaching(!showTeaching);
+  };
+
   return (
     <>
       <Navbar />
@@ -133,7 +153,7 @@ const ProfilePage = () => {
             <p>{email}</p>
           </div>
           
-          <button onClick={() => setShowEnrolled(!showEnrolled)}>
+          <button onClick={toggleEnrolledSessions}>
             {showEnrolled ? 'Hide Enrolled Sessions' : 'Show Enrolled Sessions'}
           </button>
           {showEnrolled && (
@@ -142,7 +162,7 @@ const ProfilePage = () => {
             </div>
           )}
 
-          <button onClick={() => setShowTeaching(!showTeaching)}>
+          <button onClick={toggleTeachingSessions}>
             {showTeaching ? 'Hide Teaching Sessions' : 'Show Teaching Sessions'}
           </button>
           {showTeaching && (

@@ -3,7 +3,7 @@
 /* Search input and select styles */
 .search-input,
 .topic-select {
-  background: #f034c1; /* Blue background */
+  background: #ffffff; /* Changed from #f034c1 */
   color: black; /* Black text */
   transition: color 0.3s ease;
   padding: 10px;
@@ -14,10 +14,10 @@
 }
 
 .search-input:hover,
-.topic-select:hover{
-  color: white; /* White text on hover */
-  font-weight: bold;
-  font-size: 3px solid white;/* Bold text on hover */
+.topic-select:hover {
+  color: #333; /* Changed from white */
+  font-weight: normal; /* Remove bold */
+  font-size: 16px; /* Fix font size */
 }
 
 /* Class card styles */
@@ -82,7 +82,7 @@
   border: none;
   width: 100%; /* Centered width */
   margin-bottom: 20px;
-  margin-top: 50px !important; /* Add margin to the top */
+  margin-top: 20px !important; /* Add margin to the top */
   z-index: 40; /* Ensure it appears above other elements */
   position: relative; /* Ensure z-index works */
 }
@@ -121,19 +121,129 @@
 .details {
   display: flex;
   flex-direction: column;
-  margin: 10px 0; /* Margin for spacing */
+  margin: 10px 0;
+  font-weight: bold; /* Margin for spacing */
 }
 
 .date-time {
   display: flex;
   justify-content: space-between; /* Align items on the same line */
-  margin: 5px 0; /* Margin for spacing */
+  margin: 5px 0;
+  font-weight: bold; /* Margin for spacing */
 }
 
 .slots {
   display: flex;
   justify-content: space-between; /* Align items on the same line */
-  margin: 5px 0; /* Margin for spacing */
+  margin: 5px 0;
+  font-weight: bold; /* Margin for spacing */
+}
+
+.book-slot-button {
+  background-color: white; /* White background */
+  color: black; /* Black text */
+  border: 1px solid #007bff; /* Blue border */
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px; /* Space above the button */
+}
+
+.book-slot-button:hover {
+  background-color: #007bff; /* Blue background on hover */
+  color: white; /* White text on hover */
+}
+
+/* Fix search input styles */
+.search-input {
+  background: #ffffff;
+  color: #333;
+  transition: all 0.3s ease;
+  padding: 12px 12px 12px 40px;
+  border-radius: 5px;
+  border: 2px solid #2D9CDB; /* Remove duplicate border, keep only this one */
+  width: 100%;
+  font-size: 16px;
+}
+
+.search-input:hover,
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(45, 156, 219, 0.3);
+  color: #333; /* Ensure text remains visible on hover/focus */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topic-select {
+  background: #2D9CDB; /* Blue background */
+  color: black; /* Black text */
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 100%; /* Centered width */
+  margin-bottom: 20px;
+  margin-top: 20px !important; /* Add margin to the top */
+  z-index: 40; /* Ensure it appears above other elements */
+  position: relative; /* Ensure z-index works */
+}
+
+.class-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%; /* Centered width */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.header .profile-image {
+  width: 70px; /* Profile image size */
+  height: 70px; /* Profile image size */
+  border-radius: 50%; /* Circular profile image */
+  margin-right: 10px; /* Space between image and name */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+.username {
+  font-weight: bold;
+}
+
+.topic-name {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0; /* Margin for spacing */
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+  font-weight: bold; /* Margin for spacing */
+}
+
+.date-time {
+  display: flex;
+  justify-content: space-between; /* Align items on the same line */
+  margin: 5px 0;
+  font-weight: bold; /* Margin for spacing */
+}
+
+.slots {
+  display: flex;
+  justify-content: space-between; /* Align items on the same line */
+  margin: 5px 0;
+  font-weight: bold; /* Margin for spacing */
 }
 
 .book-slot-button {
@@ -186,6 +296,97 @@
   max-width: 100%; /* Responsive video */
   height: auto; /* Maintain aspect ratio */
   border-radius: 10px; /* Rounded corners for the video */
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+}
+
+.session-image {
+  max-width: 60%; /* Responsive image */
+  height:fit-content; /* Maintain aspect ratio */
+  margin-top: 20px; /* Space above the image */
+}
+
+.no-data-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 25px;
+  min-height: 400px;
+}
+
+.no-data-container img {
+  width: 300px;
+  height: auto;
+  margin: 0; /* Reduced from 50px to 20px */
+  display: block;
+}
+
+.no-data-container p {
+  text-align: center;
+  color: #666;
+  margin-top: 10px; /* Changed from 0px to 10px for better spacing */
+  font-size: 16px;
+}
+
+/* Update the search input styles */
+.search-container {
+  margin-top: 50px;
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 0px;
+  position: relative; /* Add this */
+}
+
+/* Add search icon styles */
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  width: 16px;
+  height: 16px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.search-input::placeholder {
+  color: #666; /* Added placeholder color */
+  opacity: 0.8;
+  font-size: 14px; /* Slightly smaller placeholder text */
+}
+
+.search-filters {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: #ffffff; /* Changed from black to white */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.topic-select {
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid #2D9CDB;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
 }
 
 

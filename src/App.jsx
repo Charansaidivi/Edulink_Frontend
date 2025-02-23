@@ -9,7 +9,7 @@ import CreateClass from './pages/CreateClass'
 import ProfilePage from './pages/ProfilePage'
 import ResetPassword from './pages/ResetPassword'
 import RequestPasswordReset from './pages/RequestPasswordReset'
-
+import AboutUs from './pages/AboutUs'
 const App = () => {
   return (
     <GoogleOAuthProvider clientId="625626669431-c2p74fbeko7t33f236vooiu3sn3d9nvq.apps.googleusercontent.com">
@@ -22,6 +22,7 @@ const App = () => {
           <Route path='/reset-password/:token' element={<ResetPassword />} />
           <Route path='/reset-password/:token/:email' element={<ResetPassword />} />
           <Route path='/request-password-reset' element={<RequestPasswordReset />} />
+          <Route path='/about-us' element={<AboutUs/>} />
         </Routes>
       </div>
     </GoogleOAuthProvider>

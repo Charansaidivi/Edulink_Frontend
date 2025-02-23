@@ -1,64 +1,70 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'; // Import useDispatch to dispatch actions
-import { setProfile } from '../redux/profileSlice'; // Import the action to set profile
-import { API_URL } from '../data/apiData'; // Import API_URL
-import axios from 'axios'; // Import axios for API calls
-// import "./Navbar.css"; // Import the CSS file for styles
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setProfile } from '../redux/profileSlice';
+import { API_URL } from '../data/apiData';
+import axios from 'axios';
 
 const Navbar = () => {
-  const dispatch = useDispatch(); // Initialize dispatch
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate()
-  const profileImageFromStore = useSelector((state) => state.profile.profileImage); // Get profile image from Redux state
-  const username = useSelector((state) => state.profile.username); // Get username from Redux state
+  const navigate = useNavigate();
+  const profileImageFromStore = useSelector((state) => state.profile.profileImage);
+  const username = useSelector((state) => state.profile.username);
 
   useEffect(() => {
     const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
 
-    // Check if username is already in Redux state
     if (!username) {
       const fetchUserProfile = async () => {
         if (userId) {
           try {
-            const response = await axios.get(`${API_URL}/student/profile/${userId}`); // Fetch user profile
-            const userProfile = response.data; // Assuming the response contains the full user profile
-            dispatch(setProfile(userProfile)); // Store the entire profile in Redux
+            const response = await axios.get(`${API_URL}/student/profile/${userId}`);
+            const userProfile = response.data;
+            dispatch(setProfile(userProfile));
           } catch (error) {
             console.error("Error fetching user profile:", error);
           }
         }
       };
 
-      fetchUserProfile(); // Call the function to fetch user profile
+      fetchUserProfile();
     }
-  }, [dispatch, username]); // Dependency array includes dispatch and username
+  }, [dispatch, username]);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen); // Toggle the state
+    setIsOpen(!isOpen);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('loginToken'); 
-    dispatch(setProfile({})); 
-    navigate('/login'); // Redirect to the login page
+    localStorage.removeItem('loginToken');
+    dispatch(setProfile({}));
+    navigate('/login');
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary" >
+    <nav className="navbar navbar-expand-lg">
       <div className="container-fluid" id="navbar">
         <img
-          src="/assets/sai.png" // Path to the image in the public directory
+          src="/assets/sai.png"
           alt="Logo"
           className="navbar-logo"
         />
-        <input type="checkbox" id="checkbox" onChange={toggleMenu} />
-        <label htmlFor="checkbox" className="toggle">
-          <div className="bar bar--top"></div>
-          <div className="bar bar--middle"></div>
-          <div className="bar bar--bottom"></div>
+        {/* Toggle Button for Small Screens */}
+        <input
+          type="checkbox"
+          className="check-icon"
+          id="check-icon"
+          name="check-icon"
+          onChange={toggleMenu}
+        />
+        <label className="icon-menu" htmlFor="check-icon">
+          <div className="bar bar--1"></div>
+          <div className="bar bar--2"></div>
+          <div className="bar bar--3"></div>
         </label>
-        <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`} id="navbarTogglerDemo01">
+        {/* Navbar Links and Profile */}
+        <div className={`navbar-collapse ${isOpen ? "show" : ""}`}>
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/home">Home</a>
@@ -70,7 +76,7 @@ const Navbar = () => {
           <div className="profile-container">
             <button className="profile-button" onClick={() => navigate('/profile')}>
               <img
-                src={profileImageFromStore ? `${API_URL}/uploads/${profileImageFromStore}` : '/default.jpg'} // Use profile image from Redux state
+                src={profileImageFromStore ? `${API_URL}/uploads/${profileImageFromStore}` : '/default.jpg'}
                 alt="Profile"
                 className="profile-image"
               />

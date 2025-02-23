@@ -5,7 +5,11 @@ import { API_URL } from '../data/apiData';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
 import './HomePage.css';
+<<<<<<< HEAD
 import { FaSearch } from 'react-icons/fa';
+=======
+import SessionImage from '/Session.png'; // Update the path to your image
+>>>>>>> f9af443eb8bb7e7a24575ace7d28eff8fbf77934
 
 const HomePage = () => {
   const [selectedTopic, setSelectedTopic] = useState('');
@@ -203,9 +207,58 @@ const HomePage = () => {
                   Book Slot
                 </button>
               </div>
+<<<<<<< HEAD
             ))}
           </div>
         )}
+=======
+              <h3 className="topic-name">{cls.topicName}</h3>
+              <hr />
+              {cls.media && (
+                <div className="media-container">
+                  {cls.media.endsWith('.mp4') || cls.media.endsWith('.mov') ? (
+                    <video 
+                      src={`${API_URL}/uploads/${cls.media}`} 
+                      alt="Uploaded Media" 
+                      className="media-video" 
+                      controls
+                    />
+                  ) : (
+                    <img 
+                      src={`${API_URL}/uploads/${cls.media}`} 
+                      alt="Uploaded Media" 
+                      className="media-image"
+                    />
+                  )}
+                </div>
+              )}
+              <div className="details">
+                <div className="date-time">
+                  <span>Start Date: {formatDate(cls.startDate)}</span>
+                  <span>Start Time: {cls.startTime}</span>
+                </div>
+                <div className="date-time">
+                  <span>End Date: {formatDate(cls.endDate)}</span>
+                  <span>End Time: {cls.endTime}</span>
+                </div>
+                <div className="slots">
+                  <span>Total Slots: {cls.maxSlots}</span>
+                  <span>Available Slots: {cls.availableSlots}</span>
+                </div>
+              </div>
+              <button
+                className={`book-slot-button ${cls.availableSlots === 0 ? 'disabled' : ''}`}
+                disabled={cls.availableSlots === 0}
+                onClick={() => handleBookSlot(cls._id)}
+              >
+                Book Slot
+              </button>
+            </div>
+          ))}
+        </div>
+        <button className="choose-topic-button">Choose Topic</button>
+        <img src={SessionImage} alt="Session" className="session-image" />
+>>>>>>> f9af443eb8bb7e7a24575ace7d28eff8fbf77934
       </div>
     </div>
   );

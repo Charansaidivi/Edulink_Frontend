@@ -67,19 +67,13 @@ const Navbar = () => {
         <div className={`navbar-collapse ${isOpen ? "show" : ""}`}>
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
             <li className="nav-item">
-              <a className="nav-link" href="/create-class">Create Class</a>
-            </li>
-            <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/home">Book Class</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/my-profile">My Profile</a>
+              <a className="nav-link active" href="/create-class">Create Class</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/about-us">About Us</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/login">Login/Signup</a>
+              <a className="nav-link active" href="/about-us">About Us</a>
             </li>
           </ul>
           <div className="profile-container">

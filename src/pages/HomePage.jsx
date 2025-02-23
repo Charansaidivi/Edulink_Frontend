@@ -6,7 +6,6 @@ import Navbar from '../components/Navbar';
 import axios from 'axios';
 import './HomePage.css';
 import { FaSearch } from 'react-icons/fa';
-
 const HomePage = () => {
   const [selectedTopic, setSelectedTopic] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -111,28 +110,29 @@ const HomePage = () => {
               onChange={handleSearch}
               className="search-input"
             />
-            <select
-              value={selectedTopic}
-              onChange={handleTopicChange}
-              className="topic-select"
-            >
-              <option value="">Choose Topic</option>
-              <option value="Java">Java</option>
-              <option value="Python">Python</option>
-              <option value="C++">C++</option>
-              <option value="JavaScript">JavaScript</option>
-              <option value="Ruby">Ruby</option>
-              <option value="PHP">PHP</option>
-              <option value="C#">C#</option>
-              <option value="Go">Go</option>
-              <option value="Swift">Swift</option>
-              <option value="Kotlin">Kotlin</option>
-              <option value="Others">Others</option>
-            </select>
           </div>
-        </div>
+          <select
+            value={selectedTopic}
+            onChange={handleTopicChange}
+            className="topic-select"
+            style={{ marginTop: '20px', zIndex: 10 }}
+          >
+            <option value="">Choose Topic</option>
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="C++">C++</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="Ruby">Ruby</option>
+            <option value="PHP">PHP</option>
+            <option value="C#">C#</option>
+            <option value="Go">Go</option>
+            <option value="Swift">Swift</option>
+            <option value="Kotlin">Kotlin</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>        
         {!selectedTopic && !searchQuery ? (
-          <img src='./Home.png' alt="Session" className="session-image" />
+          <img src='./image.png' alt="Session" className="session-image" />
         ) : loading && !isInitialLoad ? (
           <div className="loading-container">
             <img src="./loading.gif" alt="Loading..." className="loading-gif" />

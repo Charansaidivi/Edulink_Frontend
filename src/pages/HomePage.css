@@ -10,7 +10,6 @@
   border-radius: 5px;
   border: none;
   width: 100%;
-  position: relative;
 }
 
 .search-input:hover,
@@ -74,19 +73,27 @@
   align-items: center;
 }
 
-.topic-select {
-  background: #2D9CDB; /* Blue background */
-  color: black; /* Black text */
+.topic-select { /* Blue background */
+  color: black;
+  font-weight: bold;
+  font-size: 18px !important; /* Black text */
   padding: 10px;
   border-radius: 5px;
   border: none;
-  width: 100%; /* Centered width */
+  width: auto; /* Adjust width as needed */
   margin-bottom: 20px;
   margin-top: 20px !important; /* Add margin to the top */
   z-index: 40; /* Ensure it appears above other elements */
-  position: relative; /* Ensure z-index works */
+  position: absolute; /* Position absolutely within the parent */
+  left: 160px; /* Adjust this value to move it beside the stick edge */
+  top: 160px; /* Adjust this value to align it vertically */
+  transform: translateY(-50%); /* Center vertically */
 }
 
+.topic-select:hover{
+
+  font-weight: bold;
+}
 .class-container {
   display: flex;
   flex-direction: column;
@@ -179,19 +186,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.topic-select {
-  background: #2D9CDB; /* Blue background */
-  color: black; /* Black text */
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  width: 100%; /* Centered width */
-  margin-bottom: 20px;
-  margin-top: 20px !important; /* Add margin to the top */
-  z-index: 40; /* Ensure it appears above other elements */
-  position: relative; /* Ensure z-index works */
 }
 
 .class-container {
@@ -369,8 +363,7 @@
   padding: 1rem;
   background: #ffffff; /* Changed from black to white */
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  box-shadow: 0 0 5px rgba(45, 156, 219, 0.3);
 }
 
 .topic-select {

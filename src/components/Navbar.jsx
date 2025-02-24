@@ -46,7 +46,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid" id="navbar">
         <img
-          src="/assets/sai.png"
+          src="/logo1.png"
           alt="Logo"
           className="navbar-logo"
         />

@@ -4,8 +4,9 @@ import { setProfile } from '../redux/profileSlice';
 import { API_URL } from '../data/apiData';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
-import './HomePage.css';
+import './css/HomePage.css';
 import { FaSearch } from 'react-icons/fa';
+
 const HomePage = () => {
   const [selectedTopic, setSelectedTopic] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -154,9 +155,10 @@ const HomePage = () => {
               <div key={cls._id} className="class-card">
                 <div className="header">
                   <img 
-                    src={cls.student.profileImage ? `${API_URL}/uploads/${cls.student.profileImage}` : '/default.jpg'} 
+                    src={cls.student.profileImage ? `${API_URL}/uploads/${cls.student.profileImage}` : './default.jpg'} 
                     alt={`${cls.student.username}'s profile`} 
                     className="profile-image"
+                    onError={(e) => { e.target.onerror = null; e.target.src = './default.jpg'; }}
                   />
                   <span className="username">{cls.student.username}</span>
                 </div>

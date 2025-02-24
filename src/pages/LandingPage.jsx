@@ -1,9 +1,11 @@
-function LandingPage() {
-    return (
-        <div>
-            <img src="path/to/Group.png" alt="Group Illustration" />
-            <h1>Edulinker</h1>
-            <p>Description: Student Learning Platform, Share your knowledge, Learn from Friends</p>
-        </div>
-    );
-} 
+import React from 'react'
+import LandingNav from '../components/LandingNav'
+const LandingPage = () => {
+  return (
+    <div>
+        <LandingNav />
+    </div>
+  )
+}
+
+export default LandingPage

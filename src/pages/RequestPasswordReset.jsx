@@ -3,7 +3,7 @@ import axios from 'axios';
 import { API_URL } from '../data/apiData';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Reset.css';
+import './css/Reset.css';
 
 const RequestPasswordReset = () => {
   const [email, setEmail] = useState('');

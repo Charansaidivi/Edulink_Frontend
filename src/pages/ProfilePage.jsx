@@ -5,7 +5,7 @@ import axios from 'axios';
 import { API_URL } from '../data/apiData';
 import Navbar from '../components/Navbar';
 import CountdownTimer from '../components/CountdownTimer';
-import './ProfilePage.css';
+import './css/ProfilePage.css';
 
 const SessionList = ({ sessions, handleJoinSession }) => (
   <div className="session-list">

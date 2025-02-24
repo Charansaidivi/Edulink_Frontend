@@ -1,6 +1,5 @@
 import React from 'react'
 import { GoogleOAuthProvider } from '@react-oauth/google'
-import AuthPage from './pages/AuthPage'
 import HomePage from './pages/HomePage'
 import './App.css'
 import { Routes,Route } from 'react-router-dom'
@@ -10,12 +9,17 @@ import ProfilePage from './pages/ProfilePage'
 import ResetPassword from './pages/ResetPassword'
 import RequestPasswordReset from './pages/RequestPasswordReset'
 import AboutUs from './pages/AboutUs'
+import LandingPage from './pages/LandingPage'
+import Login from './pages/Login'
+import Register from './pages/Register'
 const App = () => {
   return (
     <GoogleOAuthProvider clientId="625626669431-c2p74fbeko7t33f236vooiu3sn3d9nvq.apps.googleusercontent.com">
       <div>
         <Routes>
-          <Route path='/' element={<AuthPage/>}/>
+          <Route path='/' element={<LandingPage/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/register' element={<Register/>}/>
           <Route path='/home' element={<HomePage/>}/>
           <Route path='/create-class' element={<CreateClass/>}/>
           <Route path='/profile' element={<ProfilePage/>}/>

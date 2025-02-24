@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { API_URL } from '../data/apiData';
-import './CreateClass.css'; // Import the CSS file
+import './css/CreateClass.css'; // Import the CSS file
 
 const CreateClass = () => {
     const [loading, setLoading] = useState(false);

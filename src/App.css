@@ -4,190 +4,12 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
-
-/* Container for the entire authentication page */
-.auth-container {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  width: 100vw;
-}
-
-/* Image Container (Left Side) */
-.image-container {
-  flex: 1; /* Take up 50% of the width by default */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white; /* Optional: Add a background color */
-}
-
-.responsive-image {
-  max-width: 100%; /* Allow the image to take full width */
-  height: auto; /* Maintain aspect ratio */
-}
-
-/* Form Container (Right Side) */
-.form-container {
-  flex: 1; /* Take up 50% of the width by default */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-/* Form Styles */
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background: #2D9CDB;
-  padding: 30px;
-  width: 100%;
-  max-width: 400px;
-  border: 5px solid rgb(15, 15, 15);
-  border-radius: 40px;
-  transition: background 0.3s ease;
-}
-
-::placeholder {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
-
-.form button {
-  align-self: flex-end;
-}
-
-.flex-column > label {
-  color: black;
-  font-weight: 600;
-}
-
-.inputForm {
-  border: 1.5px solid black;
-  border-radius: 10em;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-  transition: 0.2s ease-in-out;
-  background-color: white;
-}
-
-.inputForm:hover {
-  color: #000000CC;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.input {
-  margin-left: 10px;
-  border-radius: 10rem;
-  border: none;
-  width: 100%;
-  height: 100%;
-}
-
-.input:focus {
-  outline: none;
-}
-
-.flex-row {
-  width: 100%;
-}
-
-.span {
-  font-size: 20px;
-  margin-left: 5px;
-  color: rgb(12, 11, 11);
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.button-submit {
-  position: relative;
-  display: inline-block;
-  padding: 15px 30px;
-  text-align: center;
-  letter-spacing: 1px;
-  text-decoration: none;
-  background: transparent;
-  transition: ease-out 0.5s;
-  border: 2px solid;
-  border-radius: 10em;
-  box-shadow: inset 0 0 0 0 white;
-  margin: 20px 0 10px 0;
-  color: black;
-  font-size: 17px;
-  font-weight: 500;
-  height: 50px;
-  width: 100%;
-  cursor: pointer;
-}
-
-.button-submit:hover {
-  color: black;
-  box-shadow: inset 0 -100px 0 0 white;
-  font-size: 19px;
-  font-weight: bold;
-}
-
-.button-submit:active {
-  transform: scale(0.9);
-}
-
-p {
-  font-size: 30px;
-  font-weight: normal;
-  color: black;
-  text-align: center;
-  cursor: pointer;
-}
-
-p span:hover {
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-}
-
-.btn {
-  margin-top: 10px;
-  width: 100%;
-  height: 50px;
-  border-radius: 10em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 500;
-  gap: 10px;
-  border: 1px solid black;
-  background-color: rgb(14, 13, 13);
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-}
-
-.btn:hover {
-  border: 1px solid orange;
-}
-
-.p {
-  text-align: center;
-  color: black;
-  font-size: 16px;
-  margin: 5px 0;
-}
-
-.flex-row {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
+ 
 /* Google Login Button Wrapper */
 .google-login-button-wrapper {
   border: 1px solid black;
 }
+
 /* Navbar Base Styles */
 #navbar {
   position: fixed;
@@ -206,30 +28,32 @@ p span:hover {
 }
 
 .navbar-logo {
-  width: 50px;
-  height: 50px;
+  width: 250px; /* Adjust the width as needed */
+  height: 70px; /* Maintain aspect ratio */
 }
 
 .navbar-nav {
   list-style: none;
   display: flex;
   gap: 0px;
-  margin:0;
-  padding: 0px;
+  margin: 0;
+  padding-right: 120px;
 }
 
 .nav-item {
   font-size: larger;
   font-weight: bold;
 }
+
 #navbar ul li:hover {
   color: white !important;
   font-size: 22px;
   font-weight: bold;
   border: 2px solid black;
   background-color: white;
-  border-radius:2rem;
+  border-radius: 2rem;
 }
+
 /* Toggle Animation Styles */
 .check-icon {
   display: none;
@@ -304,7 +128,7 @@ p span:hover {
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit:fill;
+  object-fit: fill;
   margin-left: 10px;
   border-radius: 50%;
   border: 2px solid #ecedec;
@@ -312,7 +136,6 @@ p span:hover {
 }
 
 /* Update the media queries for navbar */
-
 @media (min-width: 992px) {
   .check-icon,
   .icon-menu {
@@ -398,4 +221,93 @@ p span:hover {
   .profile-container {
     margin: 15px auto 0;
   }
+}
+
+/* New Styles from Reset.css */
+.object-fit-cover {
+  object-fit: cover;
+  background-color: #f8f9fa;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  transform: scale(.85) translateY(-1rem) translateX(.15rem);
+  color: #2D9CDB;
+}
+
+.form-control:focus {
+  border-color: #2D9CDB;
+  box-shadow: 0 0 0 0.25rem rgba(45, 156, 219, 0.25);
+}
+
+/* Add new styles */
+.btn-dark {
+  background-color: #2D9CDB;
+  border-color: #2D9CDB;
+}
+
+.btn-dark:hover {
+  background-color: #2183b8;
+  border-color: #2183b8;
+}
+
+.link-secondary:hover {
+  color: #2D9CDB !important;
+}
+
+.alert-info {
+  background-color: rgba(45, 156, 219, 0.1);
+  border-color: rgba(45, 156, 219, 0.2);
+  color: #2D9CDB;
+}
+
+.card {
+  border-color: rgba(45, 156, 219, 0.1);
+  overflow: hidden;
+  background-color: white;
+  border: none;
+}
+
+.card-body {
+  background-color: white;
+}
+
+.bg-white {
+  background-color: #ffffff !important;
+}
+
+/* Update container background */
+.container {
+  background-color: white;
+}
+
+/* Update row background */
+.row {
+  background-color: white;
+}
+
+h2.h4 {
+  color: #2D9CDB;
+}
+
+video {
+  min-height: 100%;
+  background-color: #f8f9fa;
+}
+
+.col-md-6 img {
+  min-height: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+/* Hover effects for links */
+.p .span {
+  cursor: pointer;
+  transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+.p .span:hover {
+  color: #2D9CDB;
+  font-weight: bold;
 }

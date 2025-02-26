@@ -3,7 +3,7 @@ import { API_URL } from '../data/apiData';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-const Register = ({ LoginHandler }) => {
+const Register = () => {
   const navigate = useNavigate();
   const [username, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -66,6 +66,9 @@ const Register = ({ LoginHandler }) => {
     console.error('Google signup failed:', error);
     alert('Google signup failed');
   };
+  const LoginHandler = () => {
+    navigate('/login');
+  }
 
   return (
     <section className="bg-white p-3 p-md-4 p-xl-5">

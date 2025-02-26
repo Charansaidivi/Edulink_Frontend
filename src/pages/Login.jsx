@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Login = ({ SignupHandler }) => {
+const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -71,6 +71,9 @@ const Login = ({ SignupHandler }) => {
     console.error('Google login failed:', error);
     alert('Google login failed');
   };
+  const SignupHandler = () => {
+    navigate('/register');
+  }
 
   return (
     <section className="bg-white p-3 p-md-4 p-xl-5">

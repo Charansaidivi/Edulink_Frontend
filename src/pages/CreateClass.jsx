@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { API_URL } from '../data/apiData';
 import './css/CreateClass.css'; // Import the CSS file
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const CreateClass = () => {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     
@@ -93,12 +96,15 @@ const CreateClass = () => {
         try {
             const token = localStorage.getItem('loginToken');
             if (!token) {
-                throw new Error('Not authenticated');
+                alert('Please login to continue');
+                navigate('/login');
+                return;
             }
 
             // Prepare the data to send using FormData
             const formDataToSend = new FormData();
-            const { topicName, description, startDate, endDate, startTime, endTime, maxSlots, meetingLink, media, topicType } = formData;
+            const { topicName, description, startDate, endDate, startTime, 
+                    endTime, maxSlots, meetingLink, media, topicType } = formData;
 
             // Append data to FormData
             formDataToSend.append('topicName', topicName);
@@ -111,28 +117,48 @@ const CreateClass = () => {
             formDataToSend.append('meetingLink', meetingLink);
             formDataToSend.append('topicType', topicType);
             if (media) {
-                formDataToSend.append('media', media); // Append the media file
+                formDataToSend.append('media', media);
             }
 
-            // Fetch call for creating a class
-            const response = await fetch(`${API_URL}/session/create-session`, {
-                method: 'POST',
-                headers: {
-                    'token': token,
-                },
-                body: formDataToSend, // Use FormData as the body
+            // Axios call with Bearer token
+            const response = await axios.post(
+                `${API_URL}/session/create-session`, 
+                formDataToSend,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            );
+
+            alert('Class created successfully!');
+            // Clear form data
+            setFormData({
+                topicName: '',
+                description: '',
+                startDate: '',
+                endDate: '',
+                startTime: '',
+                endTime: '',
+                maxSlots: '',
+                meetingLink: '',
+                media: null,
+                topicType: ''
             });
 
-            const data = await response.json();
-            console.log(data)
-            if (response.ok) {
-              alert('Class created successfully!');
-            } else {
-                throw new Error(data.message || 'Error creating class');
-            }
         } catch (error) {
-            setError(error.message || 'Error creating class');
-            alert(error.message || 'Error creating class');
+            if (error.response?.status === 401) {
+                const errorMsg = error.response?.data?.msg || 'Session expired. Please login again';
+                alert(errorMsg);
+                localStorage.removeItem('loginToken');
+                navigate('/login');
+                return;
+            }
+            
+            const errorMessage = error.response?.data?.message || 'Error creating class';
+            setError(errorMessage);
+            alert(errorMessage);
         } finally {
             setLoading(false);
         }

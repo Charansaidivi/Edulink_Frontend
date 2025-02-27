@@ -45,6 +45,7 @@ const HomePage = () => {
         if (selectedTopic) params.append('topicType', selectedTopic);
 
         const response = await axios.get(`${API_URL}/session/sessions?${params}`);
+        console.log('Classes:', response.data);
         setClasses(response.data);
         setIsInitialLoad(false);
       } catch (error) {
@@ -71,26 +72,47 @@ const HomePage = () => {
 
   const handleBookSlot = async (sessionId) => {
     const token = localStorage.getItem('loginToken');
-    try {
-      const response = await fetch(`${API_URL}/session/enroll/${sessionId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      const data = await response.json();
-      if (response.ok) {
-        alert(data.msg);
-        window.location.reload();
-      } else {
-        alert(data.msg);
-      }
-    } catch (error) {
-      console.error('Error enrolling in session:', error);
-      alert('Error enrolling in session');
+    
+    // Get the session details from classes array
+    const session = classes.find(cls => cls._id === sessionId);
+    if (!session) {
+        alert('Session not found');
+        return;
     }
-  };
+
+    // Check if session has already started
+    const now = new Date();
+    const sessionStartDate = new Date(session.startDate);
+    const [hours, minutes] = session.startTime.split(':');
+    sessionStartDate.setHours(parseInt(hours), parseInt(minutes), 0);
+
+    if (now > sessionStartDate) {
+        alert('Cannot enroll in a session that has already started');
+        return;
+    }
+
+    try {
+        const response = await axios.post(
+            `${API_URL}/session/enroll/${sessionId}`,
+            {},
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        );
+        if (response.data.success) {
+            alert(response.data.msg);
+            window.location.reload();
+        } else {
+            alert(response.data.msg);
+        }
+    } catch (error) {
+        console.error('Error enrolling in session:', error);
+        const errorMessage = error.response?.data?.msg || 'Error enrolling in session';
+        alert(errorMessage);
+    }
+};
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -151,60 +173,84 @@ const HomePage = () => {
           </div>
         ) : (
           <div className="class-container">
-            {classes.map((cls) => (
-              <div key={cls._id} className="class-card">
-                <div className="header">
-                  <img 
-                    src={cls.student.profileImage ? `${API_URL}/uploads/${cls.student.profileImage}` : './default.jpg'} 
-                    alt={`${cls.student.username}'s profile`} 
-                    className="profile-image"
-                    onError={(e) => { e.target.onerror = null; e.target.src = './default.jpg'; }}
-                  />
-                  <span className="username">{cls.student.username}</span>
+            {classes.map((cls) => {
+              // Check if session has started
+              const now = new Date();
+              const sessionStartDate = new Date(cls.startDate);
+              const [hours, minutes] = cls.startTime.split(':');
+              sessionStartDate.setHours(parseInt(hours), parseInt(minutes), 0);
+              const hasStarted = now > sessionStartDate;
+              
+              // Check if session starts today
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              const sessionDay = new Date(cls.startDate);
+              sessionDay.setHours(0, 0, 0, 0);
+              const isToday = sessionDay.getTime() === today.getTime();
+            
+              return (
+                <div key={cls._id} className="class-card">
+                  <div className="header">
+                    <img 
+                      src={cls.student.profileImage ? `${API_URL}/uploads/${cls.student.profileImage}` : './default.jpg'} 
+                      alt={`${cls.student.username}'s profile`} 
+                      className="profile-image"
+                      onError={(e) => { e.target.onerror = null; e.target.src = './default.jpg'; }}
+                    />
+                    <span className="username">{cls.student.username}</span>
+                  </div>
+                  <h3 className="topic-name">{cls.topicName}</h3>
+                  <hr />
+                  {cls.media && (
+                    <div className="media-container">
+                      {cls.media.endsWith('.mp4') || cls.media.endsWith('.mov') ? (
+                        <video 
+                          src={`${API_URL}/uploads/${cls.media}`} 
+                          alt="Uploaded Media" 
+                          className="media-video" 
+                          controls
+                        />
+                      ) : (
+                        <img 
+                          src={`${API_URL}/uploads/${cls.media}`} 
+                          alt="Uploaded Media" 
+                          className="media-image"
+                        />
+                      )}
+                    </div>
+                  )}
+                  <div className="details">
+                    <div className="date-time">
+                      <span>Start Date: {formatDate(cls.startDate)}</span>
+                      <span>Start Time: {cls.startTime}</span>
+                      {isToday && !hasStarted && (
+                        <span className="starts-today">Starts Today!</span>
+                      )}
+                    </div>
+                    <div className="date-time">
+                      <span>End Date: {formatDate(cls.endDate)}</span>
+                      <span>End Time: {cls.endTime}</span>
+                    </div>
+                    <div className="slots">
+                      <span>Total Slots: {cls.maxSlots}</span>
+                      <span>Available Slots: {cls.availableSlots}</span>
+                    </div>
+                  </div>
+                  <button
+                    className={`book-slot-button ${
+                      cls.availableSlots === 0 || hasStarted ? 'disabled' : 
+                      isToday && !hasStarted ? 'starts-today' : ''
+                    }`}
+                    disabled={cls.availableSlots === 0 || hasStarted}
+                    onClick={() => handleBookSlot(cls._id)}
+                  >
+                    {hasStarted ? 'Session Started' : 
+                     cls.availableSlots === 0 ? 'No Slots Available' :
+                     isToday ? 'Book Today\'s Session' : 'Book Slot'}
+                  </button>
                 </div>
-                <h3 className="topic-name">{cls.topicName}</h3>
-                <hr />
-                {cls.media && (
-                  <div className="media-container">
-                    {cls.media.endsWith('.mp4') || cls.media.endsWith('.mov') ? (
-                      <video 
-                        src={`${API_URL}/uploads/${cls.media}`} 
-                        alt="Uploaded Media" 
-                        className="media-video" 
-                        controls
-                      />
-                    ) : (
-                      <img 
-                        src={`${API_URL}/uploads/${cls.media}`} 
-                        alt="Uploaded Media" 
-                        className="media-image"
-                      />
-                    )}
-                  </div>
-                )}
-                <div className="details">
-                  <div className="date-time">
-                    <span>Start Date: {formatDate(cls.startDate)}</span>
-                    <span>Start Time: {cls.startTime}</span>
-                  </div>
-                  <div className="date-time">
-                    <span>End Date: {formatDate(cls.endDate)}</span>
-                    <span>End Time: {cls.endTime}</span>
-                  </div>
-                  <div className="slots">
-                    <span>Total Slots: {cls.maxSlots}</span>
-                    <span>Available Slots: {cls.availableSlots}</span>
-                  </div>
-                </div>
-                <button
-                  className={`book-slot-button ${cls.availableSlots === 0 ? 'disabled' : ''}`}
-                  disabled={cls.availableSlots === 0}
-                  onClick={() => handleBookSlot(cls._id)}
-                >
-                  Book Slot
-                </button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

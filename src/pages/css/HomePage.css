@@ -68,6 +68,15 @@
   color: white; /* White text on hover */
 }
 
+.book-slot-button.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.book-slot-button:disabled {
+  opacity: 0.7;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -130,6 +139,9 @@
   justify-content: space-between; /* Align items on the same line */
   margin: 5px 0;
   font-weight: bold; /* Margin for spacing */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .slots {
@@ -153,6 +165,11 @@
 .book-slot-button:hover {
   background-color: #007bff; /* Blue background on hover */
   color: white; /* White text on hover */
+}
+
+.book-slot-button.starts-today {
+  background-color: #27ae60;
+  animation: pulse 2s infinite;
 }
 
 /* Fix search input styles */
@@ -387,6 +404,25 @@
   padding: 2rem;
   font-size: 1.2rem;
   color: #666;
+}
+
+.starts-today {
+  color: #2D9CDB;
+  font-weight: bold;
+  margin-left: 10px;
+  font-size: 0.9em;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 

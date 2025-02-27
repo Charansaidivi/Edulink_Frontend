@@ -5,9 +5,11 @@ import axios from 'axios';
 import { API_URL } from '../data/apiData';
 import Navbar from '../components/Navbar';
 import CountdownTimer from '../components/CountdownTimer';
+import { useNavigate } from 'react-router-dom';
 import './css/ProfilePage.css';
 
-const SessionList = ({ sessions, handleJoinSession }) => (
+// Update the SessionList component to handle different session types
+const SessionList = ({ sessions, handleJoinSession, isTeaching, handleViewDetails }) => (
   <div className="session-list">
     {sessions.length > 0 ? (
       sessions.map((session) => {
@@ -16,10 +18,27 @@ const SessionList = ({ sessions, handleJoinSession }) => (
         
         return (
           <div key={session._id} className="session-item">
-            <h4>{session.topicName}</h4>
-            <button onClick={() => handleJoinSession(session.meetingLink)}>
-              Join
-            </button>
+            <div className="session-header">
+              <h4>{session.topicName}</h4>
+              <div className="session-actions">
+                <div className="button-stack">
+                  <button 
+                    className="join-btn"
+                    onClick={() => handleJoinSession(session.meetingLink)}
+                  >
+                    Join
+                  </button>
+                  {isTeaching && (
+                    <span 
+                      className="view-details-link"
+                      onClick={() => handleViewDetails(session._id)}
+                    >
+                      View Details →
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
             <CountdownTimer startTime={startDateTime} endTime={endDateTime} recurrence="daily" />
           </div>
         );
@@ -39,6 +58,7 @@ const SessionList = ({ sessions, handleJoinSession }) => (
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { profileImage, username, email, enrolledSessions, teachingSessions } = useSelector((state) => state.profile);
   const [sessionDetails, setSessionDetails] = useState([]);
   const [teachingSessionDetails, setTeachingSessionDetails] = useState([]);
@@ -93,14 +113,22 @@ const ProfilePage = () => {
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
+    const token = localStorage.getItem('loginToken');
     if (file) {
       const formData = new FormData();
       formData.append('media', file);
 
       try {
-        const response = await axios.post(`${API_URL}/student/upload/${userId}`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        const response = await axios.post(
+          `${API_URL}/student/upload/${userId}`, 
+          formData, 
+          {
+            headers: { 
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${token}`
+            },
+          }
+        );
         dispatch(setProfile({ profileImage: response.data.profileImage }));
         alert("Profile updated successfully");
       } catch (error) {
@@ -111,6 +139,10 @@ const ProfilePage = () => {
 
   const handleJoinSession = (meetingLink) => {
     window.open(meetingLink, '_blank');
+  };
+
+  const handleViewDetails = (sessionId) => {
+    navigate(`/session-details/${sessionId}`);
   };
 
   const handleLogout = () => {
@@ -158,7 +190,7 @@ const ProfilePage = () => {
           </button>
           {showEnrolled && (
             <div className="enrolled-sessions">
-              {loading ? <p>Loading...</p> : <SessionList sessions={sessionDetails} handleJoinSession={handleJoinSession} />}
+              {loading ? <p>Loading...</p> : <SessionList sessions={sessionDetails} handleJoinSession={handleJoinSession} isTeaching={false} />}
             </div>
           )}
 
@@ -167,7 +199,7 @@ const ProfilePage = () => {
           </button>
           {showTeaching && (
             <div className="teaching-sessions">
-              {loading ? <p>Loading...</p> : <SessionList sessions={teachingSessionDetails} handleJoinSession={handleJoinSession} />}
+              {loading ? <p>Loading...</p> : <SessionList sessions={teachingSessionDetails} handleJoinSession={handleJoinSession} isTeaching={true} handleViewDetails={handleViewDetails} />}
             </div>
           )}
 

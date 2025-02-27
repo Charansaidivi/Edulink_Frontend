@@ -76,7 +76,7 @@ const HomePage = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'token': token
+          'Authorization': `Bearer ${token}`
         }
       });
       const data = await response.json();

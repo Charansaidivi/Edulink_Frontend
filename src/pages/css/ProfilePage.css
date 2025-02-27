@@ -179,6 +179,7 @@ button:active {
 .session-item h4 {
   margin: 0;
   color: #2D9CDB;
+  font-size: 1.1em;
   align-items: center;/* Remove default margin */
 }
 
@@ -187,9 +188,10 @@ button:active {
   color: white; /* Text color */
   border: none; /* Remove default border */
   border-radius: 5px; /* Rounded corners */
-  padding: 10px 15px; /* Padding for better click area */
+  padding: 8px 15px; /* Padding for better click area */
   cursor: pointer; /* Pointer cursor on hover */
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  margin: 0;
 }
 
 .session-item button:hover {
@@ -239,4 +241,68 @@ button:active {
 
 .no-sessions {
   animation: fadeIn 0.5s ease-out;
+}
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.session-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.view-details-btn {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-details-btn:hover {
+  background-color: #219a52;
+}
+
+.view-details-link {
+  color: #2D9CDB;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-top: 5px;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.view-details-link:hover {
+  color: #2183b8;
+  text-decoration: underline;
+}
+
+.button-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.join-btn {
+  background-color: #2D9CDB;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 100px;
+}
+
+.join-btn:hover {
+  background-color: #2183b8;
 }

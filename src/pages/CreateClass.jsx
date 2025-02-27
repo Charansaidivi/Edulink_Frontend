@@ -20,8 +20,65 @@ const CreateClass = () => {
       topicType:''
     });
 
+    const getCurrentDate = () => {
+        const today = new Date();
+        return today.toISOString().split('T')[0];
+    };
+
+    const getCurrentTime = () => {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    };
+
+    const handleTimeValidation = (e) => {
+        const { name, value } = e.target;
+        const today = new Date().toISOString().split('T')[0];
+        
+        if (formData.startDate === today && name === 'startTime') {
+            const currentTime = getCurrentTime();
+            if (value < currentTime) {
+                alert('Please select a time later than current time');
+                return;
+            }
+        }
+
+        if (name === 'endTime' && formData.startDate === formData.endDate) {
+            if (value <= formData.startTime) {
+                alert('End time must be later than start time');
+                return;
+            }
+        }
+
+        handleChange(e);
+    };
+
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
+        
+        // Time and Date Validations
+        if (name === 'startTime' && formData.startDate === new Date().toISOString().split('T')[0]) {
+            const currentTime = getCurrentTime();
+            if (value < currentTime) {
+                alert('Please select a time later than current time');
+                return;
+            }
+        }
+
+        if (name === 'endTime' && formData.startDate === formData.endDate) {
+            if (value <= formData.startTime) {
+                alert('End time must be later than start time');
+                return;
+            }
+        }
+
+        // End date validation
+        if (name === 'endDate' && formData.startDate && value < formData.startDate) {
+            alert('End date cannot be before start date');
+            return;
+        }
+
         setFormData(prevState => ({
             ...prevState,
             [name]: type === 'file' ? files[0] : value
@@ -137,6 +194,7 @@ const CreateClass = () => {
                     name="startDate"
                     value={formData.startDate}
                     onChange={handleChange}
+                    min={getCurrentDate()}
                     required
                     className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
                   />
@@ -150,6 +208,7 @@ const CreateClass = () => {
                     name="endDate"
                     value={formData.endDate}
                     onChange={handleChange}
+                    min={formData.startDate || getCurrentDate()}
                     required
                     className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
                   />
@@ -162,7 +221,8 @@ const CreateClass = () => {
                     type="time"
                     name="startTime"
                     value={formData.startTime}
-                    onChange={handleChange}
+                    onChange={handleTimeValidation}
+                    min={formData.startDate === getCurrentDate() ? getCurrentTime() : undefined}
                     required
                     className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
                   />
@@ -175,7 +235,8 @@ const CreateClass = () => {
                     type="time"
                     name="endTime"
                     value={formData.endTime}
-                    onChange={handleChange}
+                    onChange={handleTimeValidation}
+                    min={formData.startTime}
                     required
                     className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
                   />

@@ -13,9 +13,25 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [classes, setClasses] = useState([]);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [showOptions, setShowOptions] = useState(false);
   const dispatch = useDispatch();
   const profileImageFromStore = useSelector((state) => state.profile.profileImage);
   const usernameFromStore = useSelector((state) => state.profile.username);
+
+  const topicOptions = [
+    "All",
+    "Java",
+    "Python",
+    "C++",
+    "JavaScript",
+    "Ruby",
+    "PHP",
+    "C#",
+    "Go",
+    "Swift",
+    "Kotlin",
+    "Others"
+  ];
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -64,6 +80,7 @@ const HomePage = () => {
 
   const handleTopicChange = (e) => {
     setSelectedTopic(e.target.value);
+    setShowOptions(false); // Close dropdown after selection
   };
 
   const handleSearch = (e) => {
@@ -134,25 +151,40 @@ const HomePage = () => {
               className="search-input"
             />
           </div>
-          <select
-            value={selectedTopic}
-            onChange={handleTopicChange}
-            className="topic-select"
-            style={{ marginTop: '20px', zIndex: 10 }}
-          >
-            <option value="">Choose Topic</option>
-            <option value="Java">Java</option>
-            <option value="Python">Python</option>
-            <option value="C++">C++</option>
-            <option value="JavaScript">JavaScript</option>
-            <option value="Ruby">Ruby</option>
-            <option value="PHP">PHP</option>
-            <option value="C#">C#</option>
-            <option value="Go">Go</option>
-            <option value="Swift">Swift</option>
-            <option value="Kotlin">Kotlin</option>
-            <option value="Others">Others</option>
-          </select>
+          <div className="select">
+            <div
+              className="selected"
+              data-default="All"
+              onClick={() => setShowOptions(!showOptions)}
+            >
+              {selectedTopic}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="1em"
+                viewBox="0 0 512 512"
+                className="arrow"
+              >
+                <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
+              </svg>
+            </div>
+            {showOptions && (
+              <div className="options">
+                {topicOptions.map((topic) => (
+                  <div key={topic} title={topic}>
+                    <input
+                      id={topic}
+                      name="option"
+                      type="radio"
+                      value={topic}
+                      checked={selectedTopic === topic}
+                      onChange={handleTopicChange}
+                    />
+                    <label className="option" htmlFor={topic}>{topic}</label>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>        
         {!selectedTopic && !searchQuery ? (
           <img src='./image.png' alt="Session" className="session-image" />

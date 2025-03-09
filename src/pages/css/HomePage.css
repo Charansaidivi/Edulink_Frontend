@@ -1,5 +1,3 @@
-/* HomePage.css */
-
 /* Search input and select styles */
 .search-input,
 .topic-select {
@@ -68,32 +66,10 @@
   color: white; /* White text on hover */
 }
 
-.book-slot-button.disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.book-slot-button:disabled {
-  opacity: 0.7;
-}
-
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.topic-select {
-  background: #2D9CDB; /* Blue background */
-  color: black; /* Black text */
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  width: 100%; /* Centered width */
-  margin-bottom: 20px;
-  margin-top: 20px !important; /* Add margin to the top */
-  z-index: 40; /* Ensure it appears above other elements */
-  position: relative; /* Ensure z-index works */
 }
 
 .class-container {
@@ -139,9 +115,6 @@
   justify-content: space-between; /* Align items on the same line */
   margin: 5px 0;
   font-weight: bold; /* Margin for spacing */
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 .slots {
@@ -165,11 +138,6 @@
 .book-slot-button:hover {
   background-color: #007bff; /* Blue background on hover */
   color: white; /* White text on hover */
-}
-
-.book-slot-button.starts-today {
-  background-color: #27ae60;
-  animation: pulse 2s infinite;
 }
 
 /* Fix search input styles */
@@ -278,7 +246,6 @@
   background-color: #007bff; /* Blue background on hover */
   color: white; /* White text on hover */
 }
-
 /* Join Meeting button styles */
 .join-meeting-button {
   background-color: white; /* White background */
@@ -350,7 +317,6 @@
   margin-top: 10px; /* Changed from 0px to 10px for better spacing */
   font-size: 16px;
 }
-
 /* Update the search input styles */
 .search-container {
   margin-top: 50px;
@@ -360,7 +326,6 @@
   margin-bottom: 0px;
   position: relative; /* Add this */
 }
-
 /* Add search icon styles */
 .search-icon {
   position: absolute;
@@ -406,23 +371,107 @@
   color: #666;
 }
 
-.starts-today {
-  color: #2D9CDB;
+/* Custom select dropdown styles for Choose Topic */
+.select {
+  margin-top: 20px;
+  width: fit-content;
+  cursor: pointer;
+  position: relative;
+  transition: 300ms;
+  color: white;
+  overflow: hidden;
+}
+
+.selected {
+  width: 270px;
+  height: 45px;
+  margin-bottom: 3px;
+  background-color: #2D9CDB;
+  padding: 5px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 100000;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.arrow {
+  position: relative;
+  right: 0px;
+  height: 10px;
+  transform: rotate(-90deg);
+  width: 25px;
+  fill: white;
+  z-index: 100000;
+  transition: 300ms;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 5px;
+  background-color:#2D9CDB;
+  position: relative;
+  top: -100px;
+  opacity: 0;
+  transition: 300ms;
+}
+
+.select:hover > .options {
+  opacity: 1;
+  top: 0;
+}
+
+.select:hover > .selected .arrow {
+  transform: rotate(0deg);
+}
+
+.option {
+  border-radius: 5px;
+  padding: 5px;
+  transition: 300ms;
+  background-color: #2D9CDB;
+  width: 260px;
+  height: 35px;
+  font-size: 15px;
+}
+.option:hover {
+  background-color: white;
+  color: black;
   font-weight: bold;
-  margin-left: 10px;
-  font-size: 0.9em;
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
-  100% {
-    transform: scale(1);
-  }
+.options input[type="radio"] {
+  display: none;
 }
 
+.options label {
+  display: inline-block;
+}
+.options label::before {
+  content: attr(data-txt);
+}
 
+.options input[type="radio"]:checked + label {
+  display: none;
+}
+
+.options input[type="radio"]#all:checked + label {
+  display: none;
+}
+
+.select:has(.options input[type="radio"]#all:checked) .selected::before {
+  content: attr(data-default);
+}
+.select:has(.options input[type="radio"]#option-1:checked) .selected::before {
+  content: attr(data-one);
+}
+.select:has(.options input[type="radio"]#option-2:checked) .selected::before {
+  content: attr(data-two);
+}
+.select:has(.options input[type="radio"]#option-3:checked) .selected::before {
+  content: attr(data-three);
+}

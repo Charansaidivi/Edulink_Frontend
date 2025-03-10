@@ -167,7 +167,7 @@ const ProfilePage = () => {
           <div className="profile-container">
             <div className="profile-image-wrapper">
               <img 
-                src={profileImage ? `${API_URL}/uploads/${profileImage}` : '/default.jpg'} 
+                src={profileImage ? `${API_URL}/uploads/user_profiles/${profileImage}` : '/default.jpg'} 
                 alt="Profile" 
                 className="profile-image" 
               />

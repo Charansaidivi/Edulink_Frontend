@@ -306,7 +306,7 @@ const SessionDetails = () => {
                     />
                   ) : (
                     <img 
-                      src={`${API_URL}/uploads/${sessionData.media}`}
+                      src={`${API_URL}/uploads/media/${sessionData.media}`}
                       alt="Session material"
                       className="session-image"
                     />

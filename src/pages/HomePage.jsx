@@ -224,7 +224,7 @@ const HomePage = () => {
                 <div key={cls._id} className="class-card">
                   <div className="header">
                     <img 
-                      src={cls.student.profileImage ? `${API_URL}/uploads/${cls.student.profileImage}` : './default.jpg'} 
+                      src={cls.student.profileImage ? `${API_URL}/uploads/media/${cls.student.profileImage}` : './default.jpg'} 
                       alt={`${cls.student.username}'s profile`} 
                       className="profile-image"
                       onError={(e) => { e.target.onerror = null; e.target.src = './default.jpg'; }}

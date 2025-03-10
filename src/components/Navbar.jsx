@@ -87,7 +87,7 @@ const Navbar = () => {
           <div className="profile-container">
             <button className="profile-button" onClick={() => navigate('/profile')}>
               <img
-                src={profileImageFromStore ? `${API_URL}/uploads/${profileImageFromStore}` : '/default.jpg'}
+                src={profileImageFromStore ? `${API_URL}/uploads/user_profiles/${profileImageFromStore}` : '/default.jpg'}
                 alt="Profile"
                 className="profile-image"
               />

@@ -45,12 +45,9 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid" id="navbar">
-        <img
-          src="/logo1.png"
-          alt="Logo"
-          className="navbar-logo"
-        />
-        {/* Toggle Button for Small Screens */}
+        <img src="/logo1.png" alt="Logo" className="navbar-logo" />
+        
+        {/* Toggle Button */}
         <input
           type="checkbox"
           className="check-icon"
@@ -63,7 +60,7 @@ const Navbar = () => {
           <div className="bar bar--2"></div>
           <div className="bar bar--3"></div>
         </label>
-        {/* Navbar Links and Profile */}
+
         <div className={`navbar-collapse ${isOpen ? "show" : ""}`}>
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
             <li className="nav-item">
@@ -75,7 +72,18 @@ const Navbar = () => {
             <li className="nav-item">
               <a className="nav-link active" href="/about-us">About Us</a>
             </li>
+            <li className="nav-item project-menu">
+              <a className="nav-link active">
+                Project Discussion
+              </a>
+              <div className="project-submenu">
+                <div className="submenu-item" onClick={() => navigate('/')}>Leader</div>
+                <div className="submenu-item" onClick={() => navigate('/')}>Member</div>
+              </div>
+            </li>
           </ul>
+
+          {/* Profile Container */}
           <div className="profile-container">
             <button className="profile-button" onClick={() => navigate('/profile')}>
               <img

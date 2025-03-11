@@ -14,7 +14,8 @@ import LandingPage from './pages/LandingPage'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import SessionDetails from './pages/SessionDetails'
-
+import Leader from './pages/Leader'
+import Member from './pages/Member'
 const App = () => {
   return (
     <GoogleOAuthProvider clientId="625626669431-c2p74fbeko7t33f236vooiu3sn3d9nvq.apps.googleusercontent.com">
@@ -62,7 +63,22 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
+          <Route
+            path="/leader"
+            element={
+              <ProtectedRoute>
+                <Leader />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/member"
+            element={
+              <ProtectedRoute>
+                <Member />
+              </ProtectedRoute>
+            }
+          />
           {/* Catch all route for 404 */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

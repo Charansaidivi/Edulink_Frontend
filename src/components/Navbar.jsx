@@ -77,8 +77,8 @@ const Navbar = () => {
                 Project Discussion
               </a>
               <div className="project-submenu">
-                <div className="submenu-item" onClick={() => navigate('/')}>Leader</div>
-                <div className="submenu-item" onClick={() => navigate('/')}>Member</div>
+                <div className="submenu-item" onClick={() => navigate('/leader')}>Leader</div>
+                <div className="submenu-item" onClick={() => navigate('/member')}>Member</div>
               </div>
             </li>
           </ul>

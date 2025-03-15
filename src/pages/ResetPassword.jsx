@@ -1,43 +1,60 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { API_URL } from '../data/apiData';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import './Reset.css';
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
   const { token, email } = useParams();
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [passwordError, setPasswordError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (newPassword !== confirmPassword) {
-      setPasswordError('Passwords do not match');
+      toast.error('Passwords do not match');
       return;
     }
     
-    setPasswordError('');
     try {
       const response = await axios.post(`${API_URL}/student/reset-password`, { 
         token, 
         newPassword,
         email: decodeURIComponent(email)
       });
-      console.log('Response:', response);
+      
+      toast.success('Password reset successful');
       setMessage(response.data.message);
+      
+      // Redirect to login after 3 seconds
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
     } catch (error) {
       console.error('Error resetting password:', error);
-      alert(error.response?.data?.message || 'Error resetting password');
+      toast.error(error.response?.data?.message || 'Error resetting password');
       setMessage('');
     }
   };
 
   return (
     <section className="bg-white p-3 p-md-4 p-xl-5">
+      <ToastContainer 
+        position="top-right" 
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12 col-xxl-11">
@@ -96,11 +113,6 @@ const ResetPassword = () => {
                               />
                               <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
                             </div>
-                            {passwordError && (
-                              <div className="text-danger small mb-3">
-                                {passwordError}
-                              </div>
-                            )}
                           </div>
                           <div className="col-12">
                             <div className="d-grid">

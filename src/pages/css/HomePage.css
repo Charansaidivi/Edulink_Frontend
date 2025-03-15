@@ -379,7 +379,8 @@
   position: relative;
   transition: 300ms;
   color: white;
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to visible */
+  z-index: 1000; /* Lower z-index than navbar */
 }
 
 .selected {
@@ -390,7 +391,7 @@
   padding: 5px;
   border-radius: 5px;
   position: relative;
-  z-index: 100000;
+  z-index: 1000; /* Lower z-index than navbar */
   font-size: 15px;
   display: flex;
   align-items: center;
@@ -414,19 +415,20 @@
   border-radius: 5px;
   padding: 5px;
   background-color:#2D9CDB;
-  position: relative;
-  top: -100px;
+  position: absolute; /* Changed from relative */
+  top: 100%; /* Position below the selected item */
+  left: 0;
+  width: 100%;
   opacity: 0;
+  visibility: hidden;
   transition: 300ms;
+  z-index: 1000; /* Lower z-index than navbar */
 }
 
 .select:hover > .options {
   opacity: 1;
-  top: 0;
-}
-
-.select:hover > .selected .arrow {
-  transform: rotate(0deg);
+  visibility: visible;
+  top: 100%; /* Keep it below the selected item */
 }
 
 .option {
@@ -474,4 +476,18 @@
 }
 .select:has(.options input[type="radio"]#option-3:checked) .selected::before {
   content: attr(data-three);
+}
+
+/* Update navbar z-index */
+#navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: #2D9CDB;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9999; /* Higher z-index for navbar */
 }

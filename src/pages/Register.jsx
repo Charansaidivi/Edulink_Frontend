@@ -3,6 +3,9 @@ import { API_URL } from '../data/apiData';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Register = () => {
   const navigate = useNavigate();
   const [username, setName] = useState('');
@@ -21,57 +24,55 @@ const Register = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        console.log(data);
         setEmail('');
         setName('');
         setPassword('');
-        alert('Student registered successfully');
-        LoginHandler();
+        toast.success('Registration successful!');
+        navigate('/login');
+      } else {
+        toast.error(data.message || 'Registration failed');
       }
     } catch (error) {
-      console.log('registration failed', error);
-      alert('Registration failed');
+      console.error('Registration failed:', error);
+      toast.error('Registration failed. Please try again.');
     }
   };
 
   const handleGoogleSignupSuccess = async (response) => {
-    console.log('Google signup success:', response);
-    const { credential } = response;
-
     try {
       const serverResponse = await fetch(`${API_URL}/student/google-auth`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token: credential }),
+        body: JSON.stringify({ token: response.credential }),
       });
 
       const data = await serverResponse.json();
       if (serverResponse.ok) {
-        console.log('Server response:', data);
-        alert('Signup successful');
+        toast.success('Signup successful');
         navigate('/home');
       } else {
-        console.error('Server error:', data);
-        alert(data.message || 'Signup failed');
+        toast.error(data.message || 'Signup failed');
       }
     } catch (error) {
       console.error('Network error:', error);
-      alert('Signup failed');
+      toast.error('Signup failed');
     }
   };
 
   const handleGoogleSignupFailure = (error) => {
     console.error('Google signup failed:', error);
-    alert('Google signup failed');
+    toast.error('Google signup failed');
   };
+
   const LoginHandler = () => {
     navigate('/login');
   }
 
   return (
     <section className="bg-white p-3 p-md-4 p-xl-5">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="container bg-white">
         <div className="row justify-content-center">
           <div className="col-12 col-xxl-10">

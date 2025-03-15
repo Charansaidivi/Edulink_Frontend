@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import { API_URL } from '../data/apiData';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  
   const HandleLogin = async (e) => {
     e.preventDefault();
+    
     try {
       const response = await fetch(`${API_URL}/student/login`, {
         method: 'POST',
@@ -22,54 +25,52 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        console.log(data);
         localStorage.setItem('loginToken', data.token);
-        alert('Vendor login successfully');
-        setEmail('');
-        setPassword('');
+        toast.success('Login successful!');
         navigate('/home');
       } else {
-        console.error('Error Response:', data);
-        alert(data.message || 'Login failed');
+        if (data.isGoogleAccount) {
+          toast.warning('This email is registered with Google. Please use the "Sign in with Google" button below.');
+          setEmail('');
+          setPassword('');
+          document.querySelector('.google-login-button')?.classList.add('highlight-google-btn');
+        } else {
+          toast.error(data.message || 'Login failed');
+        }
       }
     } catch (error) {
       console.error('Network Error:', error);
-      alert('Login failed');
+      toast.error('Connection failed. Please try again.');
     }
   };
 
   const handleGoogleLoginSuccess = async (response) => {
-    console.log('Google login success:', response);
-    const { credential } = response;
-
     try {
       const serverResponse = await fetch(`${API_URL}/student/google-auth`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token: credential }),
+        body: JSON.stringify({ token: response.credential }),
       });
 
       const data = await serverResponse.json();
       if (serverResponse.ok) {
-        console.log('Server response:', data);
         localStorage.setItem('loginToken', data.token);
-        alert('Login successful');
+        toast.success('Login successful');
         navigate('/home');
       } else {
-        console.error('Server error:', data);
-        alert(data.message || 'Login failed');
+        toast.error(data.message || 'Login failed');
       }
     } catch (error) {
       console.error('Network error:', error);
-      alert('Login failed');
+      toast.error('Login failed');
     }
   };
 
   const handleGoogleLoginFailure = (error) => {
     console.error('Google login failed:', error);
-    alert('Google login failed');
+    toast.error('Google login failed');
   };
   const SignupHandler = () => {
     navigate('/register');
@@ -77,6 +78,7 @@ const Login = () => {
 
   return (
     <section className="bg-white p-3 p-md-4 p-xl-5">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="container bg-white">
         <div className="row justify-content-center">
           <div className="col-12 col-xxl-11">

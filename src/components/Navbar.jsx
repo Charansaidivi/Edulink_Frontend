@@ -1,40 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProfile } from '../redux/profileSlice';
 import { API_URL } from '../data/apiData';
-import axios from 'axios';
+import 'boxicons/css/boxicons.min.css';
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const [bodyPd, setBodyPd] = useState(false);
+  const [activeNav, setActiveNav] = useState("home");
   const profileImageFromStore = useSelector((state) => state.profile.profileImage);
-  const username = useSelector((state) => state.profile.username);
-
-  useEffect(() => {
-    const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
-
-    if (!username) {
-      const fetchUserProfile = async () => {
-        if (userId) {
-          try {
-            const response = await axios.get(`${API_URL}/student/profile/${userId}`);
-            const userProfile = response.data;
-            dispatch(setProfile(userProfile));
-          } catch (error) {
-            console.error("Error fetching user profile:", error);
-          }
-        }
-      };
-
-      fetchUserProfile();
-    }
-  }, [dispatch, username]);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('loginToken');
@@ -42,60 +18,101 @@ const Navbar = () => {
     navigate('/login');
   };
 
+  const handleToggle = () => {
+    const toggle = document.getElementById('header-toggle');
+    const nav = document.getElementById('nav-bar');
+    const bodypdEl = document.getElementById('body-pd');
+    const header = document.getElementById('header');
+    const headerToggle = document.querySelector('.header_toggle');
+
+    // Toggle sidebar display
+    nav.classList.toggle('show');
+    // Change icon (rotate menu into x)
+    toggle.classList.toggle('bx-x');
+    // Move toggle button along with sidebar
+    headerToggle.classList.toggle('expanded');
+    // Adjust padding for body and header
+    bodypdEl.classList.toggle('body-pd');
+    header.classList.toggle('body-pd');
+    setBodyPd(!bodyPd);
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg">
-      <div className="container-fluid" id="navbar">
-        <img src="/logo1.png" alt="Logo" className="navbar-logo" />
-        
-        {/* Toggle Button */}
-        <input
-          type="checkbox"
-          className="check-icon"
-          id="check-icon"
-          name="check-icon"
-          onChange={toggleMenu}
-        />
-        <label className="icon-menu" htmlFor="check-icon">
-          <div className="bar bar--1"></div>
-          <div className="bar bar--2"></div>
-          <div className="bar bar--3"></div>
-        </label>
-
-        <div className={`navbar-collapse ${isOpen ? "show" : ""}`}>
-          <ul className="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/home">Book Class</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link active" href="/create-class">Create Class</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link active" href="/about-us">About Us</a>
-            </li>
-            <li className="nav-item project-menu">
-              <a className="nav-link active">
-                Project Discussion
-              </a>
-              <div className="project-submenu">
-                <div className="submenu-item" onClick={() => navigate('/leader')}>Leader</div>
-                <div className="submenu-item" onClick={() => navigate('/member')}>Member</div>
-              </div>
-            </li>
-          </ul>
-
-          {/* Profile Container */}
-          <div className="profile-container">
-            <button className="profile-button" onClick={() => navigate('/profile')}>
-              <img
-                src={profileImageFromStore ? `${API_URL}/uploads/user_profiles/${profileImageFromStore}` : '/default.jpg'}
-                alt="Profile"
-                className="profile-image"
-              />
-            </button>
-          </div>
+    <div className="navbar-container" id="body-pd">
+      <header className="header" id="header">
+        <div className="header_toggle">
+          <i className='bx bx-menu' id="header-toggle" onClick={handleToggle}></i>
         </div>
+        <div className="header_img" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
+          <img
+            src={profileImageFromStore ? `${API_URL}/uploads/user_profiles/${profileImageFromStore}` : '/default.jpg'}
+            alt="Profile"
+          />
+        </div>
+      </header>
+      <div className={`l-navbar ${bodyPd ? 'show' : ''}`} id="nav-bar">
+        <nav className="nav">
+          <div>
+            <Link to="/home"
+              className="nav_logo"
+              onClick={() => { setActiveNav("home"); }}
+            >
+              <img src="/logo1.png" alt="Logo" className="nav_logo-icon" />
+            </Link>
+            <div className="nav_list">
+              <Link
+                to="/home"
+                className={`nav_link ${activeNav === "home" ? "active" : ""}`}
+                onClick={() => { setActiveNav("home"); }}
+              >
+                <i className='bx bx-book-reader nav_icon'></i>
+                <span className="nav_name">Book Class</span>
+              </Link>
+              <Link
+                to="/create-class"
+                className={`nav_link ${activeNav === "create" ? "active" : ""}`}
+                onClick={() => { setActiveNav("create"); }}
+              >
+                <i className='bx bx-add-to-queue nav_icon'></i>
+                <span className="nav_name">Create Class</span>
+              </Link>
+              <Link
+                to="/about-us"
+                className={`nav_link ${activeNav === "about" ? "active" : ""}`}
+                onClick={() => { setActiveNav("about"); }}
+              >
+                <i className='bx bx-info-circle nav_icon'></i>
+                <span className="nav_name">About Us</span>
+              </Link>
+              <div
+                className={`nav_link project_dropdown ${activeNav === "project" ? "active" : ""}`}
+                onClick={() => setActiveNav("project")}
+              >
+                <i className='bx bx-group nav_icon'></i>
+                <span className="nav_name">Project Discussion</span>
+                <i className='bx bx-chevron-down dropdown_icon'></i>
+                <div className="dropdown_menu">
+                  <Link onClick={() => { setActiveNav("leader"); }} className="dropdown_item" to="/leader">
+                    <i className='bx bx-crown'></i>
+                    <span>Leader</span>
+                  </Link>
+                  <Link onClick={() => { setActiveNav("member"); }} className="dropdown_item" to="/member">
+                    <i className='bx bx-user'></i>
+                    <span>Member</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <a onClick={handleLogout} className="nav_link">
+              <i className='bx bx-log-out nav_icon'></i>
+              <span className="nav_name">Logout</span>
+            </a>
+          </div>
+        </nav>
       </div>
-    </nav>
+    </div>
   );
 };
 

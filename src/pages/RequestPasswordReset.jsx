@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../data/apiData';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/Reset.css';
 
@@ -11,7 +13,6 @@ const RequestPasswordReset = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Sending request to:', `${API_URL}/student/request-password-reset`);
     
     try {
       const response = await axios.post(
@@ -23,17 +24,18 @@ const RequestPasswordReset = () => {
           }
         }
       );
-      console.log('Response:', response.data);
-      setMessage(response.data.message || 'Password reset link sent successfully');
+      toast.success('Password reset link sent successfully');
+      setMessage(response.data.message);
     } catch (error) {
       console.error('Request failed:', error);
-      alert(error.response?.data?.message || 'Error requesting password reset');
+      toast.error(error.response?.data?.message || 'Error requesting password reset');
       setMessage('');
     }
   };
 
   return (
     <section className="bg-white p-3 p-md-4 p-xl-5">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="container bg-white">
         <div className="row justify-content-center">
           <div className="col-12 col-xxl-11">

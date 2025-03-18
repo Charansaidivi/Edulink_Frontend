@@ -1,308 +1,155 @@
-/* Profile Page Styles */
-.profile-wrapper{
-  background-color: white;
-  margin-top: 80px;
+/* Default state: sidebar is collapsed */
+.profile-wrapper {
+  padding: 20px;
+  margin-left: calc(var(--nav-width) - 15rem);
+  transition: margin-left 0.5s;
 }
+
+/* If a global class (e.g. nav-expanded) is added when the sidebar expands,
+   then move the profile page accordingly */
+body.nav-expanded .profile-wrapper {
+  margin-left: calc(var(--nav-width-expanded) - 15rem);
+}
+
 .profile-page {
-  margin: 20px auto; /* Center the container with auto margins */
-  width: 90%; /* Default width for smaller screens */
-  max-width: 1000px; /* Maximum width to prevent it from being too large */
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container {
   display: flex;
-  flex-direction: column;
-  align-items: center; /* Center content horizontally */
-  padding: 20px; /* Default padding */
-  padding-top: 60px; /* Add padding to the top to avoid overlap with navbar */
-  background: #ffffff; /* Light background color */
-  min-height: 80vh; /* Ensure it takes full height */
-  box-shadow: 0 0 20px rgba(255, 0, 230, 0.5), /* Blue glow effect */
-              0 0 40px rgba(0, 0, 255, 0.3); /* More intense blue glow */
-  border-radius: 25px; /* Optional: Rounded corners for a softer look */
-}
-  .profile-info {
-    text-align: center; /* Center the text */
-    color: #333; /* Text color */
-    margin-top: 10px; /* Space between image and text */
-  }
-  
-  .profile-info h2 {
-    font-size: 1.8em; /* Adjust font size */
-    margin: 0; /* Remove default margin */
-  }
-  
-  .profile-info p {
-    font-size: 1em; /* Adjust font size */
-    color: #666; /* Lighter text color */
-  }
-  .enrolled-sessions, .teaching-sessions {
-    width: 100%; /* Full width */
-    max-width: 400px; /* Decreased max width */
-    margin: 20px 0; /* Space between sections */
-    padding: 15px; /* Padding inside sections */
-    background-color: #fff; /* White background for sections */
-    border-radius: 25px; 
-    border:2px solid black;/* Rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  }
-  /* Assuming this is in your ProfilePage.css or a relevant CSS file *
-/* Responsive Styles */
-@media (min-width: 768px) {
-    .profile-page {
-        width: 80%; /* Adjust width for tablets and larger screens */
-        padding: 30px; /* Increase padding for larger screens */
-    }
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-@media (min-width: 1024px) {
-    .profile-page {
-        width: 70%; /* Further adjust width for larger desktops */
-        padding: 40px; /* Increase padding for larger screens */
-    }
-}
-
-.profile-page .profile-container{
-  width: 100px; /* Increased width */
-  height: 100px; /* Increased height */
-  border-radius: 50%; /* Make it circular */
-  object-fit: fit; /* Ensure the image covers the area */
-}
-
-.profile-page .profile-container img{
+.profile-image-wrapper {
+  position: relative;
+  margin-right: 30px;
   width: 100px;
   height: 100px;
 }
 
-/* Button Styles */
-button {
-  background-color: #2D9CDB; /* Primary button color */
-  color: white; /* Text color */
-  border: none; /* Remove default border */
-  border-radius: 1.5rem; /* Rounded corners */
-  padding: 12px 20px; /* Increased padding for better click area */
-  font-size: 1.1em; /* Slightly larger font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effect */
-  margin: 10px 0; /* Space between buttons */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-}
-
-button:hover {
-  background-color: #1A7BB8; /* Darker shade on hover */
-  transform: translateY(-2px); /* Lift effect on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
-}
-
-button:focus {
-  outline: none; /* Remove default focus outline */
-  box-shadow: 0 0 5px rgba(45, 156, 219, 0.5); /* Add shadow for focus state */
-}
-
-button:active {
-  transform: translateY(1px); /* Pressed effect */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow on active */
-}
-
-.profile-image-wrapper {
-  position: relative; /* Position relative for absolute positioning of the edit icon */
-  display: inline-block; /* Allow the image and input to be inline */
-}
-
 .profile-image {
-  width: 120px; /* Adjust as needed */
-  height: 120px; /* Adjust as needed */
-  border-radius: 50%; /* Circular image */
-  object-fit: cover; /* Cover the area */
-  transition: transform 0.3s ease; /* Smooth transition for hover effect */
-}
-
-.profile-image-wrapper:hover .profile-image {
-  transform: scale(1.05); /* Slight zoom effect on hover */
+  width: 100px !important;
+  height: 100px !important;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .file-input {
-  display: none; /* Hide the file input */
+  display: none;
 }
 
 .edit-icon {
-  position: absolute; /* Position the edit icon over the image */
-  top: 0; /* Position it at the top */
-  left: 0; /* Position it at the left */
-  right: 0; /* Stretch to the right */
-  bottom: 0; /* Stretch to the bottom */
-  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
-  border-radius: 50%; /* Circular background */
-  display: flex; /* Use flexbox to center the icon */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1.5em; /* Icon size */
-  opacity: 0; /* Initially hidden */
-  transition: opacity 0.3s ease; /* Smooth transition for hover effect */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(253, 253, 253, 0.7);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.5em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .profile-image-wrapper:hover .edit-icon {
-  opacity: 1; /* Show the edit icon on hover */
+  opacity: 1;
 }
 
-.logout-button {
-  background-color: #e74c3c; /* Red color for logout */
-  color: white; /* Text color */
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px 15px; /* Padding for better click area */
-  font-size: 1em; /* Font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effect */
-  margin-top: 20px; /* Space above the button */
-}
-
-.logout-button:hover {
-  background-color: #c0392b; /* Darker red on hover */
-  transform: translateY(-2px); /* Lift effect on hover */
-}
-
-.logout-button:focus {
-  outline: none; /* Remove default focus outline */
-  box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); /* Add shadow for focus state */
-}
-
-/* Add this to your existing ProfilePage.css */
-.session-item {
-  background-color: #f0f0f0; /* Light gray background */
-  padding: 15px; /* Padding for the session item */
-  border-radius: 10px; /* Rounded corners */
-  margin-bottom: 10px; /* Space between session items */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  font-weight: bold;
-  align-items: center;
-}
-
-.session-item h4 {
+.profile-info h2 {
   margin: 0;
-  color: #2D9CDB;
-  font-size: 1.1em;
-  align-items: center;/* Remove default margin */
+  font-size: 24px;
 }
 
-.session-item button {
-  background-color: #2D9CDB; /* Primary button color */
-  color: white; /* Text color */
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 8px 15px; /* Padding for better click area */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-  margin: 0;
+.profile-info p {
+  margin: 5px 0 0;
+  color: #666;
 }
 
-.session-item button:hover {
-  background-color: #1A7BB8; /* Darker shade on hover */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #c9c2c2;
+  margin-bottom: 10px;
+  
 }
 
-/* Add these styles after your .session-item styles */
+.tab-button {
+  flex: 1;
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+  transition: background-color 0.3s, color 0.3s;
+}
 
-.no-sessions {
+.tab-button.active {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+}
+
+.tab-button:hover {
+  color: #007bff;
+}
+
+.enrolled-sessions, .teaching-sessions {
+  margin-top: 20px;
+}
+
+.session-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background-color: #ffffff !important;
-  border-radius: 10px;
-  margin: 20px 0;
+  gap: 10px;
 }
 
-.no-data-illustration {
-  width: 380px;
-  height: 300px;
-  margin-bottom: 1rem;
-  border-radius: 10px;
-  object-fit:cover;
-}
-
-.no-sessions p {
-  color: #666;
-  font-size: 1.1rem;
-  text-align: center;
-  font-weight: bold;
-  margin: 0;
-}
-
-/* Add animation for the no-sessions container */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.no-sessions {
-  animation: fadeIn 0.5s ease-out;
+.session-item {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .session-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .session-actions {
   display: flex;
   gap: 10px;
-  align-items: center;
-}
-
-.view-details-btn {
-  background-color: #27ae60;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 15px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.view-details-btn:hover {
-  background-color: #219a52;
-}
-
-.view-details-link {
-  color: #2D9CDB;
-  text-decoration: none;
-  cursor: pointer;
-  font-size: 0.9em;
-  margin-top: 5px;
-  display: inline-block;
-  transition: all 0.3s ease;
-}
-
-.view-details-link:hover {
-  color: #2183b8;
-  text-decoration: underline;
-}
-
-.button-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
 }
 
 .join-btn {
-  background-color: #2D9CDB;
+  background: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
-  padding: 8px 15px;
+  padding: 5px 10px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  min-width: 100px;
 }
 
-.join-btn:hover {
-  background-color: #2183b8;
+.view-details-link {
+  color: #007bff;
+  cursor: pointer;
+}
+
+.no-sessions {
+  text-align: center;
+  color: #666;
+}
+
+.no-data-illustration {
+  width: 300px;  /* increased from 100px */
+  height: 300px; /* increased from 100px */
 }

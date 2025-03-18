@@ -321,7 +321,7 @@ const SessionDetails = () => {
                   {sessionData.enrolledStudents.map((student) => (
                     <div key={student._id} className="student-card">
                       <img 
-                        src={student.profileImage ? `${API_URL}/uploads/${student.profileImage}` : '/default.jpg'} 
+                        src={student.profileImage ? `${API_URL}/uploads/user_profiles/${student.profileImage}` : '/default.jpg'} 
                         alt={student.username}
                         className="student-image"
                       />

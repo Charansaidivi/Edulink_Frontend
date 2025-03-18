@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProfile } from '../redux/profileSlice';
 import { API_URL } from '../data/apiData';
@@ -29,11 +29,19 @@ const Navbar = () => {
     nav.classList.toggle('show');
     // Change icon (rotate menu into x)
     toggle.classList.toggle('bx-x');
-    // Move toggle button along with sidebar
+    // Move toggle button along with sidebar expansion
     headerToggle.classList.toggle('expanded');
     // Adjust padding for body and header
     bodypdEl.classList.toggle('body-pd');
     header.classList.toggle('body-pd');
+
+    // Add or remove global nav-expanded class to body
+    if (nav.classList.contains('show')) {
+      document.body.classList.add('nav-expanded');
+    } else {
+      document.body.classList.remove('nav-expanded');
+    }
+    
     setBodyPd(!bodyPd);
   };
 
@@ -60,46 +68,48 @@ const Navbar = () => {
               <img src="/logo1.png" alt="Logo" className="nav_logo-icon" />
             </Link>
             <div className="nav_list">
-              <Link
+              <NavLink
                 to="/home"
-                className={`nav_link ${activeNav === "home" ? "active" : ""}`}
-                onClick={() => { setActiveNav("home"); }}
+                className={({ isActive }) => `nav_link ${isActive ? "active" : ""}`}
               >
                 <i className='bx bx-book-reader nav_icon'></i>
                 <span className="nav_name">Book Class</span>
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/create-class"
-                className={`nav_link ${activeNav === "create" ? "active" : ""}`}
-                onClick={() => { setActiveNav("create"); }}
+                className={({ isActive }) => `nav_link ${isActive ? "active" : ""}`}
               >
                 <i className='bx bx-add-to-queue nav_icon'></i>
                 <span className="nav_name">Create Class</span>
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/about-us"
-                className={`nav_link ${activeNav === "about" ? "active" : ""}`}
-                onClick={() => { setActiveNav("about"); }}
+                className={({ isActive }) => `nav_link ${isActive ? "active" : ""}`}
               >
                 <i className='bx bx-info-circle nav_icon'></i>
                 <span className="nav_name">About Us</span>
-              </Link>
+              </NavLink>
               <div
-                className={`nav_link project_dropdown ${activeNav === "project" ? "active" : ""}`}
-                onClick={() => setActiveNav("project")}
+                className={`nav_link project_dropdown`}
               >
                 <i className='bx bx-group nav_icon'></i>
                 <span className="nav_name">Project Discussion</span>
                 <i className='bx bx-chevron-down dropdown_icon'></i>
                 <div className="dropdown_menu">
-                  <Link onClick={() => { setActiveNav("leader"); }} className="dropdown_item" to="/leader">
+                  <NavLink
+                    to="/leader"
+                    className={({ isActive }) => `dropdown_item ${isActive ? "active" : ""}`}
+                  >
                     <i className='bx bx-crown'></i>
                     <span>Leader</span>
-                  </Link>
-                  <Link onClick={() => { setActiveNav("member"); }} className="dropdown_item" to="/member">
+                  </NavLink>
+                  <NavLink
+                    to="/member"
+                    className={({ isActive }) => `dropdown_item ${isActive ? "active" : ""}`}
+                  >
                     <i className='bx bx-user'></i>
                     <span>Member</span>
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
             </div>

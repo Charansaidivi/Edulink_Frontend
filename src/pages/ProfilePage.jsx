@@ -8,7 +8,6 @@ import CountdownTimer from '../components/CountdownTimer';
 import { useNavigate } from 'react-router-dom';
 import './css/ProfilePage.css';
 
-// Update the SessionList component to handle different session types
 const SessionList = ({ sessions, handleJoinSession, isTeaching, handleViewDetails }) => (
   <div className="session-list">
     {sessions.length > 0 ? (
@@ -62,8 +61,7 @@ const ProfilePage = () => {
   const { profileImage, username, email, enrolledSessions, teachingSessions } = useSelector((state) => state.profile);
   const [sessionDetails, setSessionDetails] = useState([]);
   const [teachingSessionDetails, setTeachingSessionDetails] = useState([]);
-  const [showEnrolled, setShowEnrolled] = useState(false);
-  const [showTeaching, setShowTeaching] = useState(false);
+  const [activeTab, setActiveTab] = useState('enrolled');
   const [loading, setLoading] = useState(false);
   const [enrolledDataFetched, setEnrolledDataFetched] = useState(false);
   const [teachingDataFetched, setTeachingDataFetched] = useState(false);
@@ -88,14 +86,13 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        if (showEnrolled && !enrolledDataFetched && enrolledSessions?.length > 0) {
+        if (activeTab === 'enrolled' && !enrolledDataFetched && enrolledSessions?.length > 0) {
           setLoading(true);
           const response = await axios.post(`${API_URL}/student/sessions/details`, { sessionIds: enrolledSessions });
-          console.log("Enrolled Sessions Data:", response.data);
           setSessionDetails(response.data);
           setEnrolledDataFetched(true);
         }
-        if (showTeaching && !teachingDataFetched && teachingSessions?.length > 0) {
+        if (activeTab === 'teaching' && !teachingDataFetched && teachingSessions?.length > 0) {
           setLoading(true);
           const response = await axios.post(`${API_URL}/student/sessions/details`, { sessionIds: teachingSessions });
           setTeachingSessionDetails(response.data);
@@ -109,7 +106,7 @@ const ProfilePage = () => {
     };
 
     fetchSessions();
-  }, [showEnrolled, showTeaching, enrolledSessions, teachingSessions, enrolledDataFetched, teachingDataFetched]);
+  }, [activeTab, enrolledSessions, teachingSessions, enrolledDataFetched, teachingDataFetched]);
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -145,20 +142,6 @@ const ProfilePage = () => {
     navigate(`/session-details/${sessionId}`);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('loginToken');
-    dispatch(setProfile({}));
-    window.location.href = '/';
-  };
-
-  const toggleEnrolledSessions = () => {
-    setShowEnrolled(!showEnrolled);
-  };
-
-  const toggleTeachingSessions = () => {
-    setShowTeaching(!showTeaching);
-  };
-
   return (
     <>
       <Navbar />
@@ -185,31 +168,58 @@ const ProfilePage = () => {
             <p>{email}</p>
           </div>
           
-          <button onClick={toggleEnrolledSessions}>
-            {showEnrolled ? 'Hide Enrolled Sessions' : 'Show Enrolled Sessions'}
-          </button>
-          {showEnrolled && (
+          <div className="tabs">
+            <button 
+              className={`tab-button ${activeTab === 'enrolled' ? 'active' : ''}`} 
+              onClick={() => setActiveTab('enrolled')}
+            >
+              Enrolled Sessions
+            </button>
+            <button 
+              className={`tab-button ${activeTab === 'teaching' ? 'active' : ''}`} 
+              onClick={() => setActiveTab('teaching')}
+            >
+              Teaching Sessions
+            </button>
+            <button 
+              className={`tab-button ${activeTab === 'createdProjects' ? 'active' : ''}`} 
+              onClick={() => setActiveTab('createdProjects')}
+            >
+              Created Projects
+            </button>
+            <button 
+              className={`tab-button ${activeTab === 'enrolledProjects' ? 'active' : ''}`} 
+              onClick={() => setActiveTab('enrolledProjects')}
+            >
+              Enrolled Projects
+            </button>
+          </div>
+
+          {activeTab === 'enrolled' && (
             <div className="enrolled-sessions">
               {loading ? <p>Loading...</p> : <SessionList sessions={sessionDetails} handleJoinSession={handleJoinSession} isTeaching={false} />}
             </div>
           )}
-
-          <button onClick={toggleTeachingSessions}>
-            {showTeaching ? 'Hide Teaching Sessions' : 'Show Teaching Sessions'}
-          </button>
-          {showTeaching && (
+          {activeTab === 'teaching' && (
             <div className="teaching-sessions">
               {loading ? <p>Loading...</p> : <SessionList sessions={teachingSessionDetails} handleJoinSession={handleJoinSession} isTeaching={true} handleViewDetails={handleViewDetails} />}
             </div>
           )}
-
-          <button className="logout-button" onClick={handleLogout}>
-            Logout
-          </button>
+          {activeTab === 'createdProjects' && (
+            <div className="created-projects">
+              {/* Replace with your Created Projects component or markup */}
+              <p>No created projects found.</p>
+            </div>
+          )}
+          {activeTab === 'enrolledProjects' && (
+            <div className="enrolled-projects">
+              {/* Replace with your Enrolled Projects component or markup */}
+              <p>No enrolled projects found.</p>
+            </div>
+          )}
         </div>
       </div>
     </>
   );
 };
-
 export default ProfilePage;

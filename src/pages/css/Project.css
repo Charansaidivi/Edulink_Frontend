@@ -1,0 +1,109 @@
+/* Project.css */
+
+.min-h-screen {
+    min-height: 100vh;
+}
+
+.bg-gray-50 {
+    background-color: #f9fafb;
+}
+
+.py-8 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.max-w-3xl {
+    max-width: 768px;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.shadow-md {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.p-6 {
+    padding: 1.5rem;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.text-gray-600 {
+    color: #4b5563;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-6 {
+    margin-bottom: 1.5rem;
+}
+
+.relative {
+    position: relative;
+}
+
+.dropdown-button {
+    background-color: #4f46e5; /* Indigo background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+.dropdown-button:hover {
+    background-color: #4338ca; /* Darker indigo on hover */
+}
+
+.dropdown-menu {
+    position: absolute; /* Positioning */
+    background-color: white; /* White background */
+    border: 1px solid #d1d5db; /* Gray border */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+    z-index: 10; /* Ensure it appears above other elements */
+    margin-top: 5px; /* Space between button and dropdown */
+    width: 100%; /* Full width */
+}
+
+.dropdown-item {
+    display: block; /* Block display */
+    padding: 10px 15px; /* Padding */
+    color: #4b5563; /* Text color */
+    text-align: left; /* Left align text */
+    width: 100%; /* Full width */
+    border: none; /* No border */
+    background: none; /* No background */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+.dropdown-item:hover {
+    background-color: #f3f4f6; /* Light gray on hover */
+}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar';
 import axios from 'axios'; // Import axios
-import './css/Leader.css'; // Import the CSS file for Leader
+import './Leader.css'; // Import the CSS file for Leader
 
 const Leader = () => {
     const [formData, setFormData] = useState({

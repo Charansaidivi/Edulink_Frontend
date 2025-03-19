@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { API_URL } from '../data/apiData';
+import { API_URL } from '../../data/apiData';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';

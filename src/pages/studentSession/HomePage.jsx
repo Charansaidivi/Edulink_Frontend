@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProfile } from '../redux/profileSlice';
-import { API_URL } from '../data/apiData';
-import Navbar from '../components/Navbar';
+import { setProfile } from '../../redux/profileSlice';
+import { API_URL } from '../../data/apiData';
+import Navbar from '../../components/Navbar';
 import axios from 'axios';
-import './css/HomePage.css';
+import './HomePage.css';
 import { FaSearch } from 'react-icons/fa';
 
 const HomePage = () => {

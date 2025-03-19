@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { API_URL } from '../data/apiData';
+import { API_URL } from '../../data/apiData';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/Reset.css';
+import './Reset.css';
 
 const RequestPasswordReset = () => {
   const [email, setEmail] = useState('');

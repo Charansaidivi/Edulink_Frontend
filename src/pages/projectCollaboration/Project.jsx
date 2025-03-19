@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
-import './css/Project.css'; // Import the CSS file for Project
+import './Project.css'; // Import the CSS file for Project
 
 const Project = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

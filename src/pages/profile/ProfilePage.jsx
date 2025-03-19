@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setProfile } from '../redux/profileSlice'; 
+import { setProfile } from '../../redux/profileSlice'; 
 import axios from 'axios';
-import { API_URL } from '../data/apiData';
-import Navbar from '../components/Navbar';
-import CountdownTimer from '../components/CountdownTimer';
+import { API_URL } from '../../data/apiData';
+import Navbar from '../../components/Navbar';
+import CountdownTimer from '../../components/CountdownTimer';
 import { useNavigate } from 'react-router-dom';
-import './css/ProfilePage.css';
+import './ProfilePage.css';
 
 const SessionList = ({ sessions, handleJoinSession, isTeaching, handleViewDetails }) => (
   <div className="session-list">
@@ -161,7 +161,7 @@ const ProfilePage = () => {
       username: editedUsername !== username ? editedUsername : undefined,
       linkedIn: editedLinkedIn !== linkedIn ? editedLinkedIn : undefined,
     };
-
+    
     // Optionally, if nothing changed, you can decide not to call the API:
     if (payload.username === undefined && payload.linkedIn === undefined) {
       alert("No changes to update");

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
-import { API_URL } from '../data/apiData';
-import './css/CreateClass.css'; // Import the CSS file
+import Navbar from '../../components/Navbar';
+import { API_URL } from '../../data/apiData';
+import './CreateClass.css'; // Import the CSS file
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 

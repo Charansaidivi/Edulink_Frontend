@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { API_URL } from '../data/apiData';
+import { API_URL } from '../../data/apiData';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { ToastContainer, toast } from 'react-toastify';

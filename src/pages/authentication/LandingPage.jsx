@@ -1,5 +1,5 @@
 import React from 'react'
-import LandingNav from '../components/LandingNav'
+import LandingNav from '../../components/LandingNav'
 const LandingPage = () => {
   return (
     <div>

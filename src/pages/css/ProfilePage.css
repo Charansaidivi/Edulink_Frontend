@@ -20,7 +20,9 @@ body.nav-expanded .profile-wrapper {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Ensure the profile container is positioned relatively */
 .profile-container {
+  position: relative;
   display: flex;
   align-items: center;
   margin-bottom: 20px;
@@ -152,4 +154,40 @@ body.nav-expanded .profile-wrapper {
 .no-data-illustration {
   width: 300px;  /* increased from 100px */
   height: 300px; /* increased from 100px */
+}
+
+.add-linkedIn {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Style for the global edit icon on profile (top right corner) */
+.profile-edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+/* Optional styling for input fields in edit mode */
+.edit-input {
+  font-size: 18px;
+  padding: 5px;
+  margin: 5px 0;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Style for save button */
+.save-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
 }

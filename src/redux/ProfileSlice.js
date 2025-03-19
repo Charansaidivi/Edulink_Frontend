@@ -7,6 +7,7 @@ const initialState = {
   username: '',
   email: '',
   ratings: 0,
+  linkedIn: null,  // New field for LinkedIn URL
 };
 
 const profileSlice = createSlice({
@@ -30,4 +31,3 @@ const profileSlice = createSlice({
 
 export const { setProfile, setProfileImage, setEnrolledSessions, setTeachingSessions } = profileSlice.actions;
 export default profileSlice.reducer;
-        

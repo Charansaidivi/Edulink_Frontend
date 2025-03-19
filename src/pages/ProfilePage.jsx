@@ -58,15 +58,29 @@ const SessionList = ({ sessions, handleJoinSession, isTeaching, handleViewDetail
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { profileImage, username, email, enrolledSessions, teachingSessions } = useSelector((state) => state.profile);
+  const { profileImage, username, email, linkedIn, enrolledSessions, teachingSessions } = useSelector((state) => state.profile);
   const [sessionDetails, setSessionDetails] = useState([]);
   const [teachingSessionDetails, setTeachingSessionDetails] = useState([]);
   const [activeTab, setActiveTab] = useState('enrolled');
   const [loading, setLoading] = useState(false);
   const [enrolledDataFetched, setEnrolledDataFetched] = useState(false);
   const [teachingDataFetched, setTeachingDataFetched] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedUsername, setEditedUsername] = useState(username);
+  const [editedLinkedIn, setEditedLinkedIn] = useState(linkedIn);
 
-  const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
+  const userId = localStorage.getItem('loginToken') 
+    ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId 
+    : "";
+
+  useEffect(() => {
+    if (username) {
+      setEditedUsername(username);
+    }
+    if (linkedIn) {
+      setEditedLinkedIn(linkedIn);
+    }
+  }, [username, linkedIn]);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -79,7 +93,6 @@ const ProfilePage = () => {
         }
       }
     };
-
     fetchUserProfile();
   }, [dispatch, userId]);
 
@@ -104,7 +117,6 @@ const ProfilePage = () => {
         setLoading(false);
       }
     };
-
     fetchSessions();
   }, [activeTab, enrolledSessions, teachingSessions, enrolledDataFetched, teachingDataFetched]);
 
@@ -114,7 +126,6 @@ const ProfilePage = () => {
     if (file) {
       const formData = new FormData();
       formData.append('media', file);
-
       try {
         const response = await axios.post(
           `${API_URL}/student/upload/${userId}`, 
@@ -142,12 +153,51 @@ const ProfilePage = () => {
     navigate(`/session-details/${sessionId}`);
   };
 
+  const handleSaveProfile = async () => {
+    const token = localStorage.getItem('loginToken');
+    
+    // Only update fields that have changed; unchanged fields will be undefined.
+    const payload = {
+      username: editedUsername !== username ? editedUsername : undefined,
+      linkedIn: editedLinkedIn !== linkedIn ? editedLinkedIn : undefined,
+    };
+
+    // Optionally, if nothing changed, you can decide not to call the API:
+    if (payload.username === undefined && payload.linkedIn === undefined) {
+      alert("No changes to update");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `${API_URL}/student/profile/update/${userId}`,
+        payload,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
+      // Update the redux profile with new details returned by the API
+      dispatch(setProfile({ 
+        username: response.data.username,
+        linkedIn: response.data.linkedIn
+      }));
+      setIsEditing(false);
+      alert("Profile updated successfully");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Error updating profile");
+    }
+  };
+
   return (
     <>
       <Navbar />
       <div className="profile-wrapper">
         <div className="profile-page">
-          <div className="profile-container">
+          <div className="profile-container" style={{ position: 'relative' }}>
             <div className="profile-image-wrapper">
               <img 
                 src={profileImage ? `${API_URL}/uploads/user_profiles/${profileImage}` : '/default.jpg'} 
@@ -162,10 +212,64 @@ const ProfilePage = () => {
               />
               <label htmlFor="file-upload" className="edit-icon">✎</label>
             </div>
-          </div>  
-          <div className="profile-info">
-            <h2>{username}</h2>
-            <p>{email}</p>
+            <div className="profile-info">
+              {isEditing ? (
+                <>
+                  <input 
+                    type="text" 
+                    value={editedUsername} 
+                    onChange={(e) => setEditedUsername(e.target.value)} 
+                    className="edit-input"
+                  />
+                  <p>
+                    <i className="bx bx-envelope" style={{ marginRight: '5px' }}></i>
+                    {email}
+                  </p>
+                  <p>
+                    <i 
+                      className="bx bxl-linkedin" 
+                      style={{ marginRight: '5px', color: '#0077b5', fontSize: '20px' }}
+                    ></i>
+                    <input 
+                      type="text" 
+                      value={editedLinkedIn || ''} 
+                      onChange={(e) => setEditedLinkedIn(e.target.value)} 
+                      placeholder="Add LinkedIn URL"
+                      className="edit-input"
+                    />
+                  </p>
+                  <button onClick={handleSaveProfile} className="save-btn">Save</button>
+                </>
+              ) : (
+                <>
+                  <h2>{username}</h2>
+                  <p>
+                    <i className="bx bx-envelope" style={{ marginRight: '5px' }}></i>
+                    {email}
+                  </p>
+                  <p>
+                    <i 
+                      className="bx bxl-linkedin" 
+                      style={{ marginRight: '5px', color: '#0077b5', fontSize: '20px' }}
+                    ></i>
+                    {linkedIn ? (
+                      <a href={linkedIn} target="_blank" rel="noopener noreferrer">
+                        {linkedIn}
+                      </a>
+                    ) : (
+                      <span className="add-linkedIn">Add LinkedIn URL</span>
+                    )}
+                  </p>
+                </>
+              )}
+            </div>
+            <div 
+              className="profile-edit-icon" 
+              onClick={() => setIsEditing(!isEditing)}
+              title="Edit Profile"
+            >
+              <i className='bx bx-edit'></i>
+            </div>
           </div>
           
           <div className="tabs">
@@ -207,13 +311,11 @@ const ProfilePage = () => {
           )}
           {activeTab === 'createdProjects' && (
             <div className="created-projects">
-              {/* Replace with your Created Projects component or markup */}
               <p>No created projects found.</p>
             </div>
           )}
           {activeTab === 'enrolledProjects' && (
             <div className="enrolled-projects">
-              {/* Replace with your Enrolled Projects component or markup */}
               <p>No enrolled projects found.</p>
             </div>
           )}
@@ -222,4 +324,5 @@ const ProfilePage = () => {
     </>
   );
 };
+
 export default ProfilePage;

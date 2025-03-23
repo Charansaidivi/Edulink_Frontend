@@ -151,24 +151,24 @@ const HomePage = () => {
               className="search-input"
             />
           </div>
-          <div className="select">
+          <div className="home-select">
             <div
-              className="selected"
-              data-default="All"
+              className="home-selected"
               onClick={() => setShowOptions(!showOptions)}
+              data-default="All"
             >
               {selectedTopic}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="1em"
                 viewBox="0 0 512 512"
-                className="arrow"
+                className="home-arrow"
               >
                 <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
               </svg>
             </div>
             {showOptions && (
-              <div className="options">
+              <div className="home-options">
                 {topicOptions.map((topic) => (
                   <div key={topic} title={topic}>
                     <input
@@ -179,7 +179,7 @@ const HomePage = () => {
                       checked={selectedTopic === topic}
                       onChange={handleTopicChange}
                     />
-                    <label className="option" htmlFor={topic}>{topic}</label>
+                    <label className="home-option" htmlFor={topic}>{topic}</label>
                   </div>
                 ))}
               </div>

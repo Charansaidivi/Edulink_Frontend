@@ -371,113 +371,6 @@
   color: #666;
 }
 
-/* Custom select dropdown styles for Choose Topic */
-.select {
-  margin-top: 20px;
-  width: fit-content;
-  cursor: pointer;
-  position: relative;
-  transition: 300ms;
-  color: white;
-  overflow: visible; /* Changed from hidden to visible */
-  z-index: 1000; /* Lower z-index than navbar */
-}
-
-.selected {
-  width: 270px;
-  height: 45px;
-  margin-bottom: 3px;
-  background-color: #2D9CDB;
-  padding: 5px;
-  border-radius: 5px;
-  position: relative;
-  z-index: 1000; /* Lower z-index than navbar */
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.arrow {
-  position: relative;
-  right: 0px;
-  height: 10px;
-  transform: rotate(-90deg);
-  width: 25px;
-  fill: white;
-  z-index: 100000;
-  transition: 300ms;
-}
-
-.options {
-  display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-  padding: 5px;
-  background-color:#2D9CDB;
-  position: absolute; /* Changed from relative */
-  top: 100%; /* Position below the selected item */
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  visibility: hidden;
-  transition: 300ms;
-  z-index: 1000; /* Lower z-index than navbar */
-}
-
-.select:hover > .options {
-  opacity: 1;
-  visibility: visible;
-  top: 100%; /* Keep it below the selected item */
-}
-
-.option {
-  border-radius: 5px;
-  padding: 5px;
-  transition: 300ms;
-  background-color: #2D9CDB;
-  width: 260px;
-  height: 35px;
-  font-size: 15px;
-}
-.option:hover {
-  background-color: white;
-  color: black;
-  font-weight: bold;
-}
-
-.options input[type="radio"] {
-  display: none;
-}
-
-.options label {
-  display: inline-block;
-}
-.options label::before {
-  content: attr(data-txt);
-}
-
-.options input[type="radio"]:checked + label {
-  display: none;
-}
-
-.options input[type="radio"]#all:checked + label {
-  display: none;
-}
-
-.select:has(.options input[type="radio"]#all:checked) .selected::before {
-  content: attr(data-default);
-}
-.select:has(.options input[type="radio"]#option-1:checked) .selected::before {
-  content: attr(data-one);
-}
-.select:has(.options input[type="radio"]#option-2:checked) .selected::before {
-  content: attr(data-two);
-}
-.select:has(.options input[type="radio"]#option-3:checked) .selected::before {
-  content: attr(data-three);
-}
-
 /* Update navbar z-index */
 #navbar {
   position: fixed;
@@ -490,4 +383,114 @@
   align-items: center;
   justify-content: space-between;
   z-index: 9999; /* Higher z-index for navbar */
+}
+
+/* HomePage dropdown styles */
+.home-select {
+  margin-top: 20px;
+  width: fit-content;
+  cursor: pointer;
+  position: relative;
+  transition: 300ms;
+  color: white;
+  overflow: visible;
+  z-index: 1000;
+}
+
+.home-selected {
+  width: 270px;
+  height: 45px;
+  margin-bottom: 3px;
+  background-color: #2D9CDB;
+  padding: 5px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 1000;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-arrow {
+  position: relative;
+  right: 0;
+  height: 10px;
+  width: 25px;
+  transform: rotate(-90deg);
+  fill: white;
+  transition: 300ms;
+  z-index: 100000;
+}
+
+.home-options {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #2D9CDB;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: 300ms;
+  z-index: 1000;
+}
+
+.home-select:hover > .home-options {
+  opacity: 1;
+  visibility: visible;
+  top: 100%;
+}
+
+.home-option {
+  border-radius: 5px;
+  padding: 5px;
+  transition: 300ms;
+  background-color: #2D9CDB;
+  width: 260px;
+  height: 35px;
+  font-size: 15px;
+}
+
+.home-option:hover {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+}
+
+/* Hide radio inputs for styling */
+.home-options input[type="radio"] {
+  display: none;
+}
+
+.home-options label {
+  display: inline-block;
+}
+
+/* If you need to use pseudo-elements to display text via data attributes */
+.home-options label::before {
+  content: attr(data-txt);
+}
+
+/* Option: if a radio input is checked, you can hide its label (optional) */
+.home-options input[type="radio"]:checked + label {
+  display: none;
+}
+
+/* Example for default and custom content on .home-selected via :before pseudo-element */
+/* (Adjust data attribute names as needed) */
+.home-select:has(.home-options input[type="radio"]#all:checked) .home-selected::before {
+  content: attr(data-default);
+}
+.home-select:has(.home-options input[type="radio"]#option-1:checked) .home-selected::before {
+  content: attr(data-one);
+}
+.home-select:has(.home-options input[type="radio"]#option-2:checked) .home-selected::before {
+  content: attr(data-two);
+}
+.home-select:has(.home-options input[type="radio"]#option-3:checked) .home-selected::before {
+  content: attr(data-three);
 }

@@ -191,3 +191,84 @@ body.nav-expanded .profile-wrapper {
   cursor: pointer;
   margin-top: 10px;
 }
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.project-card {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+.project-card h3 {
+    color: #2D9CDB;
+    margin-bottom: 10px;
+}
+
+.project-card p {
+    margin: 8px 0;
+    color: #666;
+}
+
+.status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+.status-badge.pending {
+    background-color: #ffd700;
+    color: #000;
+}
+
+.status-badge.accepted {
+    background-color: #4caf50;
+    color: white;
+}
+
+.status-badge.declined {
+    background-color: #f44336;
+    color: white;
+}
+
+.view-details-btn {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.view-details-btn:hover {
+    background-color: #1976d2;
+}
+
+.no-data-container {
+    text-align: center;
+    padding: 40px;
+}
+
+.no-data-illustration {
+    max-width: 300px;
+    margin-bottom: 20px;
+}

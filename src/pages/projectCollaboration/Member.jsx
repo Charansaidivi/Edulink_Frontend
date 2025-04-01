@@ -26,6 +26,9 @@ const Member = () => {
     ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId
     : "";
 
+  // Extract the token from localStorage
+  const token = localStorage.getItem('loginToken');
+
   // Fetch projects based on search and selected sector filter
   useEffect(() => {
     const fetchProjects = async () => {
@@ -42,7 +45,11 @@ const Member = () => {
         if (params.toString()) {
           url += `?${params.toString()}`;
         }
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}` // Include the token
+          }
+        });
         setProjects(response.data);
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -57,7 +64,11 @@ const Member = () => {
   useEffect(() => {
     const fetchSectors = async () => {
       try {
-        const response = await axios.get(`${API_URL}/project/sectors`);
+        const response = await axios.get(`${API_URL}/project/sectors`, {
+          headers: {
+            Authorization: `Bearer ${token}` // Include the token
+          }
+        });
         // Add "All" as default option
         setAvailableSectors(['All', ...response.data]);
       } catch (error) {
@@ -84,6 +95,10 @@ const Member = () => {
         userId,
         description: interestDesc,
         linkedIn: finalLinkedIn
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}` // Include the token
+        }
       });
       alert("Interest submitted successfully");
       setShowModal(false);

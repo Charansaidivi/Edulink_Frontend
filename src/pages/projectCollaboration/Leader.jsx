@@ -2,6 +2,25 @@ import React, { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import axios from 'axios'; // Import axios
 import './Leader.css'; // Import the CSS file for Leader
+import { API_URL } from '../../data/apiData';
+
+// Extract the token from localStorage
+const token = localStorage.getItem('loginToken');
+
+// Create a new project
+const createProject = async (dataToSend) => {
+  try {
+    const response = await axios.post(`${API_URL}/project/create`, dataToSend, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}` // Include the token
+      }
+    });
+    console.log("Project created successfully:", response.data);
+  } catch (error) {
+    console.error("Error creating project:", error);
+  }
+};
 
 const Leader = () => {
     const [formData, setFormData] = useState({
@@ -40,13 +59,8 @@ const Leader = () => {
             console.log('Form Data:', dataToSend); // Log form data
 
             // Send the form data to the backend
-            const response = await axios.post('http://localhost:4005/project/create-projects', dataToSend, {
-                headers: {
-                    'Content-Type': 'application/json' // Set content type to JSON
-                }
-            });
+            await createProject(dataToSend);
 
-            console.log('Project created successfully:', response.data);
             // Optionally, you can reset the form or redirect the user
             setFormData({
                 sector: '',

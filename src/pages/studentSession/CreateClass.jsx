@@ -167,171 +167,183 @@ const CreateClass = () => {
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
           <Navbar/>
-          <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6" id='newClass'>
-            <div className="flex justify-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-600 text-center w-full">Create New Class</h2>
-            </div>
-    
-            <form onSubmit={handleSubmit} className="space-y-6">    
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                {/* Topic Name */}
+          <div className="max-w-3xl mx-auto">
+            <form onSubmit={handleSubmit} className="form">
+              <span className="text-2xl">Create New Class</span>
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  {/* Topic Name */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Topic Name</label>
+                    <input
+                      type="text"
+                      name="topicName"
+                      value={formData.topicName}
+                      onChange={handleChange}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                    />
+                  </div>
+
+                  {/* Topic Type Dropdown */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Topic Type</label>
+                    <select
+                      name="topicType"
+                      value={formData.topicType}
+                      onChange={handleChange}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                    >
+                      <option value="">Select a topic</option>
+                      <option value="Java">Java</option>
+                      <option value="Python">Python</option>
+                      <option value="C++">C++</option>
+                      <option value="JavaScript">JavaScript</option>
+                      <option value="Ruby">Ruby</option>
+                      <option value="PHP">PHP</option>
+                      <option value="C#">C#</option>
+                      <option value="Go">Go</option>
+                      <option value="Swift">Swift</option>
+                      <option value="Kotlin">Kotlin</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  </div>
+
+                  {/* Start Date */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Start Date</label>
+                    <input
+                      type="date"
+                      name="startDate"
+                      value={formData.startDate}
+                      onChange={handleChange}
+                      min={getCurrentDate()}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                    />
+                  </div>
+
+                  {/* End Date */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">End Date</label>
+                    <input
+                      type="date"
+                      name="endDate"
+                      value={formData.endDate}
+                      onChange={handleChange}
+                      min={formData.startDate || getCurrentDate()}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                    />
+                  </div>
+
+                  {/* Start Time */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Start Time</label>
+                    <input
+                      type="time"
+                      name="startTime"
+                      value={formData.startTime}
+                      onChange={handleTimeValidation}
+                      min={formData.startDate === getCurrentDate() ? getCurrentTime() : undefined}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                    />
+                  </div>
+
+                  {/* End Time */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">End Time</label>
+                    <input
+                      type="time"
+                      name="endTime"
+                      value={formData.endTime}
+                      onChange={handleTimeValidation}
+                      min={formData.startTime}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                    />
+                  </div>
+
+                  {/* Max Slots */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Maximum Slots</label>
+                    <input
+                      type="number"
+                      name="maxSlots"
+                      value={formData.maxSlots}
+                      onChange={handleChange}
+                      required
+                      min="1"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Meeting Link */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Topic Name</label>
-                  <input
-                    type="text"
-                    name="topicName"
-                    value={formData.topicName}
+                    <label className="block text-sm font-medium text-gray-700">Meeting Link</label>
+                    <input
+                      type="url"
+                      name="meetingLink"
+                      value={formData.meetingLink}
+                      onChange={handleChange}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                      placeholder="https://meet.google.com/..."
+                    />
+                  </div>
+
+                {/* Description */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Description</label>
+                  <textarea
+                    name="description"
+                    value={formData.description}
                     onChange={handleChange}
-                    required
+                    rows="4"
                     className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                  />
+                  ></textarea>
                 </div>
 
-                {/* Topic Type Dropdown */}
+                {/* Media File Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Topic Type</label>
-                  <select
-                    name="topicType"
-                    value={formData.topicType}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                  >
-                    <option value="">Select a topic</option>
-                    <option value="Java">Java</option>
-                    <option value="Python">Python</option>
-                    <option value="C++">C++</option>
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="Ruby">Ruby</option>
-                    <option value="PHP">PHP</option>
-                    <option value="C#">C#</option>
-                    <option value="Go">Go</option>
-                    <option value="Swift">Swift</option>
-                    <option value="Kotlin">Kotlin</option>
-                    <option value="Others">Others</option>
-                  </select>
-                </div>
-
-                {/* Start Date */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Start Date</label>
-                  <input
-                    type="date"
-                    name="startDate"
-                    value={formData.startDate}
-                    onChange={handleChange}
-                    min={getCurrentDate()}
-                    required
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                  />
-                </div>
-
-                {/* End Date */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">End Date</label>
-                  <input
-                    type="date"
-                    name="endDate"
-                    value={formData.endDate}
-                    onChange={handleChange}
-                    min={formData.startDate || getCurrentDate()}
-                    required
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                  />
-                </div>
-
-                {/* Start Time */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Start Time</label>
-                  <input
-                    type="time"
-                    name="startTime"
-                    value={formData.startTime}
-                    onChange={handleTimeValidation}
-                    min={formData.startDate === getCurrentDate() ? getCurrentTime() : undefined}
-                    required
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                  />
-                </div>
-
-                {/* End Time */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">End Time</label>
-                  <input
-                    type="time"
-                    name="endTime"
-                    value={formData.endTime}
-                    onChange={handleTimeValidation}
-                    min={formData.startTime}
-                    required
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                  />
-                </div>
-
-                {/* Max Slots */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Maximum Slots</label>
-                  <input
-                    type="number"
-                    name="maxSlots"
-                    value={formData.maxSlots}
-                    onChange={handleChange}
-                    required
-                    min="1"
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                  />
+                  <label className="block text-sm font-medium text-gray-700">Upload Media</label>
+                  <div className="file-upload">
+                    <span className="file-wrapper">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 71 67">
+                        <path
+                          stroke-width="5"
+                          stroke="black"
+                          d="M41.7322 11.7678L42.4645 12.5H43.5H68.5V64.5H2.5V2.5H32.4645L41.7322 11.7678Z"
+                        ></path>
+                      </svg>
+                      <span className="file-front"></span>
+                    </span>
+                    <input
+                      type="file"
+                      name="media"
+                      onChange={handleChange}
+                      className="file-input"
+                    />
+                    <span className="file-name">
+                      {formData.media ? formData.media.name : 'Upload a file'}
+                    </span>
+                  </div>
                 </div>
               </div>
-
-              {/* Meeting Link */}
-              <div>
-                  <label className="block text-sm font-medium text-gray-700">Meeting Link</label>
-                  <input
-                    type="url"
-                    name="meetingLink"
-                    value={formData.meetingLink}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                    placeholder="https://meet.google.com/..."
-                  />
-                </div>
-
-              {/* Description */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Description</label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  rows="4"
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                ></textarea>
-              </div>
-
-              {/* Media File Upload */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Upload Media</label>
-                <input
-                  type="file"
-                  name="media"
-                  onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                />
-              </div>
-
-              {/* Submit Buttons */}
               <div className="flex justify-end space-x-4">
                 <button
                   type="button"
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
+                  className="btn btn-cancel"
                   disabled={loading}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md disabled:opacity-50"
+                  className="btn"
                   disabled={loading}
                 >
                   {loading ? 'Creating...' : 'Create Class'}

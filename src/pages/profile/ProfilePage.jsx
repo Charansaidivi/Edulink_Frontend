@@ -68,6 +68,9 @@ const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedUsername, setEditedUsername] = useState(username);
   const [editedLinkedIn, setEditedLinkedIn] = useState(linkedIn);
+  const [enrolledProjects, setEnrolledProjects] = useState([]);
+  const [createdProjects, setCreatedProjects] = useState([]);
+  const [projectsLoading, setProjectsLoading] = useState(false);
 
   const userId = localStorage.getItem('loginToken') 
     ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId 
@@ -119,6 +122,24 @@ const ProfilePage = () => {
     };
     fetchSessions();
   }, [activeTab, enrolledSessions, teachingSessions, enrolledDataFetched, teachingDataFetched]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+        if (activeTab === 'enrolledProjects' || activeTab === 'createdProjects') {
+            setProjectsLoading(true);
+            try {
+                const response = await axios.get(`${API_URL}/student/projects/${userId}`);
+                setEnrolledProjects(response.data.enrolledProjects);
+                setCreatedProjects(response.data.createdProjects);
+            } catch (error) {
+                console.error("Error fetching projects:", error);
+            } finally {
+                setProjectsLoading(false);
+            }
+        }
+    };
+    fetchProjects();
+}, [activeTab, userId]);
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -311,14 +332,71 @@ const ProfilePage = () => {
           )}
           {activeTab === 'createdProjects' && (
             <div className="created-projects">
-              <p>No created projects found.</p>
+                {projectsLoading ? (
+                    <p>Loading...</p>
+                ) : createdProjects.length === 0 ? (
+                    <div className="no-data-container">
+                        <img 
+                            src="/Nodata.gif" 
+                            alt="No projects found" 
+                            className="no-data-illustration" 
+                        />
+                        <p>No created projects found.</p>
+                    </div>
+                ) : (
+                    <div className="project-grid">
+                        {createdProjects.map((project) => (
+                            <div key={project._id} className="project-card">
+                                <h3>{project.sector}</h3>
+                                <p>{project.description}</p>
+                                <p><strong>Skills Required:</strong> {project.skillsRequired.join(', ')}</p>
+                                <p><strong>Team Size:</strong> {project.teamSize}</p>
+                                <p><strong>Deadline:</strong> {new Date(project.deadline).toLocaleDateString()}</p>
+                                <p><strong>Enrolled Students:</strong> {project.enrolledStudents?.length || 0}</p>
+                                <button 
+                                    className="edit-btn" 
+                                    onClick={() => navigate(`/project-details/${project._id}`)}
+                                >
+                                    Edit
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
-          )}
-          {activeTab === 'enrolledProjects' && (
+        )}
+        
+        {activeTab === 'enrolledProjects' && (
             <div className="enrolled-projects">
-              <p>No enrolled projects found.</p>
+                {projectsLoading ? (
+                    <p>Loading...</p>
+                ) : enrolledProjects.length === 0 ? (
+                    <div className="no-data-container">
+                        <img 
+                            src="/Nodata.gif" 
+                            alt="No projects found" 
+                            className="no-data-illustration" 
+                        />
+                        <p>No enrolled projects found.</p>
+                    </div>
+                ) : (
+                    <div className="project-grid">
+                        {enrolledProjects.map((project) => (
+                            <div key={project._id} className="project-card">
+                                <div className={`status-badge ${project.status}`}>
+                                    {project.status}
+                                </div>
+                                <h3>{project.sector}</h3>
+                                <p>{project.description}</p>
+                                <p><strong>Skills Required:</strong> {project.skillsRequired.join(', ')}</p>
+                                <p><strong>Team Size:</strong> {project.teamSize}</p>
+                                <p><strong>Deadline:</strong> {new Date(project.deadline).toLocaleDateString()}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
-          )}
+        )}
         </div>
       </div>
     </>

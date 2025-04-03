@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProfile } from '../redux/profileSlice';
@@ -8,41 +8,50 @@ import 'boxicons/css/boxicons.min.css';
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [bodyPd, setBodyPd] = useState(false);
+  const [bodyPd, setBodyPd] = useState(() => {
+    // Initialize from localStorage
+    return localStorage.getItem('sidebarState') === 'open';
+  });
   const [activeNav, setActiveNav] = useState("home");
   const profileImageFromStore = useSelector((state) => state.profile.profileImage);
 
+  // Effect to apply sidebar state on mount and state changes
+  useEffect(() => {
+    const nav = document.getElementById('nav-bar');
+    const toggle = document.getElementById('header-toggle');
+    const bodypdEl = document.getElementById('body-pd');
+    const header = document.getElementById('header');
+    const headerToggle = document.querySelector('.header_toggle');
+
+    if (bodyPd) {
+      nav.classList.add('show');
+      toggle.classList.add('bx-x');
+      headerToggle.classList.add('expanded');
+      bodypdEl.classList.add('body-pd');
+      header.classList.add('body-pd');
+      document.body.classList.add('nav-expanded');
+    } else {
+      nav.classList.remove('show');
+      toggle.classList.remove('bx-x');
+      headerToggle.classList.remove('expanded');
+      bodypdEl.classList.remove('body-pd');
+      header.classList.remove('body-pd');
+      document.body.classList.remove('nav-expanded');
+    }
+  }, [bodyPd]);
+
   const handleLogout = () => {
     localStorage.removeItem('loginToken');
+    localStorage.removeItem('sidebarState'); // Clear sidebar state on logout
     dispatch(setProfile({}));
     navigate('/login');
   };
 
   const handleToggle = () => {
-    const toggle = document.getElementById('header-toggle');
-    const nav = document.getElementById('nav-bar');
-    const bodypdEl = document.getElementById('body-pd');
-    const header = document.getElementById('header');
-    const headerToggle = document.querySelector('.header_toggle');
-
-    // Toggle sidebar display
-    nav.classList.toggle('show');
-    // Change icon (rotate menu into x)
-    toggle.classList.toggle('bx-x');
-    // Move toggle button along with sidebar expansion
-    headerToggle.classList.toggle('expanded');
-    // Adjust padding for body and header
-    bodypdEl.classList.toggle('body-pd');
-    header.classList.toggle('body-pd');
-
-    // Add or remove global nav-expanded class to body
-    if (nav.classList.contains('show')) {
-      document.body.classList.add('nav-expanded');
-    } else {
-      document.body.classList.remove('nav-expanded');
-    }
-    
-    setBodyPd(!bodyPd);
+    const newState = !bodyPd;
+    setBodyPd(newState);
+    // Save state to localStorage
+    localStorage.setItem('sidebarState', newState ? 'open' : 'closed');
   };
 
   return (
@@ -55,6 +64,7 @@ const Navbar = () => {
           <img
             src={profileImageFromStore ? `${API_URL}/uploads/user_profiles/${profileImageFromStore}` : '/default.jpg'}
             alt="Profile"
+            className="navbar-profile-image"
           />
         </div>
       </header>

@@ -23,6 +23,9 @@ const CreateClass = () => {
       topicType:''
     });
 
+    // Add this state for file name display
+    const [fileName, setFileName] = useState('Upload a file');
+
     const getCurrentDate = () => {
         const today = new Date();
         return today.toISOString().split('T')[0];
@@ -57,35 +60,66 @@ const CreateClass = () => {
         handleChange(e);
     };
 
+    // Update the handleChange function to validate file types
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         
-        // Time and Date Validations
-        if (name === 'startTime' && formData.startDate === new Date().toISOString().split('T')[0]) {
-            const currentTime = getCurrentTime();
-            if (value < currentTime) {
-                alert('Please select a time later than current time');
+        if (type === 'file') {
+            const file = files[0];
+            if (file) {
+                // Check file type
+                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                const validVideoTypes = ['video/mp4', 'video/webm', 'video/ogg'];
+                const validTypes = [...validImageTypes, ...validVideoTypes];
+
+                if (!validTypes.includes(file.type)) {
+                    alert('Please upload only image or video files');
+                    e.target.value = ''; // Reset file input
+                    return;
+                }
+
+                // Check file size (e.g., 50MB limit)
+                const maxSize = 50 * 1024 * 1024; // 50MB in bytes
+                if (file.size > maxSize) {
+                    alert('File size should be less than 50MB');
+                    e.target.value = ''; // Reset file input
+                    return;
+                }
+
+                setFileName(file.name);
+                setFormData(prevState => ({
+                    ...prevState,
+                    media: file
+                }));
+            }
+        } else {
+            // Time and Date Validations
+            if (name === 'startTime' && formData.startDate === new Date().toISOString().split('T')[0]) {
+                const currentTime = getCurrentTime();
+                if (value < currentTime) {
+                    alert('Please select a time later than current time');
+                    return;
+                }
+            }
+
+            if (name === 'endTime' && formData.startDate === formData.endDate) {
+                if (value <= formData.startTime) {
+                    alert('End time must be later than start time');
+                    return;
+                }
+            }
+
+            // End date validation
+            if (name === 'endDate' && formData.startDate && value < formData.startDate) {
+                alert('End date cannot be before start date');
                 return;
             }
-        }
 
-        if (name === 'endTime' && formData.startDate === formData.endDate) {
-            if (value <= formData.startTime) {
-                alert('End time must be later than start time');
-                return;
-            }
+            setFormData(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
         }
-
-        // End date validation
-        if (name === 'endDate' && formData.startDate && value < formData.startDate) {
-            alert('End date cannot be before start date');
-            return;
-        }
-
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: type === 'file' ? files[0] : value
-        }));
     };
 
     const handleSubmit = async (e) => {
@@ -146,6 +180,7 @@ const CreateClass = () => {
                 media: null,
                 topicType: ''
             });
+            setFileName('Upload a file');
 
         } catch (error) {
             if (error.response?.status === 401) {
@@ -309,28 +344,40 @@ const CreateClass = () => {
 
                 {/* Media File Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Upload Media</label>
-                  <div className="file-upload">
-                    <span className="file-wrapper">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 71 67">
-                        <path
-                          stroke-width="5"
-                          stroke="black"
-                          d="M41.7322 11.7678L42.4645 12.5H43.5H68.5V64.5H2.5V2.5H32.4645L41.7322 11.7678Z"
-                        ></path>
-                      </svg>
-                      <span className="file-front"></span>
-                    </span>
-                    <input
-                      type="file"
-                      name="media"
-                      onChange={handleChange}
-                      className="file-input"
-                    />
-                    <span className="file-name">
-                      {formData.media ? formData.media.name : 'Upload a file'}
-                    </span>
-                  </div>
+                    <label className="block text-sm font-medium text-gray-700">
+                        Upload Media (Images or Videos only)
+                    </label>
+                    <label className="file-upload" htmlFor="file-input">
+                        <span className="file-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 71 67">
+                                <path
+                                    strokeWidth="5"
+                                    stroke="black"
+                                    d="M41.7322 11.7678L42.4645 12.5H43.5H68.5V64.5H2.5V2.5H32.4645L41.7322 11.7678Z"
+                                />
+                            </svg>
+                            <span className="file-front"></span>
+                        </span>
+                        <input
+                            id="file-input"
+                            type="file"
+                            name="media"
+                            onChange={handleChange}
+                            className="file-input"
+                            accept="image/*,video/*"
+                        />
+                        <span className="file-name">
+                            {fileName} 
+                            {formData.media && (
+                                <span className="file-size">
+                                    ({(formData.media.size / (1024 * 1024)).toFixed(2)} MB)
+                                </span>
+                            )}
+                        </span>
+                    </label>
+                    <p className="mt-1 text-sm text-gray-500">
+                        Supported formats: JPG, PNG, GIF, WEBP, MP4, WEBM, OGG (Max 50MB)
+                    </p>
                 </div>
               </div>
               <div className="flex justify-end space-x-4">

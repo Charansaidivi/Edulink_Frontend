@@ -1,4 +1,3 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
 
 :root {
@@ -93,23 +92,20 @@ body {
 
 /* HEADER IMAGE (Profile) */
 .header_img {
-  width: 45px;  /* Increase from 40px */
-  height: 45px;  /* Increase from 40px */
+  width: 45px;  /* Adjust size */
+  height: 45px;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s;
   margin-left: auto;
-}
-
-.header_img:hover {
-  transform: scale(1.1);
+  position: relative; /* Ensure it stays within the header */
+  z-index: 10; /* Ensure it does not overlap other elements */
 }
 
 .header_img img {
-  width: 45px;   /* Increase from 45px */
-  height: 45px;  /* Add height to maintain aspect ratio */
-  object-fit: cover;  /* Changed from fill to cover for better image display */
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image fits properly */
 }
 
 /* SIDEBAR (l-navbar) */
@@ -286,6 +282,12 @@ body {
   width: 2px;
   height: 32px;
   background-color: var(--white-color);
+}
+
+/* Navbar-specific styles */
+.navbar-container {
+  position: relative;
+  z-index: 1000; /* Ensure it stays above other elements */
 }
 
 /* Media Queries */

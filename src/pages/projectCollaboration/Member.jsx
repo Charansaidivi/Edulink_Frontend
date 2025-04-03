@@ -167,19 +167,33 @@ const Member = () => {
                 className="no-data-illustration" 
               />
               <p>
-                No projects available{selectedSector !== 'All' ? ` in ${selectedSector}` : ''}{searchQuery ? ` matching "${searchQuery}"` : ''}
+                No active projects available
+                {selectedSector !== 'All' ? ` in ${selectedSector}` : ''}
+                {searchQuery ? ` matching "${searchQuery}"` : ''}
               </p>
             </div>
           ) : (
             projects.map((project) => (
-              <div key={project._id} className="project-card">
-                <h3>{project.sector}</h3>
+              <div 
+                key={project._id} 
+                className={`project-card ${project.isDeadlineSoon ? 'deadline-soon' : ''}`}
+              >
+                <div className="project-header">
+                  <h3>{project.sector}</h3>
+                  <div className="deadline-info">
+                    <span className={`days-left ${project.isDeadlineSoon ? 'urgent' : ''}`}>
+                      {project.daysLeft} days left
+                    </span>
+                  </div>
+                </div>
                 <p>{project.description}</p>
                 <p><strong>Skills Required:</strong> {project.skillsRequired.join(', ')}</p>
                 <p><strong>Team Size:</strong> {project.teamSize}</p>
                 <p><strong>Deadline:</strong> {new Date(project.deadline).toLocaleDateString()}</p>
-                {/* "I'm Interested" button */}
-                <button onClick={() => handleInterestClick(project)}>
+                <button 
+                  onClick={() => handleInterestClick(project)}
+                  className={project.isDeadlineSoon ? 'urgent-btn' : ''}
+                >
                   I'm Interested
                 </button>
               </div>

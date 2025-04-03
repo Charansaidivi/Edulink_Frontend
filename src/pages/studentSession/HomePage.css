@@ -1,153 +1,11 @@
 /* Search input and select styles */
-.search-input,
-.topic-select {
-  background: #ffffff; /* Changed from #f034c1 */
-  color: black; /* Black text */
-  transition: color 0.3s ease;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  width: 100%;
-  position: relative;
-}
-
-.search-input:hover,
-.topic-select:hover {
-  color: #333; /* Changed from white */
-  font-weight: normal; /* Remove bold */
-  font-size: 16px; /* Fix font size */
-}
-
-/* Class card styles */
-.class-card {
-  background-color: #f0f0f0; /* Gray background */
-  color: black; /* Black text */
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  width: 100%; /* Full width of the container */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  border: 2px solid #007bff; /* Blue border */
-}
-
-.profile-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.profile-container img {
-  width: 50px; /* Profile image size */
-  height: 50px; /* Profile image size */
-  border-radius: 50%; /* Circular profile image */
-  margin-right: 10px; /* Space between image and name */
-}
-
-.topic-name {
-  font-weight: bold;
-  color: black; /* Black text for topic name */
-  margin: 0px 0 !important; /* Margin for spacing */
-}
-
-/* Book slot button styles */
-.class-card .book-slot-button {
-  background-color: white; /* White background */
-  color: black; /* Black text */
-  border: 1px solid #007bff; /* Blue border */
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px; /* Space above the button */
-}
-
-.class-card .book-slot-button:hover {
-  background-color: #007bff; /* Blue background on hover */
-  color: white; /* White text on hover */
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.class-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%; /* Centered width */
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.header .profile-image {
-  width: 70px; /* Profile image size */
-  height: 70px; /* Profile image size */
-  border-radius: 50%; /* Circular profile image */
-  margin-right: 10px; /* Space between image and name */
-  object-fit: cover; /* Ensures the image covers the area without distortion */
-}
-
-.username {
-  font-weight: bold;
-}
-
-.topic-name {
-  text-align: center;
-  font-weight: bold;
-  margin: 10px 0; /* Margin for spacing */
-}
-
-.details {
-  display: flex;
-  flex-direction: column;
-  margin: 10px 0;
-  font-weight: bold; /* Margin for spacing */
-}
-
-.date-time {
-  display: flex;
-  justify-content: space-between; /* Align items on the same line */
-  margin: 5px 0;
-  font-weight: bold; /* Margin for spacing */
-}
-
-.slots {
-  display: flex;
-  justify-content: space-between; /* Align items on the same line */
-  margin: 5px 0;
-  font-weight: bold; /* Margin for spacing */
-}
-
-.book-slot-button {
-  background-color: white; /* White background */
-  color: black; /* Black text */
-  border: 1px solid #007bff; /* Blue border */
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px; /* Space above the button */
-}
-
-.book-slot-button:hover {
-  background-color: #007bff; /* Blue background on hover */
-  color: white; /* White text on hover */
-}
-
-/* Fix search input styles */
 .search-input {
   background: #ffffff;
   color: #333;
   transition: all 0.3s ease;
   padding: 12px 12px 12px 40px;
   border-radius: 5px;
-  border: 2px solid #2D9CDB; /* Remove duplicate border, keep only this one */
+  border: 2px solid #2D9CDB;
   width: 100%;
   font-size: 16px;
 }
@@ -157,176 +15,14 @@
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 5px rgba(45, 156, 219, 0.3);
-  color: #333; /* Ensure text remains visible on hover/focus */
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.topic-select {
-  background: #2D9CDB; /* Blue background */
-  color: black; /* Black text */
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  width: 100%; /* Centered width */
-  margin-bottom: 20px;
-  margin-top: 20px !important; /* Add margin to the top */
-  z-index: 40; /* Ensure it appears above other elements */
-  position: relative; /* Ensure z-index works */
-}
-
-.class-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%; /* Centered width */
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.header .profile-image {
-  width: 70px; /* Profile image size */
-  height: 70px; /* Profile image size */
-  border-radius: 50%; /* Circular profile image */
-  margin-right: 10px; /* Space between image and name */
-  object-fit: cover; /* Ensures the image covers the area without distortion */
-}
-
-.username {
-  font-weight: bold;
-}
-
-.topic-name {
-  text-align: center;
-  font-weight: bold;
-  margin: 10px 0; /* Margin for spacing */
-}
-
-.details {
-  display: flex;
-  flex-direction: column;
-  margin: 10px 0;
-  font-weight: bold; /* Margin for spacing */
-}
-
-.date-time {
-  display: flex;
-  justify-content: space-between; /* Align items on the same line */
-  margin: 5px 0;
-  font-weight: bold; /* Margin for spacing */
-}
-
-.slots {
-  display: flex;
-  justify-content: space-between; /* Align items on the same line */
-  margin: 5px 0;
-  font-weight: bold; /* Margin for spacing */
-}
-
-.book-slot-button {
-  background-color: white; /* White background */
-  color: black; /* Black text */
-  border: 1px solid #007bff; /* Blue border */
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px; /* Space above the button */
-}
-
-.book-slot-button:hover {
-  background-color: #007bff; /* Blue background on hover */
-  color: white; /* White text on hover */
-}
-/* Join Meeting button styles */
-.join-meeting-button {
-  background-color: white; /* White background */
-  color: black; /* Black text */
-  border: 1px solid black; /* Black border */
-  position: center;
-  padding: 10px 20px; /* Padding for the button */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
-}
-
-.join-meeting-button:hover {
-  background-color: blue; /* Blue background on hover */
-  color: white; /* White text on hover */
-}
-
-/* Media container styles */
-.media-container {
-  display: flex;
-  justify-content: center; /* Center the media */
-  padding: 10%; /* Padding around the media */
-}
-
-.media-image {
-  max-width: 100%; /* Responsive image */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 10px; /* Rounded corners for the image */
-}
-
-.media-video {
-  max-width: 100%; /* Responsive video */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 10px; /* Rounded corners for the video */
-}
-
-.home-container {
-  display: flex;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-}
-
-.session-image {
-  max-width: 60%; /* Responsive image */
-  height:fit-content; /* Maintain aspect ratio */
-  margin-top: 20px; /* Space above the image */
-}
-
-.no-data-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-left: 25px;
-  min-height: 400px;
-}
-
-.no-data-container img {
-  width: 300px;
-  height: auto;
-  margin: 0; /* Reduced from 50px to 20px */
-  display: block;
-}
-
-.no-data-container p {
-  text-align: center;
+.search-input::placeholder {
   color: #666;
-  margin-top: 10px; /* Changed from 0px to 10px for better spacing */
-  font-size: 16px;
+  opacity: 0.8;
+  font-size: 14px;
 }
-/* Update the search input styles */
-.search-container {
-  margin-top: 50px;
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  margin-bottom: 0px;
-  position: relative; /* Add this */
-}
-/* Add search icon styles */
+
 .search-icon {
   position: absolute;
   left: 12px;
@@ -339,52 +35,297 @@
   pointer-events: none;
 }
 
-.search-input::placeholder {
-  color: #666; /* Added placeholder color */
-  opacity: 0.8;
-  font-size: 14px; /* Slightly smaller placeholder text */
-}
-
-.search-filters {
+.search-container {
+  margin-top: 50px;
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background: #ffffff; /* Changed from black to white */
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 0px;
+  position: relative;
 }
 
+/* Topic select dropdown */
 .topic-select {
-  flex: 1;
-  padding: 0.75rem;
-  border: 2px solid #2D9CDB;
-  border-radius: 4px;
-  font-size: 1rem;
+  background: #2D9CDB;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  margin: 20px 0;
+  z-index: 40;
+  position: relative;
   cursor: pointer;
 }
 
-.loading {
-  text-align: center;
-  padding: 2rem;
-  font-size: 1.2rem;
-  color: #666;
+.home-select {
+  margin-top: 20px;
+  width: fit-content;
+  cursor: pointer;
+  position: relative;
+  transition: 300ms;
+  color: white;
+  overflow: visible;
+  z-index: 1000;
 }
 
-/* Update navbar z-index */
-#navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 80px;
+.home-selected {
+  width: 270px;
+  height: 45px;
+  margin-bottom: 3px;
   background-color: #2D9CDB;
+  padding: 5px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 1000;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 9999; /* Higher z-index for navbar */
 }
 
+.home-arrow {
+  position: relative;
+  right: 0;
+  height: 10px;
+  width: 25px;
+  transform: rotate(-90deg);
+  fill: white;
+  transition: 300ms;
+  z-index: 100000;
+}
+
+.home-options {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #2D9CDB;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: 300ms;
+  z-index: 1000;
+}
+
+.home-select:hover > .home-options {
+  opacity: 1;
+  visibility: visible;
+  top: 100%;
+}
+
+.home-option {
+  border-radius: 5px;
+  padding: 5px;
+  transition: 300ms;
+  background-color: #2D9CDB;
+  width: 260px;
+  height: 35px;
+  font-size: 15px;
+}
+
+.home-option:hover {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+}
+
+/* Session Card Styles */
+.class-card {
+  background-color: #fff;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  position: relative;
+}
+
+/* Session Header */
+.session-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+/* Profile Container */
+.profile-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.username {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Media Container */
+.media-container {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10%;
+}
+
+.media-image,
+.media-video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Details Section */
+.details {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.date-time,
+.slots {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.topic-name {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Buttons */
+.book-slot-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.book-slot-button:hover {
+  background-color: #0056b3;
+}
+
+.join-meeting-button {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-align: center;
+}
+
+.join-meeting-button:hover {
+  background-color: blue;
+  color: white;
+}
+
+/* Layout Containers */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.class-container {
+  border: 1px solid #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  position: relative;
+  z-index: 1;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Loading and Empty States */
+.loading-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.no-data-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  margin-left: 25px;
+}
+
+.no-data-container img {
+  width: 300px;
+  height: auto;
+  margin: 0;
+  display: block;
+}
+
+.no-data-container p {
+  text-align: center;
+  color: #666;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* Navbar Profile Image */
+.header_img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  z-index: 1000;
+}
+
+.header_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 /* HomePage dropdown styles */
 .home-select {
   margin-top: 20px;

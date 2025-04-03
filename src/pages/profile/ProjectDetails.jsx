@@ -25,6 +25,16 @@ const ProjectDetails = () => {
 
   useEffect(() => {
     if (projectData) {
+        // Check if deadline has passed
+        const isDeadlinePassed = new Date(projectData.deadline) < new Date();
+        if (isDeadlinePassed) {
+            // Update all pending students to declined
+            projectData.enrolledStudents.forEach(student => {
+                if (student.status === 'pending') {
+                    handleStatusUpdate(student, 'declined');
+                }
+            });
+        }
         setAcceptedCount(projectData.enrolledStudents.filter(s => s.status === 'accepted').length);
     }
   }, [projectData]);
@@ -272,8 +282,9 @@ const ProjectDetails = () => {
                         </a>
                       )}
 
-                      {/* Only show action buttons for pending students and when team is not full */}
-                      {(!student.status || student.status === 'pending') && (
+                      {/* Only show action buttons for pending students when deadline hasn't passed */}
+                      {(!student.status || student.status === 'pending') && 
+                       new Date(projectData.deadline) > new Date() && (
                         <div className="action-buttons">
                           <button 
                             className="accept-btn"

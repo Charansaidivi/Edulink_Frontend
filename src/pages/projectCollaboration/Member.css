@@ -200,6 +200,39 @@
   padding: 1rem;
   background: #fafafa;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.project-card.deadline-soon {
+  border: 2px solid #ff4444;
+}
+
+.deadline-info {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.days-left {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  background-color: #e0e0e0;
+}
+
+.days-left.urgent {
+  background-color: #ff4444;
+  color: white;
+}
+
+.urgent-btn {
+  background-color: #ff4444;
+  color: white;
+}
+
+.urgent-btn:hover {
+  background-color: #cc0000;
 }
 
 /* No data */

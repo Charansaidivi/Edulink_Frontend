@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { API_URL } from '../../data/apiData';
-import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -38,37 +38,41 @@ const Register = () => {
     }
   };
 
-  const handleGoogleSignupSuccess = async (response) => {
-    try {
-      const serverResponse = await fetch(`${API_URL}/student/google-auth`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: response.credential }),
-      });
-
-      const data = await serverResponse.json();
-      if (serverResponse.ok) {
-        toast.success('Signup successful');
-        navigate('/home');
-      } else {
-        toast.error(data.message || 'Signup failed');
+  // Google Login with Authorization Code Flow using useGoogleLogin
+  const googleLogin = useGoogleLogin({
+    flow: 'auth-code', // Request an authorization code
+    scope: 'https://www.googleapis.com/auth/calendar openid email profile', // Required scopes
+    onSuccess: async (response) => {
+      try {
+        console.log('Authorization Code:', response.code); // Log the code
+        const serverResponse = await fetch(`${API_URL}/student/google-auth`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: response.code }),
+        });
+        const data = await serverResponse.json();
+        if (serverResponse.ok) {
+          localStorage.setItem('loginToken', data.token);
+          localStorage.setItem('googleAccessToken', data.googleAccessToken); // Store for later use if needed
+          toast.success('Google signup successful!');
+          navigate('/home');
+        } else {
+          toast.error(data.message || 'Google signup failed');
+        }
+      } catch (error) {
+        console.error('Google auth error:', error);
+        toast.error('Failed to authenticate with Google');
       }
-    } catch (error) {
-      console.error('Network error:', error);
-      toast.error('Signup failed');
-    }
-  };
-
-  const handleGoogleSignupFailure = (error) => {
-    console.error('Google signup failed:', error);
-    toast.error('Google signup failed');
-  };
+    },
+    onError: (error) => {
+      console.error('Google Signup Error:', error);
+      toast.error('Google signup failed');
+    },
+  });
 
   const LoginHandler = () => {
     navigate('/login');
-  }
+  };
 
   return (
     <section className="bg-white p-3 p-md-4 p-xl-5">
@@ -157,10 +161,10 @@ const Register = () => {
                       </p>
                       <p className="p line">Or With</p>
                       <div className="flex-row">
-                        <GoogleLogin
-                          onSuccess={handleGoogleSignupSuccess}
-                          onError={handleGoogleSignupFailure}
-                        />
+                        {/* Custom button to trigger Google signup */}
+                        <button onClick={googleLogin} className="btn btn-google">
+                          Sign up with Google
+                        </button>
                       </div>
                     </div>
                   </div>

@@ -218,72 +218,77 @@ const ProfilePage = () => {
       <Navbar />
       <div className="profile-wrapper">
         <div className="profile-page">
-          <div className="profile-container" style={{ position: 'relative' }}>
-            <div className="profile-image-wrapper">
-              <img 
-                src={profileImage ? `${API_URL}/uploads/user_profiles/${profileImage}` : '/default.jpg'} 
-                alt="Profile" 
-                className="profile-image" 
-              />
-              <input 
-                type="file" 
-                id="file-upload" 
-                onChange={handleImageUpload} 
-                className="file-input" 
-              />
-              <label htmlFor="file-upload" className="edit-icon">✎</label>
-            </div>
-            <div className="profile-info">
-              {isEditing ? (
-                <>
-                  <input 
-                    type="text" 
-                    value={editedUsername} 
-                    onChange={(e) => setEditedUsername(e.target.value)} 
-                    className="edit-input"
-                  />
-                  <p>
-                    <i className="bx bx-envelope" style={{ marginRight: '5px' }}></i>
-                    {email}
-                  </p>
-                  <p>
-                    <i 
-                      className="bx bxl-linkedin" 
-                      style={{ marginRight: '5px', color: '#0077b5', fontSize: '20px' }}
-                    ></i>
+          <div className="profile-container">
+            {/* Left group: profile image and details */}
+            <div className="profile-left">
+              <div className="profile-image-wrapper">
+                <img 
+                  src={profileImage ? `${API_URL}/uploads/user_profiles/${profileImage}` : '/default.jpg'} 
+                  alt="Profile" 
+                  className="profile-image" 
+                />
+                <input 
+                  type="file" 
+                  id="file-upload" 
+                  onChange={handleImageUpload} 
+                  className="file-input" 
+                />
+                <label htmlFor="file-upload" className="edit-icon">✎</label>
+              </div>
+              <div className="profile-info">
+                {isEditing ? (
+                  <>
                     <input 
                       type="text" 
-                      value={editedLinkedIn || ''} 
-                      onChange={(e) => setEditedLinkedIn(e.target.value)} 
-                      placeholder="Add LinkedIn URL"
+                      value={editedUsername} 
+                      onChange={(e) => setEditedUsername(e.target.value)} 
                       className="edit-input"
                     />
-                  </p>
-                  <button onClick={handleSaveProfile} className="save-btn">Save</button>
-                </>
-              ) : (
-                <>
-                  <h2>{username}</h2>
-                  <p>
-                    <i className="bx bx-envelope" style={{ marginRight: '5px' }}></i>
-                    {email}
-                  </p>
-                  <p>
-                    <i 
-                      className="bx bxl-linkedin" 
-                      style={{ marginRight: '5px', color: '#0077b5', fontSize: '20px' }}
-                    ></i>
-                    {linkedIn ? (
-                      <a href={linkedIn} target="_blank" rel="noopener noreferrer">
-                        {linkedIn}
-                      </a>
-                    ) : (
-                      <span className="add-linkedIn">Add LinkedIn URL</span>
-                    )}
-                  </p>
-                </>
-              )}
+                    <p>
+                      <i className="bx bx-envelope" style={{ marginRight: '5px' }}></i>
+                      {email}
+                    </p>
+                    <p>
+                      <i 
+                        className="bx bxl-linkedin" 
+                        style={{ marginRight: '5px', color: '#0077b5', fontSize: '20px' }}
+                      ></i>
+                      <input 
+                        type="text" 
+                        value={editedLinkedIn || ''} 
+                        onChange={(e) => setEditedLinkedIn(e.target.value)} 
+                        placeholder="Add LinkedIn URL"
+                        className="edit-input"
+                      />
+                    </p>
+                    <button onClick={handleSaveProfile} className="save-btn">Save</button>
+                  </>
+                ) : (
+                  <>
+                    <h2>{username}</h2>
+                    <p>
+                      <i className="bx bx-envelope" style={{ marginRight: '5px' }}></i>
+                      {email}
+                    </p>
+                    <p>
+                      <i 
+                        className="bx bxl-linkedin" 
+                        style={{ marginRight: '5px', color: '#0077b5', fontSize: '20px' }}
+                      ></i>
+                      {linkedIn ? (
+                        <a href={linkedIn} target="_blank" rel="noopener noreferrer">
+                          {linkedIn}
+                        </a>
+                      ) : (
+                        <span className="add-linkedIn">Add LinkedIn URL</span>
+                      )}
+                    </p>
+                  </>
+                )}
+              </div>
             </div>
+            
+            {/* Edit icon at top-right (global edit icon for profile) */}
             <div 
               className="profile-edit-icon" 
               onClick={() => setIsEditing(!isEditing)}

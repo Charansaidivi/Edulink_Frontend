@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar';
 import axios from 'axios';
 import './HomePage.css';
 import { FaSearch } from 'react-icons/fa';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const HomePage = () => {
   const [selectedTopic, setSelectedTopic] = useState('');
@@ -14,6 +15,7 @@ const HomePage = () => {
   const [classes, setClasses] = useState([]);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [showOptions, setShowOptions] = useState(false);
+  const [showGooglePrompt, setShowGooglePrompt] = useState(false);
   const dispatch = useDispatch();
 
   const topicOptions = [
@@ -34,6 +36,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       const userId = localStorage.getItem('loginToken') ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId : "";
+      console.log(userId);
       if (userId) {
         try {
           const response = await axios.get(`${API_URL}/student/profile/${userId}`);
@@ -74,6 +77,83 @@ const HomePage = () => {
 
     return () => clearTimeout(timeoutId);
   }, [searchQuery, selectedTopic, isInitialLoad]);
+
+  useEffect(() => {
+    const checkGooglePreference = async () => {
+        try {
+            const token = localStorage.getItem('loginToken');
+            const userId = localStorage.getItem('loginToken') 
+                ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId 
+                : "";
+
+            if (!userId) {
+                console.error('User ID not found in token');
+                return;
+            }
+
+            const response = await axios.get(`${API_URL}/student/profile/${userId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            const { useGoogleCalendar } = response.data;
+
+            // Store in Redux
+            dispatch(setProfile({ useGoogleCalendar }));
+
+            // Store in localStorage
+            localStorage.setItem('useGoogleCalendar', JSON.stringify(useGoogleCalendar));
+
+            // Show prompt if Google Calendar is not enabled
+            if (!useGoogleCalendar) {
+                setShowGooglePrompt(true);
+            }
+        } catch (error) {
+            console.error('Error checking Google preference:', error);
+        }
+    };
+
+    checkGooglePreference();
+}, [dispatch]);
+
+  const googleLogin = useGoogleLogin({
+    flow: 'auth-code',
+    scope: 'https://www.googleapis.com/auth/calendar openid email profile',
+    onSuccess: async (response) => {
+      try {
+        const token = localStorage.getItem('loginToken');
+        const serverResponse = await axios.post(`${API_URL}/student/google-auth`, {
+          code: response.code,
+        }, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (serverResponse.status === 200) {
+          alert('Google Calendar integration enabled!');
+          setShowGooglePrompt(false);
+        }
+      } catch (error) {
+        console.error('Error enabling Google Calendar:', error);
+        alert('Failed to enable Google Calendar. Please try again.');
+      }
+    },
+    onError: (error) => {
+      console.error('Google Login Error:', error);
+      alert('Google login failed. Please try again.');
+    },
+  });
+
+  const handleDecline = async () => {
+    try {
+      const token = localStorage.getItem('loginToken');
+      await axios.put(`${API_URL}/student/update-preference`, {
+        useGoogleCalendar: false,
+      }, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setShowGooglePrompt(false);
+    } catch (error) {
+      console.error('Error updating preference:', error);
+    }
+  };
 
   const handleTopicChange = (e) => {
     setSelectedTopic(e.target.value);
@@ -259,6 +339,15 @@ const HomePage = () => {
           </div>
         )}
       </div>
+
+      {showGooglePrompt && (
+        <div className="modal">
+          <h2>Enable Google Calendar Integration</h2>
+          <p>Would you like to sync your classes and enrollments with Google Calendar?</p>
+          <button onClick={googleLogin}>Yes, Enable</button>
+          <button onClick={handleDecline}>No, Thanks</button>
+        </div>
+      )}
     </div>
   );
 };

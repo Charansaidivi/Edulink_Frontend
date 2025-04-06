@@ -108,6 +108,19 @@ body {
   object-fit: cover; /* Ensure the image fits properly */
 }
 
+/* Example style for calendar icon in header */
+.header_cal {
+  font-size: 24px;
+  color: #4723D9; /* Adjust the color as necessary */
+}
+
+/* Add style for header_profile_group to align the calendar icon and profile image together */
+.header_profile_group {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Push to the right if needed */
+}
+
 /* SIDEBAR (l-navbar) */
 .l-navbar {
   position: fixed;

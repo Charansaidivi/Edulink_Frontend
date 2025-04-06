@@ -4,6 +4,9 @@ import { API_URL } from '../../data/apiData';
 import './CreateClass.css'; // Import the CSS file
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'; // Import useSelector and useDispatch
+import { useGoogleLogin } from '@react-oauth/google'; // Import useGoogleLogin
+import { setProfile } from '../../redux/ProfileSlice';
 
 const CreateClass = () => {
     const navigate = useNavigate();
@@ -25,6 +28,10 @@ const CreateClass = () => {
 
     // Add this state for file name display
     const [fileName, setFileName] = useState('Upload a file');
+
+    // Access useGoogleCalendar from Redux store
+    const useGoogleCalendar = useSelector((state) => state.profile.useGoogleCalendar);
+    const dispatch = useDispatch();
 
     const getCurrentDate = () => {
         const today = new Date();
@@ -122,6 +129,35 @@ const CreateClass = () => {
         }
     };
 
+    // Define the googleLogin function
+    const googleLogin = useGoogleLogin({
+        flow: 'auth-code',
+        scope: 'https://www.googleapis.com/auth/calendar openid email profile',
+        onSuccess: async (response) => {
+            try {
+                const token = localStorage.getItem('loginToken');
+                const serverResponse = await axios.post(`${API_URL}/student/enable-google-calendar`, {
+                    code: response.code,
+                }, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                if (serverResponse.status === 200) {
+                    alert('Google Calendar integration enabled!');
+                    dispatch(setProfile({ useGoogleCalendar: true })); // Update Redux store
+                    localStorage.setItem('useGoogleCalendar', true); // Persist in localStorage
+                }
+            } catch (error) {
+                console.error('Error enabling Google Calendar:', error);
+                alert('Failed to enable Google Calendar. Please try again.');
+            }
+        },
+        onError: (error) => {
+            console.error('Google Login Error:', error);
+            alert('Google login failed. Please try again.');
+        },
+    });
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -135,6 +171,15 @@ const CreateClass = () => {
                 return;
             }
 
+            // Check useGoogleCalendar from Redux store
+            console.log(useGoogleCalendar)
+            if (!useGoogleCalendar) {
+                const enableGoogle = window.confirm('Would you like to enable Google Calendar integration?');
+                if (enableGoogle) {
+                    await googleLogin();
+                }
+            }
+
             // Prepare the data to send using FormData
             const formDataToSend = new FormData();
             const { topicName, description, startDate, endDate, startTime, 
@@ -143,8 +188,8 @@ const CreateClass = () => {
             // Append data to FormData
             formDataToSend.append('topicName', topicName);
             formDataToSend.append('description', description);
-            formDataToSend.append('startDate', new Date(startDate).toISOString());
-            formDataToSend.append('endDate', new Date(endDate).toISOString());
+            formDataToSend.append('startDate', startDate); // Send as YYYY-MM-DD
+            formDataToSend.append('endDate', endDate);     // Send as YYYY-MM-DD
             formDataToSend.append('startTime', startTime);
             formDataToSend.append('endTime', endTime);
             formDataToSend.append('maxSlots', Number(maxSlots));
@@ -181,7 +226,7 @@ const CreateClass = () => {
                 topicType: ''
             });
             setFileName('Upload a file');
-
+            navigate('/home');
         } catch (error) {
             if (error.response?.status === 401) {
                 const errorMsg = error.response?.data?.msg || 'Session expired. Please login again';
@@ -192,6 +237,7 @@ const CreateClass = () => {
             }
             
             const errorMessage = error.response?.data?.message || 'Error creating class';
+            console.log(error)
             setError(errorMessage);
             alert(errorMessage);
         } finally {

@@ -6,8 +6,8 @@ const initialState = {
   teachingSessions: [],
   username: '',
   email: '',
-  ratings: 0,
-  linkedIn: null,  // New field for LinkedIn URL
+  linkedIn: null,
+  useGoogleCalendar: false, // Initialize with a default value
 };
 
 const profileSlice = createSlice({

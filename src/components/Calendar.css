@@ -1,0 +1,65 @@
+/* Customize the calendar container */
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Customize the calendar header */
+.fc-toolbar {
+    background-color: #2d9cdb;
+    color: white;
+    border-radius: 10px 10px 0 0;
+    padding: 10px;
+}
+
+.fc-toolbar h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Customize the calendar cells */
+.fc-daygrid-day {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+.fc-daygrid-day:hover {
+    background-color: #f0f8ff;
+}
+
+/* Customize events */
+.fc-event {
+    background-color: #2d9cdb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.fc-event:hover {
+    background-color: #1b7cb8;
+    cursor: pointer;
+}
+
+/* Customize today's date */
+.fc-day-today {
+    background-color: #e8f5fe !important;
+    border: 2px solid #2d9cdb;
+}
+
+/* Customize the calendar footer */
+.fc-footer-toolbar {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+}

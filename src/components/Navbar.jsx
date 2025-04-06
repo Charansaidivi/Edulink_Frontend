@@ -9,13 +9,11 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [bodyPd, setBodyPd] = useState(() => {
-    // Initialize from localStorage
     return localStorage.getItem('sidebarState') === 'open';
   });
   const [activeNav, setActiveNav] = useState("home");
   const profileImageFromStore = useSelector((state) => state.profile.profileImage);
 
-  // Effect to apply sidebar state on mount and state changes
   useEffect(() => {
     const nav = document.getElementById('nav-bar');
     const toggle = document.getElementById('header-toggle');
@@ -42,7 +40,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('loginToken');
-    localStorage.removeItem('sidebarState'); // Clear sidebar state on logout
+    localStorage.removeItem('sidebarState');
     dispatch(setProfile({}));
     navigate('/login');
   };
@@ -50,7 +48,6 @@ const Navbar = () => {
   const handleToggle = () => {
     const newState = !bodyPd;
     setBodyPd(newState);
-    // Save state to localStorage
     localStorage.setItem('sidebarState', newState ? 'open' : 'closed');
   };
 
@@ -60,12 +57,22 @@ const Navbar = () => {
         <div className="header_toggle">
           <i className='bx bx-menu' id="header-toggle" onClick={handleToggle}></i>
         </div>
-        <div className="header_img" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
-          <img
-            src={profileImageFromStore ? `${API_URL}/uploads/user_profiles/${profileImageFromStore}` : '/default.jpg'}
-            alt="Profile"
-            className="navbar-profile-image"
-          />
+        {/* Group Calendar icon and Profile image together */}
+        <div className="header_profile_group">
+          <div 
+            className="header_cal" 
+            onClick={() => navigate('/calendar')}
+            style={{ cursor: 'pointer', marginRight: '10px' }}
+          >
+            <i className='bx bx-calendar'></i>
+          </div>
+          <div className="header_img" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
+            <img
+              src={profileImageFromStore ? `${API_URL}/uploads/user_profiles/${profileImageFromStore}` : '/default.jpg'}
+              alt="Profile"
+              className="navbar-profile-image"
+            />
+          </div>
         </div>
       </header>
       <div className={`l-navbar ${bodyPd ? 'show' : ''}`} id="nav-bar">
@@ -99,9 +106,7 @@ const Navbar = () => {
                 <i className='bx bx-info-circle nav_icon'></i>
                 <span className="nav_name">About Us</span>
               </NavLink>
-              <div
-                className={`nav_link project_dropdown`}
-              >
+              <div className={`nav_link project_dropdown`}>
                 <i className='bx bx-group nav_icon'></i>
                 <span className="nav_name">Project Discussion</span>
                 <i className='bx bx-chevron-down dropdown_icon'></i>

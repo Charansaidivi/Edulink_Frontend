@@ -17,6 +17,7 @@ import SessionDetails from './pages/profile/SessionDetails'
 import Leader from './pages/projectCollaboration/Leader'
 import Member from './pages/projectCollaboration/Member'
 import ProjectDetails from './pages/profile/ProjectDetails.jsx'
+import Calendar from './components/Calendar.jsx'
 const App = () => {
   return (
     <GoogleOAuthProvider clientId="625626669431-c2p74fbeko7t33f236vooiu3sn3d9nvq.apps.googleusercontent.com">
@@ -83,6 +84,11 @@ const App = () => {
           <Route path="/project-details/:projectId" element={
               <ProtectedRoute>
                 <ProjectDetails />
+              </ProtectedRoute>
+            } />
+          <Route path='/calendar' element={
+              <ProtectedRoute>
+                <Calendar />
               </ProtectedRoute>
             } />
           {/* Catch all route for 404 */}

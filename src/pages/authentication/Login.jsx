@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { API_URL } from '../../data/apiData';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,19 +10,15 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
   const HandleLogin = async (e) => {
     e.preventDefault();
-    
     try {
       const response = await fetch(`${API_URL}/student/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem('loginToken', data.token);
@@ -33,7 +29,6 @@ const Login = () => {
           toast.warning('This email is registered with Google. Please use the "Sign in with Google" button below.');
           setEmail('');
           setPassword('');
-          document.querySelector('.google-login-button')?.classList.add('highlight-google-btn');
         } else {
           toast.error(data.message || 'Login failed');
         }
@@ -44,37 +39,41 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLoginSuccess = async (response) => {
-    try {
-      const serverResponse = await fetch(`${API_URL}/student/google-auth`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: response.credential }),
-      });
-
-      const data = await serverResponse.json();
-      if (serverResponse.ok) {
-        localStorage.setItem('loginToken', data.token);
-        toast.success('Login successful');
-        navigate('/home');
-      } else {
-        toast.error(data.message || 'Login failed');
+  // Google Login with Authorization Code Flow using useGoogleLogin
+  const googleLogin = useGoogleLogin({
+    flow: 'auth-code', // Request an authorization code
+    scope: 'https://www.googleapis.com/auth/calendar openid email profile', // Required scopes
+    onSuccess: async (response) => {
+      try {
+        console.log('Authorization Code:', response.code); // Log the code
+        const serverResponse = await fetch(`${API_URL}/student/google-auth`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: response.code }),
+        });
+        const data = await serverResponse.json();
+        if (serverResponse.ok) {
+          localStorage.setItem('loginToken', data.token);
+          localStorage.setItem('googleAccessToken', data.googleAccessToken); // Store for later use if needed
+          toast.success('Google login successful!');
+          navigate('/home');
+        } else {
+          toast.error(data.message || 'Google login failed');
+        }
+      } catch (error) {
+        console.error('Google auth error:', error);
+        toast.error('Failed to authenticate with Google');
       }
-    } catch (error) {
-      console.error('Network error:', error);
-      toast.error('Login failed');
-    }
-  };
+    },
+    onError: (error) => {
+      console.error('Google Login Error:', error);
+      toast.error('Google login failed');
+    },
+  });
 
-  const handleGoogleLoginFailure = (error) => {
-    console.error('Google login failed:', error);
-    toast.error('Google login failed');
-  };
   const SignupHandler = () => {
     navigate('/register');
-  }
+  };
 
   return (
     <section className="bg-white p-3 p-md-4 p-xl-5">
@@ -154,10 +153,10 @@ const Login = () => {
                       </p>
                       <p className="p line">Or With</p>
                       <div className="flex-row">
-                        <GoogleLogin
-                          onSuccess={handleGoogleLoginSuccess}
-                          onError={handleGoogleLoginFailure}
-                        />
+                        {/* Custom button to trigger Google login */}
+                        <button onClick={googleLogin} className="btn btn-google">
+                          Sign in with Google
+                        </button>
                       </div>
                     </div>
                   </div>

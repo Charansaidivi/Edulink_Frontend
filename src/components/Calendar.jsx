@@ -5,6 +5,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { API_URL } from '../data/apiData';
+import Navbar from './Navbar';
 import './Calendar.css'; // Import the custom CSS
 
 const Calendar = () => {
@@ -47,33 +48,41 @@ const Calendar = () => {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <>
+                <Navbar />
+                <div className="loading-container">Loading...</div>
+            </>
+        );
     }
 
     return (
-        <div className="calendar-container">
-            <h2>My Calendar Events</h2>
-            <FullCalendar
-                plugins={[dayGridPlugin, interactionPlugin]}
-                initialView="dayGridMonth"
-                events={events}
-                eventClick={(info) => {
-                    alert(`Event: ${info.event.title}\nStart: ${info.event.start}`);
-                }}
-                headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,dayGridWeek,dayGridDay',
-                }}
-                buttonText={{
-                    today: 'Today',
-                    month: 'Month',
-                    week: 'Week',
-                    day: 'Day',
-                }}
-                height="auto"
-            />
-        </div>
+        <>
+            <Navbar />
+            <div className="calendar-container">
+                <h2>My Calendar Events</h2>
+                <FullCalendar
+                    plugins={[dayGridPlugin, interactionPlugin]}
+                    initialView="dayGridMonth"
+                    events={events}
+                    eventClick={(info) => {
+                        alert(`Event: ${info.event.title}\nStart: ${info.event.start}`);
+                    }}
+                    headerToolbar={{
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,dayGridWeek,dayGridDay',
+                    }}
+                    buttonText={{
+                        today: 'Today',
+                        month: 'Month',
+                        week: 'Week',
+                        day: 'Day',
+                    }}
+                    height="auto"
+                />
+            </div>
+        </>
     );
 };
 

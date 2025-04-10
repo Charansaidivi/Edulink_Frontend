@@ -3,12 +3,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
     padding: 20px;
     background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+    margin-left: 78px; /* Default navbar width */
+    transition: margin-left 0.3s;
+}
+
+/* When navbar is expanded */
+body.nav-expanded .calendar-container {
+    margin-left: 240px; /* Expanded navbar width */
 }
 
 /* Customize the calendar header */
@@ -17,6 +23,7 @@
     color: white;
     border-radius: 10px 10px 0 0;
     padding: 10px;
+    width: 100%;
 }
 
 .fc-toolbar h2 {
@@ -62,4 +69,77 @@
     background-color: #f9f9f9;
     padding: 10px;
     border-radius: 0 0 10px 10px;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-left: 78px;
+    transition: margin-left 0.3s;
+    background-color: #f9f9f9;
+}
+
+body.nav-expanded .loading-container {
+    margin-left: 240px;
+}
+
+/* Calendar specific styles */
+.fc {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.fc .fc-toolbar {
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.fc .fc-button {
+    background-color: #4285f4;
+    border-color: #4285f4;
+}
+
+.fc .fc-button:hover {
+    background-color: #3367d6;
+    border-color: #3367d6;
+}
+
+.fc .fc-button-active {
+    background-color: #3367d6;
+    border-color: #3367d6;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: rgba(66, 133, 244, 0.1);
+}
+
+.fc .fc-event {
+    cursor: pointer;
+    padding: 2px 4px;
+}
+
+.fc .fc-event:hover {
+    opacity: 0.9;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .calendar-container {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    body.nav-expanded .calendar-container {
+        margin-left: 78px;
+    }
+
+    .fc .fc-toolbar {
+        flex-direction: column;
+        align-items: center;
+    }
 }

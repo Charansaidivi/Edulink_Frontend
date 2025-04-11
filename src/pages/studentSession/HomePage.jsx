@@ -67,6 +67,7 @@ const HomePage = () => {
 
         const response = await axios.get(`${API_URL}/session/sessions?${params}`);
         setClasses(response.data);
+        console.log(response.data);
         setIsInitialLoad(false);
       } catch (error) {
         console.error('Error fetching classes:', error);
@@ -225,6 +226,7 @@ const HomePage = () => {
   };
 
   const handleProfileClick = (ownerId) => {
+    console.log('Navigating to profile:', ownerId);
     navigate(`/profile/${ownerId}`); // Navigate to the profile page of the owner
   };
 
@@ -302,7 +304,7 @@ const HomePage = () => {
                         './default.jpg'}
                       alt={`${cls.student.username}'s profile`}
                       className="profile-image"
-                      onClick={() => handleProfileClick(cls.student._id)} // Pass the correct ownerId
+                      onClick={() => handleProfileClick(cls.studentId._id)} // Pass the correct ownerId
                       style={{ cursor: 'pointer' }}
                       onError={(e) => { e.target.onerror = null; e.target.src = './default.jpg'; }}
                     />

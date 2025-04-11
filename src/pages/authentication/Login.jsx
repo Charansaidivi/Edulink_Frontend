@@ -5,7 +5,6 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();

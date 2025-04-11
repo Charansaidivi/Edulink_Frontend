@@ -18,6 +18,8 @@ import Leader from './pages/projectCollaboration/Leader'
 import Member from './pages/projectCollaboration/Member'
 import ProjectDetails from './pages/profile/ProjectDetails.jsx'
 import Calendar from './components/Calendar.jsx'
+import SettingsPage from './pages/profile/SettingsPage.jsx'
+import OwnerProfilePage from './pages/profile/OwnerProfilePage.jsx'
 const App = () => {
   return (
     <GoogleOAuthProvider clientId="625626669431-c2p74fbeko7t33f236vooiu3sn3d9nvq.apps.googleusercontent.com">
@@ -89,6 +91,16 @@ const App = () => {
           <Route path='/calendar' element={
               <ProtectedRoute>
                 <Calendar />
+              </ProtectedRoute>
+            } />
+          <Route path='/settings' element={
+              <ProtectedRoute>
+                <SettingsPage />
+              </ProtectedRoute>
+            } />
+          <Route path='/profile/:ownerId' element={
+              <ProtectedRoute>
+                <OwnerProfilePage />
               </ProtectedRoute>
             } />
           {/* Catch all route for 404 */}

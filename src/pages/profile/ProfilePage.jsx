@@ -6,6 +6,7 @@ import { API_URL } from '../../data/apiData';
 import Navbar from '../../components/Navbar';
 import CountdownTimer from '../../components/CountdownTimer';
 import { useNavigate } from 'react-router-dom';
+import { FaCog } from 'react-icons/fa'; // Import settings icon
 import './ProfilePage.css';
 
 const SessionList = ({ sessions, handleJoinSession, isTeaching, handleViewDetails }) => (
@@ -286,6 +287,15 @@ const ProfilePage = () => {
                   </>
                 )}
               </div>
+            </div>
+
+            {/* Add settings icon */}
+            <div 
+              className="settings-icon-container" 
+              onClick={() => navigate('/settings')} // Navigate to settings page
+              title="Go to Settings"
+            >
+              <FaCog className="settings-icon" />
             </div>
             
             {/* Edit icon at top-right (global edit icon for profile) */}

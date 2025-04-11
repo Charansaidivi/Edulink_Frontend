@@ -1,0 +1,138 @@
+/* LandingPage.css */
+
+.landing-page {
+    background-color: #f3f6fd;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  
+  .landing-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5rem;
+    flex-wrap: wrap;
+  }
+  
+  .landing-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-badge {
+    background-color: #f73c7a;
+    color: white;
+    font-weight: bold;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-size: 1.3rem;
+  }
+  
+  .logo-text {
+    margin-left: 0.5rem;
+    font-weight: 700;
+    color: #1c1f33;
+  }
+  
+  .logo-light {
+    font-weight: 400;
+  }
+  
+  .landing-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .nav-link-text {
+    font-weight: 600;
+    color: #1c1f33;
+  }
+  
+  .nav-link-new {
+    color: #28c66f;
+    font-weight: 700;
+  }
+  
+  .nav-separator {
+    color: #1c1f33;
+  }
+  /* Hero Section Styles */
+.hero-section {
+    max-width: 600px;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+  }
+  
+  .hero-title {
+    font-weight: 800;
+    font-size: 2.8rem;
+    color: #243b7a;
+    line-height: 1.3;
+  }
+  
+  .hero-title .highlight {
+    color: #f73c7a;
+  }
+  
+  .featured-text {
+    font-size: 1.1rem;
+    margin: 1.5rem 0;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .envato-logo {
+    height: 1.5rem;
+    vertical-align: middle;
+    margin: 0 0.3rem;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .watch-btn {
+    background-color: #f73c7a;
+    color: white;
+    padding: 0.7rem 2rem;
+    border: none;
+    font-weight: 700;
+    border-radius: 2rem;
+    box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.1);
+  }
+  
+  .get-btn {
+    background-color: #243b7a;
+    color: white;
+    padding: 0.7rem 2rem;
+    border: none;
+    font-weight: 700;
+    border-radius: 2rem;
+    box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hero-wrapper {
+    padding: 3rem 2rem;
+    background-color: #f4f7fc;
+    min-height: 90vh;
+  }
+  
+  /* Hero Image Container */
+.hero-image-container {
+  position: relative;
+  max-width: 600px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 500px;
+  pointer-events: none; /* Prevents triggering hover */
+  user-select: none;
+}

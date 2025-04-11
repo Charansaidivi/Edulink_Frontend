@@ -11,9 +11,40 @@ const Register = () => {
   const [username, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordErrors, setPasswordErrors] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    special: false
+  });
+
+  const validatePassword = (pass) => {
+    const errors = {
+      length: pass.length >= 8,
+      uppercase: /[A-Z]/.test(pass),
+      lowercase: /[a-z]/.test(pass),
+      number: /[0-9]/.test(pass),
+      special: /[!@#$%^&*(),.?":{}|<>]/.test(pass)
+    };
+    setPasswordErrors(errors);
+    return Object.values(errors).every(error => error);
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    validatePassword(newPassword);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!validatePassword(password)) {
+      toast.error('Please ensure your password meets all requirements');
+      return;
+    }
+
     try {
       const response = await fetch(`${API_URL}/student/register`, {
         method: 'POST',
@@ -141,10 +172,30 @@ const Register = () => {
                                 id="password"
                                 placeholder="Enter your password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={handlePasswordChange}
                                 required
                               />
                               <label htmlFor="password" className="form-label">Password</label>
+                            </div>
+                            <div className="password-requirements mt-2">
+                              <p className="mb-1">Password must contain:</p>
+                              <ul className="list-unstyled">
+                                <li className={passwordErrors.length ? 'text-success' : 'text-danger'}>
+                                  ✓ At least 8 characters
+                                </li>
+                                <li className={passwordErrors.uppercase ? 'text-success' : 'text-danger'}>
+                                  ✓ One uppercase letter
+                                </li>
+                                <li className={passwordErrors.lowercase ? 'text-success' : 'text-danger'}>
+                                  ✓ One lowercase letter
+                                </li>
+                                <li className={passwordErrors.number ? 'text-success' : 'text-danger'}>
+                                  ✓ One number
+                                </li>
+                                <li className={passwordErrors.special ? 'text-success' : 'text-danger'}>
+                                  ✓ One special character
+                                </li>
+                              </ul>
                             </div>
                           </div>
                           <div className="col-12">
@@ -161,9 +212,14 @@ const Register = () => {
                       </p>
                       <p className="p line">Or With</p>
                       <div className="flex-row">
-                        {/* Custom button to trigger Google signup */}
-                        <button onClick={googleLogin} className="btn btn-google">
-                          Sign up with Google
+                        <button onClick={googleLogin} className="button">
+                          <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">
+                            <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+                            <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+                            <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+                            <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+                          </svg>
+                          Continue with Google
                         </button>
                       </div>
                     </div>

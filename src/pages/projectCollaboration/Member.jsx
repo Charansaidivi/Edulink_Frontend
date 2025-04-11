@@ -12,24 +12,19 @@ const Member = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSector, setSelectedSector] = useState('All');
   const [showOptions, setShowOptions] = useState(false);
-  // New state for modal
   const [showModal, setShowModal] = useState(false);
   const [modalProject, setModalProject] = useState(null);
   const [interestDesc, setInterestDesc] = useState('');
   const [inputLinkedIn, setInputLinkedIn] = useState('');
 
-  // Extract linkedIn from Redux store
-  const { linkedIn } = useSelector((state) => state.profile);
+  const profile = useSelector((state) => state.profile);
 
-  // Extract userId from localStorage
   const userId = localStorage.getItem('loginToken')
     ? JSON.parse(atob(localStorage.getItem('loginToken').split('.')[1])).userId
     : "";
 
-  // Extract the token from localStorage
   const token = localStorage.getItem('loginToken');
 
-  // Fetch projects based on search and selected sector filter
   useEffect(() => {
     const fetchProjects = async () => {
       setLoading(true);
@@ -47,7 +42,7 @@ const Member = () => {
         }
         const response = await axios.get(url, {
           headers: {
-            Authorization: `Bearer ${token}` // Include the token
+            Authorization: `Bearer ${token}`
           }
         });
         setProjects(response.data);
@@ -60,16 +55,14 @@ const Member = () => {
     fetchProjects();
   }, [searchQuery, selectedSector]);
 
-  // Fetch available sectors for the drop down
   useEffect(() => {
     const fetchSectors = async () => {
       try {
         const response = await axios.get(`${API_URL}/project/sectors`, {
           headers: {
-            Authorization: `Bearer ${token}` // Include the token
+            Authorization: `Bearer ${token}`
           }
         });
-        // Add "All" as default option
         setAvailableSectors(['All', ...response.data]);
       } catch (error) {
         console.error("Error fetching sectors:", error);
@@ -78,18 +71,15 @@ const Member = () => {
     fetchSectors();
   }, [projects]);
 
-  // Handle interest button click – show modal and set project details
   const handleInterestClick = (project) => {
     setModalProject(project);
     setShowModal(true);
-    setInterestDesc(''); // reset description
-    setInputLinkedIn(''); // reset linkedIn input
+    setInterestDesc('');
+    setInputLinkedIn('');
   };
 
-  // Handle modal submit: submit data to backend and store interest info in database.
   const handleSubmitInterest = async () => {
-    // Use inputLinkedIn if linkedIn is null/empty, otherwise use the existing one from profile.
-    const finalLinkedIn = linkedIn || inputLinkedIn;
+    const finalLinkedIn = profile.linkedIn || inputLinkedIn;
     try {
       await axios.post(`${API_URL}/project/interest/${modalProject._id}`, {
         userId,
@@ -97,14 +87,14 @@ const Member = () => {
         linkedIn: finalLinkedIn
       }, {
         headers: {
-          Authorization: `Bearer ${token}` // Include the token
+          Authorization: `Bearer ${token}`
         }
       });
       alert("Interest submitted successfully");
       setShowModal(false);
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        alert(error.response.data.message); // Display the error message from the backend
+        alert(error.response.data.message);
       } else {
         console.error("Error submitting interest:", error);
         alert("Error submitting interest");
@@ -113,12 +103,27 @@ const Member = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="member-container">
       <Navbar />
+      <div className="profile-section">
+        <img
+          src={profile.profileImage || './default.jpg'}
+          alt="Profile"
+          className="profile-image"
+        />
+        <h2>{profile.username}</h2>
+        <p>Email: {profile.email}</p>
+        <p>LinkedIn: {profile.linkedIn || 'Not provided'}</p>
+        <div className="profile-stats">
+          <p>Created Projects: {profile.createdProjectsCount}</p>
+          <p>Enrolled Projects: {profile.enrolledProjectsCount}</p>
+          <p>Created Sessions: {profile.createdSessionsCount}</p>
+          <p>Enrolled Sessions: {profile.enrolledSessionsCount}</p>
+        </div>
+      </div>
       <div className="project-wrapper">
         <h2 className="header-title">Projects</h2>
         
-        {/* Filters */}
         <div className="member-project-filter">
           <div className="member-search-container">
             <input 
@@ -155,7 +160,6 @@ const Member = () => {
           </div>
         </div>
         
-        {/* Project Cards */}
         <div className="project-cards">
           {loading ? (
             <p>Loading...</p>
@@ -202,7 +206,6 @@ const Member = () => {
         </div>
       </div>
 
-      {/* Modal overlay */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -213,7 +216,7 @@ const Member = () => {
               onChange={(e) => setInterestDesc(e.target.value)}
               placeholder="Enter your description..."
             />
-            { !linkedIn && (
+            { !profile.linkedIn && (
               <>
                 <p>Please provide your LinkedIn URL:</p>
                 <input 

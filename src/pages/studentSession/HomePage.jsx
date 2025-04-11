@@ -5,10 +5,13 @@ import { API_URL } from '../../data/apiData';
 import Navbar from '../../components/Navbar';
 import axios from 'axios';
 import './HomePage.css';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaCog } from 'react-icons/fa';
 import { useGoogleLogin } from '@react-oauth/google';
+import { useNavigate } from 'react-router-dom'; // Import navigation hook
 
 const HomePage = () => {
+  const profile = useSelector((state) => state.profile);
+  const [isPublic, setIsPublic] = useState(profile.isPublic);
   const [selectedTopic, setSelectedTopic] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
@@ -17,6 +20,7 @@ const HomePage = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [showGooglePrompt, setShowGooglePrompt] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize navigation hook
 
   const topicOptions = [
     "All",
@@ -206,10 +210,27 @@ const HomePage = () => {
     return new Date(dateString).toLocaleDateString('en-GB', options).replace(/\//g, ' - ');
   };
 
+  const toggleProfileVisibility = async () => {
+    try {
+      const token = localStorage.getItem('loginToken');
+      const response = await axios.put(
+        `${API_URL}/student/profile-visibility/${profile._id}`,
+        { isPublic: !isPublic },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setIsPublic(response.data.isPublic);
+    } catch (error) {
+      console.error("Error updating profile visibility:", error);
+    }
+  };
+
+  const handleProfileClick = (ownerId) => {
+    navigate(`/profile/${ownerId}`); // Navigate to the profile page of the owner
+  };
+
   return (
     <div className="home-container">
       <Navbar />
-      
       <div className="container mx-auto p-4">
         <div className="mb-4">
           <div className="search-container">
@@ -273,7 +294,6 @@ const HomePage = () => {
           <div className="class-container">
             {classes.map((cls) => (
               <div key={cls._id} className="class-card">
-                {/* Top-left student profile with username beside image */}
                 <div className="session-header">
                   <div className="profile-container">
                     <img
@@ -282,6 +302,8 @@ const HomePage = () => {
                         './default.jpg'}
                       alt={`${cls.student.username}'s profile`}
                       className="profile-image"
+                      onClick={() => handleProfileClick(cls.student._id)} // Pass the correct ownerId
+                      style={{ cursor: 'pointer' }}
                       onError={(e) => { e.target.onerror = null; e.target.src = './default.jpg'; }}
                     />
                   </div>
@@ -290,7 +312,6 @@ const HomePage = () => {
                   </div>
                 </div>
 
-                {/* Session content */}
                 <h3 className="topic-name">{cls.topicName}</h3>
                 <hr />
                 

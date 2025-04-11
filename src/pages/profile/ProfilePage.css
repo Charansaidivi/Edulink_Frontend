@@ -302,3 +302,20 @@ body.nav-expanded .profile-wrapper {
     max-width: 300px;
     margin-bottom: 20px;
 }
+
+.settings-icon-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.settings-icon {
+  font-size: 1.5rem;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.settings-icon:hover {
+  color: #0077b5;
+}

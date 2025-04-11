@@ -1,22 +1,44 @@
 /* LandingPage.css */
 
 .landing-page {
-    background-color: #f3f6fd;
-    min-height: 100vh;
+    background-color: #ffffff;
+    min-height: 1000vh;
     padding: 2rem;
   }
   
+  /* Updated Navbar Styles */
   .landing-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5rem;
-    flex-wrap: wrap;
+    padding: 1rem 2rem;
+    padding-right: 160px; /* Adjusted padding for right side */
+    padding-left: 160px;
+    transition: all 0.3s ease-in-out;
+    background-color: white; /* Default transparent background */
+    box-shadow: none; /* No shadow by default */
+  }
+  
+  .landing-navbar.scrolled {
+    background-color: white; /* White background when scrolled */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow when scrolled */
   }
   
   .landing-logo {
     display: flex;
     align-items: center;
+    gap: 1rem;
+  }
+  
+  .logo-image {
+    height: 70px; /* Adjust the height of the logo */
+    width: auto; /* Maintain aspect ratio */
+    cursor: pointer; /* Add pointer cursor for interactivity */
   }
   
   .logo-badge {
@@ -38,21 +60,73 @@
     font-weight: 400;
   }
   
-  .landing-nav-links {
+  .nav-links-left {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    flex-wrap: wrap;
+    margin-left: 2rem;
   }
   
   .nav-link-text {
-    font-weight: 600;
     color: #1c1f33;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    position: relative; /* Required for pseudo-elements */
+    transition: color 0.3s ease;
   }
   
-  .nav-link-new {
-    color: #28c66f;
-    font-weight: 700;
+  .nav-link-text::before,
+  .nav-link-text::after {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #f73c7a; /* Red underline color */
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -5px; /* Position the underline below the text */
+    transition: width 0.5s ease;
+  }
+  
+  .nav-link-text::after {
+    right: 0;
+    left: auto;
+  }
+  
+  .nav-link-text:hover::before,
+  .nav-link-text:hover::after {
+    width: 100%; /* Expand underline on hover */
+  }
+  
+  .nav-link-text:hover {
+    color:#f73c7a; /* Change text color on hover */
+  }
+  
+  .landing-nav-links-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .login-btn,
+  .signup-btn {
+    background-color: transparent;
+    border: 2px solid #1c1f33;
+    color: #1c1f33;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .login-btn:hover,
+  .signup-btn:hover {
+    background-color: #1c1f33;
+    color: white;
   }
   
   .nav-separator {
@@ -61,8 +135,9 @@
   /* Hero Section Styles */
 .hero-section {
     max-width: 600px;
-    margin-top: 2rem;
+    margin-top: 5rem;
     margin-bottom: 5rem;
+    margin-right: 100px;
   }
   
   .hero-title {
@@ -73,7 +148,13 @@
   }
   
   .hero-title .highlight {
-    color: #f73c7a;
+    color: #f73c7a; /* Highlighted text color */
+  }
+
+  .hero-title .subtext {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #333; /* Subtext color */
   }
   
   .featured-text {
@@ -81,6 +162,11 @@
     margin: 1.5rem 0;
     font-weight: 600;
     color: #333;
+  }
+  
+  .featured-text .highlight {
+    color: #f73c7a; /* Highlighted text color */
+    font-weight: 700;
   }
   
   .envato-logo {
@@ -116,7 +202,7 @@
   
   .hero-wrapper {
     padding: 3rem 2rem;
-    background-color: #f4f7fc;
+    background-color: white; /* Set background to white */
     min-height: 90vh;
   }
   

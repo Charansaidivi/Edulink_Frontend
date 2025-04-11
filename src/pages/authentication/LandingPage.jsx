@@ -1,37 +1,66 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./LandingPage.css";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true); // Add background when scrolled
+      } else {
+        setIsScrolled(false); // Remove background when at the top
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div className="landing-page">
       {/* Top Navbar */}
-      <nav className="landing-navbar">
+      <nav className={`landing-navbar ${isScrolled ? "scrolled" : ""}`}>
         <div className="landing-logo">
-          <div className="logo-badge">MS</div>
-          <h4 className="logo-text">
-            MASTER<span className="logo-light">STUDY</span>
-          </h4>
-        </div>
-        <div className="landing-nav-links">
-          {["DEMOS", "FEATURES", "PAGES", "COURSES", "COURSE BUILDER"].map((item, i) => (
-            <span key={i} className="nav-link-text">
-              {item}
+          <img
+            src="./logo2.png" // Replace with the actual path to your logo
+            alt="MasterStudy Logo"
+            className="logo-image"
+          />
+          <div className="nav-links-left">
+            <span className="nav-link-text" onClick={() => navigate("/")}>
+              Home
             </span>
-          ))}
-          <span className="nav-link-new">WHAT’S NEW</span>
-          <span className="nav-separator">|</span>
-          <span className="nav-link-text">PURCHASE 🛒</span>
+            <span className="nav-link-text" onClick={() => navigate("/about")}>
+              About
+            </span>
+          </div>
+        </div>
+        <div className="landing-nav-links-right">
+          <button className="btn login-btn" onClick={() => navigate("/login")}>
+            Login
+          </button>
+          <button className="btn signup-btn" onClick={() => navigate("/signup")}>
+            Signup
+          </button>
         </div>
       </nav>
       <div className="hero-wrapper d-flex align-items-center justify-content-between flex-wrap">
         <div className="hero-section container text-left">
           <h1 className="hero-title">
-            THE BEST <span className="highlight">EDUCATION</span><br />
-            WORDPRESS THEME
+            <span className="highlight">Learn Together.</span> Build Together. <span className="highlight">Rise Together.</span>
+            <br />
+            <span className="subtext">
+              'Because real growth happens when minds connect.'
+            </span>
           </h1>
           <p className="featured-text">
-            featured on <img src="https://cdn.worldvectorlogo.com/logos/envato.svg" alt="Envato" className="envato-logo" /> tuts+
+            Dive into a platform where knowledge flows freely, collaboration fuels innovation, and every student has a chance to lead, learn, and leave a legacy.
           </p>
           <div className="cta-buttons">
             <button className="btn watch-btn">WATCH</button>
